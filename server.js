@@ -119,45 +119,56 @@ app.post('/api/addcard', async (req, res, next) =>
 {
   // incoming: userId, color
   // outgoing: error
-
-  var error = '';
-
+	
   const { userId, card } = req.body;
 
-  // TEMP FOR LOCAL TESTING.
+  const newCard = {Card:card,UserId:userId};
+  var error = '';
+
+  try
+  {
+    const db = client.db('COP4331Cards');
+    const result = db.collection('Cards').insertOne(newCard);
+  }
+  catch(e)
+  {
+    error = e.toString();
+  }
+
   cardList.push( card );
 
   var ret = { error: error };
   res.status(200).json(ret);
 });
 
+
 app.post('/api/login', async (req, res, next) => 
 {
   // incoming: login, password
   // outgoing: id, firstName, lastName, error
-
-  var error = '';
+	
+ var error = '';
 
   const { login, password } = req.body;
+
+  const db = client.db("COP4331Cards");
+  const results = await db.collection('Users').find({Login:login,Password:password}).toArray();
 
   var id = -1;
   var fn = '';
   var ln = '';
 
-  if( login.toLowerCase() == 'rickl' && password == 'COP4331' )
+  if( results.length > 0 )
   {
-    id = 1;
-    fn = 'Rick';
-    ln = 'Leinecker';
-  }
-  else
-  {
-    error = 'Invalid user name/password';
+    id = results[0].UserID;
+    fn = results[0].FirstName;
+    ln = results[0].LastName;
   }
 
-  var ret = { id:id, firstName:fn, lastName:ln, error:error};
+  var ret = { id:id, firstName:fn, lastName:ln, error:''};
   res.status(200).json(ret);
 });
+
 
 app.post('/api/searchcards', async (req, res, next) => 
 {
@@ -167,22 +178,21 @@ app.post('/api/searchcards', async (req, res, next) =>
   var error = '';
 
   const { userId, search } = req.body;
-  var _search = search.toLowerCase().trim();
+
+  var _search = search.trim();
+  
+  const db = client.db('COP4331Cards');
+  const results = await db.collection('Cards').find({"Card":{$regex:_search+'.*', $options:'r'}}).toArray();
+  
   var _ret = [];
-
-  for( var i=0; i<cardList.length; i++ )
+  for( var i=0; i<results.length; i++ )
   {
-    var lowerFromList = cardList[i].toLocaleLowerCase();
-    if( lowerFromList.indexOf( _search ) >= 0 )
-    {
-      _ret.push( cardList[i] );
-    }
+    _ret.push( results[i].Card );
   }
-
-  var ret = {results:_ret, error:''};
+  
+  var ret = {results:_ret, error:error};
   res.status(200).json(ret);
 });
-
 
 
 app.use((req, res, next) => 
