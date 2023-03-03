@@ -2,11 +2,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+const path = require('path');           
+const PORT = process.env.PORT || 5000;  
 const app = express();
+
+app.set('port', (process.env.PORT || 5000));
 app.use(cors());
 app.use(bodyParser.json());
 
-const url = 'mongodb://cop4431mongodb:Kyvs1hMBZk6Hp9Ok7Qivez34PqHrk3ssx7eMRonkfvwO3dgFOeQKdeSAKE4AaC91D72QyQ7e7gMZACDbEyfAGw==@cop4431mongodb.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&replicaSet=globaldb&maxIdleTimeMS=120000&appName=@cop4431mongodb@';
+const url = 'mongodb+srv://user1234:COP4331@cop4331-foodapp.btj0k.mongodb.net/?retryWrites=true&w=majority';
 const MongoClient = require("mongodb").MongoClient;
 const client = new MongoClient(url);
 client.connect(console.log("mongodb connected"));
@@ -209,4 +213,7 @@ app.use((req, res, next) =>
   next();
 });
 
-app.listen(5000); // start Node + Express server on port 5000
+app.listen(PORT, () => 
+{
+  console.log('Server listening on port ' + PORT);
+});
