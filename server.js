@@ -117,27 +117,37 @@ var cardList =
 */
 
 
-app.post('/api/addUser', async (req, res, next) =>
+app.post('/api/register', async (req, res, next) =>
 {
   // incoming: userId, color
   // outgoing: error
 	
   const {email, login, password} = req.body;
-
-  
-
-  const newUser = {Email:email, Login:login, Password:password};
   var error = '';
 
-  try
+  const db = client.db("COP4331-LargeProject");
+  const results = await db.collection('Users').find({Login:login}).toArray();
+
+  if( results.length > 0 )
   {
-    const db = client.db('COP4331-LargeProject');
-    const result = db.collection('Users').insertOne(newUser);
+    error = 'Login Taken';
   }
-  catch(e)
+  else
   {
-    error = e.toString();
+    const newUser = {Email:email, Login:login, Password:password};
+  
+    try
+    {
+      //const db = client.db('COP4331-LargeProject');
+      const result = db.collection('Users').insertOne(newUser);
+    }
+    catch(e)
+    {
+      error = e.toString();
+    }
   }
+
+
 
   //cardList.push( card );
 
