@@ -124,6 +124,8 @@ app.post('/api/addUser', async (req, res, next) =>
 	
   const {email, login, password} = req.body;
 
+  
+
   const newUser = {Email:email, Login:login, Password:password};
   var error = '';
 
@@ -153,21 +155,28 @@ app.post('/api/login', async (req, res, next) =>
 
   const { login, password } = req.body;
 
-  const db = client.db("COP4331Cards");
+  const db = client.db("COP4331-LargeProject");
   const results = await db.collection('Users').find({Login:login,Password:password}).toArray();
 
   var id = -1;
-  var fn = '';
-  var ln = '';
+  var eml = '';
+  var lgn = '';
+  var pass = '';
 
+  let found = "Not Found";
   if( results.length > 0 )
   {
-    id = results[0].UserID;
-    fn = results[0].FirstName;
-    ln = results[0].LastName;
+    //id = results[0].UserID;
+    id = results[0]._id;
+    eml = results[0].Email;
+    lgn = results[0].Login;
+    pass = results[0].Password;
+    //ln = results[0].LastName;
+    found="";
   }
 
-  var ret = { id:id, firstName:fn, lastName:ln, error:''};
+  //var ret = { id:id, firstName:fn, lastName:ln, error:''};
+  var ret = { ID:id, email:eml, login:lgn, password:pass, error:found};
   res.status(200).json(ret);
 });
 
