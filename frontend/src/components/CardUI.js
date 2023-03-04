@@ -2,6 +2,19 @@ import React, { useState } from 'react';
 
 function CardUI()
 {
+    const app_name = 'large-project-poos'
+    function buildPath(route)
+    {
+        if (process.env.NODE_ENV === 'production') 
+        {
+            return 'https://' + app_name +  '.herokuapp.com/' + route;
+        }
+        else
+        {        
+            return 'http://localhost:5000/' + route;
+        }
+    }
+    
     let card = '';
     let search = '';
 
@@ -9,20 +22,7 @@ function CardUI()
     const [searchResults,setResults] = useState('');
     const [cardList,setCardList] = useState('');
 
-    // const addCard = async event => 
-    // {
-	//     event.preventDefault();
-
-    //      alert('addCard() ' + card.value);
-
-    // };
-
-    // const searchCard = async event => 
-    // {
-    //     event.preventDefault();
-        
-    //     alert('searchCard() ' + search.value);
-    // };
+    
 
     let _ud = localStorage.getItem('user_data');
     let ud = JSON.parse(_ud);
@@ -39,7 +39,7 @@ function CardUI()
 
         try
         {
-            const response = await fetch('http://localhost:5000/api/addcard', {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+            const response = await fetch(buildPath('api/addcard'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
 
             let txt = await response.text();
             let res = JSON.parse(txt);
@@ -69,7 +69,7 @@ function CardUI()
 
         try
         {
-            const response = await fetch('http://localhost:5000/api/searchcards', {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+            const response = await fetch(buildPath('api/searchcards'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
 
             let txt = await response.text();
             let res = JSON.parse(txt);
