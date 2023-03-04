@@ -6,12 +6,12 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const url = 'mongodb://cop4431mongodb:Kyvs1hMBZk6Hp9Ok7Qivez34PqHrk3ssx7eMRonkfvwO3dgFOeQKdeSAKE4AaC91D72QyQ7e7gMZACDbEyfAGw==@cop4431mongodb.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&replicaSet=globaldb&maxIdleTimeMS=120000&appName=@cop4431mongodb@';
+const url = 'mongodb+srv://group18:COP4331@cop4331-foodapp.btj0k.mongodb.net/?retryWrites=true&w=majority';
 const MongoClient = require("mongodb").MongoClient;
 const client = new MongoClient(url);
 client.connect(console.log("mongodb connected"));
 
-
+/*
 var cardList = 
 [
   'Roy Campanella',
@@ -114,28 +114,30 @@ var cardList =
   'Rickey Henderson',
   'Babe Ruth'
 ];
+*/
 
-app.post('/api/addcard', async (req, res, next) =>
+
+app.post('/api/addUser', async (req, res, next) =>
 {
   // incoming: userId, color
   // outgoing: error
 	
-  const { userId, card } = req.body;
+  const {email, login, password} = req.body;
 
-  const newCard = {Card:card,UserId:userId};
+  const newUser = {Email:email, Login:login, Password:password};
   var error = '';
 
   try
   {
-    const db = client.db('COP4331Cards');
-    const result = db.collection('Cards').insertOne(newCard);
+    const db = client.db('COP4331-LargeProject');
+    const result = db.collection('Users').insertOne(newUser);
   }
   catch(e)
   {
     error = e.toString();
   }
 
-  cardList.push( card );
+  //cardList.push( card );
 
   var ret = { error: error };
   res.status(200).json(ret);
