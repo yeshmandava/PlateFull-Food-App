@@ -122,7 +122,7 @@ app.post('/api/register', async (req, res, next) =>
   // incoming: userId, color
   // outgoing: error
 	
-  const {email, login, password} = req.body;
+  const {email, login, password, restaurant} = req.body;
   var error = '';
 
   const db = client.db("COP4331-LargeProject");
@@ -134,7 +134,7 @@ app.post('/api/register', async (req, res, next) =>
   }
   else
   {
-    const newUser = {Email:email, Login:login, Password:password};
+    const newUser = {Email:email, Login:login, Password:password, Restaurant:restaurant};
   
     try
     {
@@ -172,6 +172,7 @@ app.post('/api/login', async (req, res, next) =>
   var eml = '';
   var lgn = '';
   var pass = '';
+  var rest = '';
 
   let found = "Not Found";
   if( results.length > 0 )
@@ -181,12 +182,14 @@ app.post('/api/login', async (req, res, next) =>
     eml = results[0].Email;
     lgn = results[0].Login;
     pass = results[0].Password;
+    rest = results[0].Restaurant;
+
     //ln = results[0].LastName;
     found="";
   }
 
   //var ret = { id:id, firstName:fn, lastName:ln, error:''};
-  var ret = { ID:id, email:eml, login:lgn, password:pass, error:found};
+  var ret = { ID:id, email:eml, login:lgn, password:pass, resturant:rest, error:found};
   res.status(200).json(ret);
 });
 
