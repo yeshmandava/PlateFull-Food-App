@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import axios from 'axios';
 
 function Login()
 {
@@ -8,18 +9,10 @@ function Login()
 
     const [message,setMessage] = useState('');
 
-    const app_name = 'large-project-poos'
-    function buildPath(route)
-    {
-        if (process.env.NODE_ENV === 'production') 
-        {
-            return 'https://' + app_name +  '.herokuapp.com/' + route;
-        }
-        else
-        {        
-            return 'http://localhost:5000/' + route;
-        }
-    }
+    let bp = require('./Path.js');
+    let storage = require('../tokenStorage.js');
+
+    //const response = await fetch(bp.buildPath('api/login'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
 
 
     const doLogin = async event => 
@@ -31,7 +24,7 @@ function Login()
 
         try
         {    
-            const response = await fetch(buildPath('api/login'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+            const response = await fetch(bp.buildPath('api/login'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
 
             var res = JSON.parse(await response.text());
 
@@ -41,7 +34,13 @@ function Login()
             }
             else
             {
-                var user = {firstName:res.firstName,lastName:res.lastName,id:res.id}
+                storage.storeToken(res);
+                
+                let userId = res.id
+                let firstName = res.fn;
+                let lastName = res.ln;
+
+                let user = {firstName:res.firstName,lastName:res.lastName,id:res.id}
                 localStorage.setItem('user_data', JSON.stringify(user));
 
                 setMessage('');

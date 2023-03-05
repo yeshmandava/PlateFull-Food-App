@@ -1,20 +1,9 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 function CardUI()
 {
-    const app_name = 'large-project-poos'
-    function buildPath(route)
-    {
-        if (process.env.NODE_ENV === 'production') 
-        {
-            return 'https://' + app_name +  '.herokuapp.com/' + route;
-        }
-        else
-        {        
-            return 'http://localhost:5000/' + route;
-        }
-    }
-    
+    let bp = require('./Path.js');
     let card = '';
     let search = '';
 
@@ -22,24 +11,29 @@ function CardUI()
     const [searchResults,setResults] = useState('');
     const [cardList,setCardList] = useState('');
 
-    
-
     let _ud = localStorage.getItem('user_data');
     let ud = JSON.parse(_ud);
     let userId = ud.id;
     let firstName = ud.firstName;
     let lastName = ud.lastName;
+
+    let storage = require('../tokenStorage.js');
 	
     const addCard = async event => 
     {
 	    event.preventDefault();
 
-        let obj = {userId:userId,card:card.value};
+        // let obj = {userId:userId,card:card.value};
+        // let js = JSON.stringify(obj);
+
+        let storage = require('../tokenStorage.js');            
+        let obj = {userId:userId,card:card.value,jwtToken:storage.retrieveToken()};
         let js = JSON.stringify(obj);
+
 
         try
         {
-            const response = await fetch(buildPath('api/addcard'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+            const response = await fetch(bp.buildPath('api/addcard'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
 
             let txt = await response.text();
             let res = JSON.parse(txt);
@@ -51,6 +45,7 @@ function CardUI()
             else
             {
                 setMessage('Card has been added');
+                storage.storeToken( res.jwtToken );
             }
         }
         catch(e)
@@ -64,17 +59,19 @@ function CardUI()
     {
         event.preventDefault();
         		
-        let obj = {userId:userId,search:search.value};
+        let storage = require('../tokenStorage.js');            
+        let obj = {userId:userId,search:search.value,jwtToken:storage.retrieveToken()};
         let js = JSON.stringify(obj);
 
         try
         {
-            const response = await fetch(buildPath('api/searchcards'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+            const response = await fetch(bp.buildPath('api/searchcards'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
 
-            let txt = await response.text();
-            let res = JSON.parse(txt);
-            let _results = res.results;
-            let resultText = '';
+            var txt = await response.text();
+            var res = JSON.parse(txt);
+            var _results = res.results;
+            var resultText = '';
+
             for( var i=0; i<_results.length; i++ )
             {
                 resultText += _results[i];
@@ -90,10 +87,9 @@ function CardUI()
         {
             alert(e.toString());
             setResults(e.toString());
+            storage.storeToken( res.jwtToken );
         }
     };
-
-
 
     return(
         <div id="cardUIDiv">
