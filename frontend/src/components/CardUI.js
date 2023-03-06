@@ -13,7 +13,7 @@ function CardUI()
 
     let _ud = localStorage.getItem('user_data');
     let ud = JSON.parse(_ud);
-    let userId = ud.id;
+    let userId = ud.userId;
     let firstName = ud.firstName;
     let lastName = ud.lastName;
 
