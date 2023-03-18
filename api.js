@@ -62,6 +62,47 @@ exports.setApp = function(app,client)
     });
 
 
+    app.post('/api/register', async (req, res, next) =>
+    {
+      // incoming: userId, color
+      // outgoing: error
+      
+      const {firstName, lastName, email, login, password} = req.body;
+      var error = '';
+
+      //const db = client.db("COP4331-LargeProject");
+
+      const results = await User.find({Login:login}); 
+
+      if( results.length > 0 )
+      {
+        error = 'Login Taken';
+      }
+      else
+      {
+        const newUser = new User({FirstName: firstName, LastName: lastName, Email: email, Login: login, Password: password});
+      
+        try
+        {
+          //const db = client.db('COP4331-LargeProject');
+          //const result = db.collection('Users').insertOne(newUser);
+          newUser.save();
+        }
+        catch(e)
+        {
+          error = e.toString();
+        }
+      }
+
+
+
+      //cardList.push( card );
+
+      var ret = { error: error };
+      res.status(200).json(ret);
+    });
+
+
     app.post('/api/login', async (req, res, next) => 
     {
       // incoming: login, password
@@ -75,24 +116,27 @@ exports.setApp = function(app,client)
       var id = -1;
       var fn = '';
       var ln = '';
+
     
-      var ret;
+      let ret;
 
       if( results.length > 0 )
         {
-          id = results[0].UserId;
+          id = results[0]._id;
           fn = results[0].FirstName;
           ln = results[0].LastName;
 
-          try
-          {
+
+
+         try
+        {
             const token = require("./createJWT.js");
             ret = token.createToken( fn, ln, id );
-          }
-          catch(e)
-          {
-            ret = {error:e.message};
-          }
+        }
+        catch(e)
+        {
+          ret = {error:e.message};
+        }
         }
         else
         {

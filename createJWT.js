@@ -8,6 +8,7 @@ exports.createToken = function ( fn, ln, id )
 
 _createToken = function ( fn, ln, id )
 {
+    let ret;
     try
     {
       const expiration = new Date();
@@ -24,12 +25,13 @@ _createToken = function ( fn, ln, id )
                       '365d'
       */
 
-      let ret = {accessToken:accessToken, fn:fn, ln:ln, id:id};
+       ret = {accessToken:accessToken, fn:fn, ln:ln, id:id};
     }
     catch(e)
     {
-      let ret = {error:e.message};
+       ret = {error:e.message}; 
     }
+
     return ret;
 }
 
