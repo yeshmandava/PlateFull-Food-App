@@ -18,9 +18,5 @@
         "mongodb": "^5.1.0",
         "mongoose": "^7.0.0",
         "mongoose-int32": "^0.6.0"
-    },
-    "browser": {
-        "crypto": false,
-        "stream": false
     }
 }
