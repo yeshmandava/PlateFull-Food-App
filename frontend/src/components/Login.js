@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
+import {SaveCookie, ReadCookie} from '../components/Cookies';
 
 function Login()
 {
@@ -49,6 +50,7 @@ function Login()
                 var lastName = res.ln;
                   
                 var user = {firstName:firstName,lastName:lastName,id:userId}
+                SaveCookie(firstName, lastName, userId)
                 localStorage.setItem('user_data', JSON.stringify(user));
                 window.location.href = '/cards';
             }
