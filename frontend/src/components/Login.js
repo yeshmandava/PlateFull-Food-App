@@ -43,12 +43,10 @@ function Login()
             else 
             {	
                 storage.storeToken(res);
-                var jwt = require('jsonwebtoken');
     
-                var ud = jwt.decode(storage.retrieveToken(),{complete:true});
-                var userId = ud.payload.userId;
-                var firstName = ud.payload.firstName;
-                var lastName = ud.payload.lastName;
+                var userId = res.id;
+                var firstName = res.fn;
+                var lastName = res.ln;
                   
                 var user = {firstName:firstName,lastName:lastName,id:userId}
                 localStorage.setItem('user_data', JSON.stringify(user));
