@@ -1,24 +1,24 @@
-import { useCookies } from 'react-cookie';
+import { useCookies } from "react-cookie";
 
 function SaveCookie(firstName, lastName, userId) {
-  const cookieData = {
-    firstName: firstName,
-    lastName: lastName,
-    userId: userId,
-  };
+	const cookieData = {
+		firstName: firstName,
+		lastName: lastName,
+		userId: userId,
+	};
 
-  const [cookies, setCookie] = useCookies(['userData']);
-  setCookie('userData', cookieData);
+	const [cookies, setCookie] = useCookies(["userData"]);
+	setCookie("userData", cookieData);
 }
 
 function ReadCookie() {
-  const [cookies] = useCookies(['userData']);
+	const [cookies] = useCookies(["userData"]);
 
-  if (cookies.userData) {
-    return cookies.userData;
-  } else {
-    return null;
-  }
+	if (cookies.userData) {
+		return cookies.userData;
+	} else {
+		return null;
+	}
 }
 
 export { SaveCookie, ReadCookie };
