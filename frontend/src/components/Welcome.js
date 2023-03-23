@@ -13,8 +13,18 @@ function Welcome() {
 			</div>
 			<div className="right-section">
 				<h2 className="welcome-grabber">Join PlateFull Today</h2>
-				<button className="login-button">Login</button>
-				<button className="register-button">Sign Up</button>
+				<button
+					className="login-button"
+					onClick={() => (window.location.href = "/login")}
+				>
+					Login
+				</button>
+				<button
+					className="register-button"
+					onClick={() => (window.location.href = "/login")}
+				>
+					Sign Up
+				</button>
 			</div>
 		</div>
 	);

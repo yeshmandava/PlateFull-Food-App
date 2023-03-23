@@ -17,7 +17,7 @@ code {
 	justify-content: space-between;
 	align-items: center;
 	height: 100vh;
-	background-color: #e7e7e7;
+	background-color: #FFF6E0;
   color: #3E3E3E;
 }
 
@@ -30,7 +30,7 @@ code {
 	justify-content: center;
 	align-items: center;
 	padding: 2rem;
-	background-color: #FFE8D6;
+	background-color: #F5936C;
 }
 
 .right-section {
@@ -64,7 +64,7 @@ code {
 }
 
 .login-button {
-	background-color: #A4B4AF;
+	background-color: #ffefc6;
 	border: 1px solid #000000;
 	border-radius: 25px;
 	padding: 0.5rem 10rem;
@@ -74,7 +74,7 @@ code {
 }
 
 .register-button {
-	background-color: #FFB58F;
+	background-color: #F5936C;
 	border: 1px solid #000000;
 	border-radius: 25px;
 	padding: 0.5rem 9.5rem;
@@ -84,11 +84,11 @@ code {
 }
 
 .login-button:hover {
-  background-color: #D3E0DC;
+  background-color: #ffefc657;
 }
 
 .register-button:hover {
-	background-color: #FFE8D6;
+	background-color: #f5936c8e;
 }
 
 .spinner-container {
