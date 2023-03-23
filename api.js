@@ -13,8 +13,7 @@ exports.setApp = function(app,client)
     // incoming: userId, color
     // outgoing: error
         
-    // const { userId, card } = req.body;
-    let token = require('./createJWT.js');
+    var token = require('./createJWT.js');
     const { userId, card, jwtToken } = req.body;
     
     try
@@ -118,13 +117,13 @@ exports.setApp = function(app,client)
       var ln = '';
 
     
-      let ret;
+      var ret;
 
       if( results.length > 0 )
         {
           id = results[0]._id;
           fn = results[0].FirstName;
-          ln = results[0].LastName;
+          ln = results[0].LastName
 
 
 
@@ -151,8 +150,8 @@ exports.setApp = function(app,client)
       // incoming: userId, search
       // outgoing: results[], error
 
-      let  error = '';
-      let token = require('./createJWT.js');
+      var  error = '';
+      var token = require('./createJWT.js');
       const { userId, card, jwtToken } = req.body;
 
       try

@@ -1,42 +1,43 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useJwt } from "react-jwt";
 
 function CardUI()
 {
-    let bp = require('./Path.js');
-    let card = '';
-    let search = '';
+    var bp = require('./Path.js');
+    var card = '';
+    var search = '';
 
     const [message,setMessage] = useState('');
     const [searchResults,setResults] = useState('');
     const [cardList,setCardList] = useState('');
 
-    let _ud = localStorage.getItem('user_data');
-    let ud = JSON.parse(_ud);
-    let userId = ud.userId;
-    let firstName = ud.firstName;
-    let lastName = ud.lastName;
+    var _ud = localStorage.getItem('user_data');
+    var ud = JSON.parse(_ud);
+    var userId = ud.userId;
+    var firstName = ud.firstName;
+    var lastName = ud.lastName;
 
-    let storage = require('../tokenStorage.js');
+    var storage = require('../tokenStorage.js');
 	
     const addCard = async event => 
     {
 	    event.preventDefault();
 
-        // let obj = {userId:userId,card:card.value};
-        // let js = JSON.stringify(obj);
+        // var obj = {userId:userId,card:card.value};
+        // var js = JSON.stringify(obj);
 
-        let storage = require('../tokenStorage.js');            
-        let obj = {userId:userId,card:card.value,jwtToken:storage.retrieveToken()};
-        let js = JSON.stringify(obj);
+        var storage = require('../tokenStorage.js');            
+        var obj = {userId:userId,card:card.value,jwtToken:storage.retrieveToken()};
+        var js = JSON.stringify(obj);
 
 
         try
         {
             const response = await fetch(bp.buildPath('api/addcard'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
 
-            let txt = await response.text();
-            let res = JSON.parse(txt);
+            var txt = await response.text();
+            var res = JSON.parse(txt);
 
             if( res.error.length > 0 )
             {
@@ -59,9 +60,9 @@ function CardUI()
     {
         event.preventDefault();
         		
-        let storage = require('../tokenStorage.js');            
-        let obj = {userId:userId,search:search.value,jwtToken:storage.retrieveToken()};
-        let js = JSON.stringify(obj);
+        var storage = require('../tokenStorage.js');            
+        var obj = {userId:userId,search:search.value,jwtToken:storage.retrieveToken()};
+        var js = JSON.stringify(obj);
 
         try
         {

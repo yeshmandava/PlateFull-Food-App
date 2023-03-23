@@ -1,17 +1,18 @@
-
 import React, { useState } from 'react';
 import axios from 'axios';
+import jwt_decode from "jwt-decode";
+
 
 function Login()
 {
-    let loginName;
-    let loginPassword;
+    var bp = require('./Path.js');
+    var storage = require('../tokenStorage.js');
+    
+    var loginName;
+    var loginPassword;
 
     const [message,setMessage] = useState('');
-
-    let bp = require('./Path.js');
-    let storage = require('../tokenStorage.js');
-
+    // const { setAuth } = useContext(authContext);
     //const response = await fetch(bp.buildPath('api/login'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
 
 
@@ -44,12 +45,23 @@ function Login()
             {	
                 storage.storeToken(res);
     
-                var userId = res.id;
-                var firstName = res.fn;
-                var lastName = res.ln;
+                // var userId = res.id;
+                // var firstName = res.fn;
+                // var lastName = res.ln;
+                //var jwt = require("jsonwebtoken");
+               
+                var ud = jwt_decode(storage.retrieveToken(),{complete:true});
+                // const {ud, isExpired} = useJwt(storage.retrieveToken);
+              
+                var userId = ud.userId;
+                var firstName = ud.firstName;
+                var lastName = ud.lastName;
+
                   
                 var user = {firstName:firstName,lastName:lastName,id:userId}
                 localStorage.setItem('user_data', JSON.stringify(user));
+
+                setMessage('');
                 window.location.href = '/cards';
             }
         })
@@ -58,38 +70,6 @@ function Login()
             console.log(error);
         });
     }
-
-    //     try
-    //     {    
-    //         const response = await fetch(bp.buildPath('api/login'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
-
-    //         var res = JSON.parse(await response.text());
-
-    //         if( res.id <= 0 )
-    //         {
-    //             setMessage('User/Password combination incorrect');
-    //         }
-    //         else
-    //         {
-    //             storage.storeToken(res);
-                
-    //             let userId = res.id
-    //             let firstName = res.fn;
-    //             let lastName = res.ln;
-
-    //             let user = {firstName:res.firstName,lastName:res.lastName,id:res.id}
-    //             localStorage.setItem('user_data', JSON.stringify(user));
-
-    //             setMessage('');
-    //             window.location.href = '/cards';
-    //         }
-    //     }
-    //     catch(e)
-    //     {
-    //         alert(e.toString());
-    //         return;
-    //     }    
-    // };
 
     return(
       <div id="loginDiv">

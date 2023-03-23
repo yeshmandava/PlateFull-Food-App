@@ -8,7 +8,6 @@ exports.createToken = function ( fn, ln, id )
 
 _createToken = function ( fn, ln, id )
 {
-    let ret;
     try
     {
       const expiration = new Date();
@@ -25,11 +24,11 @@ _createToken = function ( fn, ln, id )
                       '365d'
       */
 
-       ret = {accessToken:accessToken, fn:fn, ln:ln, id:id};
+      var ret = {accessToken:accessToken};
     }
     catch(e)
     {
-       ret = {error:e.message}; 
+      var ret = {error:e.message}; 
     }
 
     return ret;
@@ -37,7 +36,7 @@ _createToken = function ( fn, ln, id )
 
 exports.isExpired = function( token )
 {
-   let isError = jwt.verify( token, process.env.ACCESS_TOKEN_SECRET, (err, verifiedJwt) =>
+   var isError = jwt.verify( token, process.env.ACCESS_TOKEN_SECRET, (err, verifiedJwt) =>
     {
         if( err )
         {
@@ -55,11 +54,11 @@ exports.isExpired = function( token )
 
 exports.refresh = function( token )
 {
-  let ud = jwt.decode(token,{complete:true});
+  var ud = jwt.decode(token,{compvare:true});
 
-  let userId = ud.payload.id;
-  let firstName = ud.payload.firstName;
-  let lastName = ud.payload.lastName;
+  var userId = ud.payload.id;
+  var firstName = ud.payload.firstName;
+  var lastName = ud.payload.lastName;
 
   return _createToken( firstName, lastName, userId );
 }
