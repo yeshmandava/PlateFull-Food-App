@@ -68,6 +68,8 @@ export default function Register()
             
             <input type="submit" id="loginButton" className="buttons" value = "Register" onClick={doRegister} />
         </form>
+        <span id="registerResult">{message}</span>
+
       </div>
    )
 }
