@@ -72,6 +72,7 @@ exports.setApp = function(app,client)
 
       //const db = client.db("COP4331-LargeProject");
 
+      // find() is timing out for some reason
       const results = await User.find({Login:login}); 
 
       if( results.length > 0 )
