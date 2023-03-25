@@ -1,5 +1,10 @@
 require('express');
 require('mongodb');
+require('dotenv').config();
+const axios = require('axios');
+
+const API_ID = process.env.EDAMAM_API_ID;
+const API_KEY = process.env.EDAMAM_API_KEY;
 
 exports.setApp = function(app,client)
 {
@@ -146,6 +151,24 @@ exports.setApp = function(app,client)
       
         res.status(200).json(ret);
     });
+
+    app.post('/api/recipes', async (req,res) => {
+      try{
+        const {query} = req.body;
+        const url = `https://api.edamam.com/search?q=${query}&app_id=${API_ID}&app_key=${API_KEY}`;
+        //const API_ID = process.env.EDAMAM_API_ID;
+        //const API_KEY = process.env.EDAMAM_API_KEY;
+      
+        const response = await axios.get(url);
+        const data = response.data;
+        res.json(data.hits);
+        //const recipes = response.data.hits.map(hit => hit.recipe);
+        //res.json(recipes);
+      } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+      }
+    })
 
     app.post('/api/searchcards', async (req, res, next) => 
     {
