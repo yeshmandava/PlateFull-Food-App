@@ -21,7 +21,7 @@ function Welcome() {
 				</button>
 				<button
 					className="register-button"
-					onClick={() => (window.location.href = "/login")}
+					onClick={() => (window.location.href = "/register")}
 				>
 					Sign Up
 				</button>

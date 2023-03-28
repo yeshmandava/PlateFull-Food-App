@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-export default function Register()
+function Register()
 {
    var bp = require('./Path.js');
 
@@ -73,3 +73,5 @@ export default function Register()
       </div>
    )
 }
+
+export default Register;
