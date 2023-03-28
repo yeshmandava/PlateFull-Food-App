@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage";
 import CardPage from "./pages/CardPage";
+import RegisterPage from "./pages/RegisterPage";
 import WelcomePage from "./pages/WelcomePage";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
 			<Routes>
 				<Route path="/" index element={<WelcomePage />} />
 				<Route path="/login" index element={<LoginPage />} />
+				<Route path="/register" index element={<RegisterPage />} />
 				<Route path="/cards" index element={<CardPage />} />
 			</Routes>
 		</BrowserRouter>

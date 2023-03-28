@@ -1,5 +1,6 @@
 require('express');
 require('mongodb');
+const bcrypt = require('bcrypt');
 
 exports.setApp = function(app,client)
 {
@@ -81,7 +82,10 @@ exports.setApp = function(app,client)
       }
       else
       {
-        const newUser = new User({FirstName: firstName, LastName: lastName, Email: email, Login: login, Password: password});
+        const salt = await bcrypt.genSalt();
+        const passwordHash = await bcrypt.hash(password, salt);
+        
+        const newUser = new User({FirstName: firstName, LastName: lastName, Email: email, Login: login, Password: passwordHash});
       
         try
         {
