@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+import '../stylesheets/Register.css'
+
 export default function Register()
 {
    var bp = require('./Path.js');
@@ -56,7 +58,7 @@ export default function Register()
 
       
    return(
-      <div id="registerDiv">
+      <div id="registerDiv" className="register-card">
          <form onSubmit={doRegister}>
             <span id="register-title">Register</span>
             <br/>
