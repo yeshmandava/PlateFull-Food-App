@@ -1,0 +1,25 @@
+:root{
+    --offwhite: #FFFCF5;
+    --cream: #FFF6E0;
+    --red-light: #F5936C;
+    --red: #DC4E33;
+    --gold:  #FEB346;
+    --gold: #FEB346;
+    --brown-light: #CB6E2D;
+    --brown-dark: #633729;
+}
+
+.login-card{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:10px;
+    margin-right:20px;
+    width:300px;
+    height:400px;
+    background-color:var(--offwhite);
+    box-shadow: 5px 5px 5px 5px gray;
+
+}
