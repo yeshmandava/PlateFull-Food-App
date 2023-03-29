@@ -45,7 +45,7 @@ function Login() {
           var user = { firstName: firstName, lastName: lastName, id: userId };
           // SaveCookie(firstName, lastName, userId);
           localStorage.setItem("user_data", JSON.stringify(user));
-          window.location.href = "/users";
+          window.location.href = "/Users";
         }
       })
       .catch(function (error) {
