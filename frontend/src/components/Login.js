@@ -55,7 +55,7 @@ function Login() {
 
   return (
     <div id="loginDiv" className="login-card">
-      <form onSubmit={doLogin}>s
+      <form onSubmit={doLogin}>
         <span id="inner-title">PLEASE LOG IN</span>
         <br />
         <input
