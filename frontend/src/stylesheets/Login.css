@@ -16,12 +16,10 @@
     align-items:center;
     text-align:center;
     
+    box-sizing:border-box;
     width:100%;
     padding:10px;
-
     height:400px;
-
-
 
     background-color:var(--red-light);
     box-shadow: 5px 5px 5px 5px gray;
