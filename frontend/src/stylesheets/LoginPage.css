@@ -70,13 +70,13 @@ body{
     animation: register-animation 1s ease-in forwards;
 }
 @keyframes register-animation{
-    0%{
-        background-color:var(--red);
-        transform:translateX(0);
+    from{
+        left:0;
+        background:color:
     }
-    100%{
-        background-color:var(--gold);
-        transform:translateX(-100%);
+    
+    to{
+        left:100%;
     }
 }
 
