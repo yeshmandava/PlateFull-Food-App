@@ -7,6 +7,7 @@ import LoginPage from "./pages/LoginPage";
 import CardPage from "./pages/CardPage";
 import WelcomePage from "./pages/WelcomePage";
 import HomePage from "./pages/HomePage"
+import NewCardPage from "./pages/NewCardPage";
 
 function App() {
 	return (
@@ -16,6 +17,7 @@ function App() {
 				<Route path="/login" index element={<LoginPage />} />
 				<Route path="/cards" index element={<CardPage />} />
 				<Route path="/Users" index element={<HomePage />} />
+				<Route path="/New-Card" index element={<NewCardPage/>} />
 			</Routes>
 		</BrowserRouter>
 	);
