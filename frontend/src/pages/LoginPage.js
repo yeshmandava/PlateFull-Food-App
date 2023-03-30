@@ -14,20 +14,19 @@ const LoginPage = () =>
     <div>
       {<div className="side-panel" side={panelSide}/>}
       <div className="container">
-        <PageTitle />
-        <img src="../img/sample-logo.png" alt="logo"/>
-        
         <div className="info" side={panelSide}>
+          <h2>Welcome to Plateful</h2>
+          <img src="../img/sample-logo.png" alt="logo"/>
           {showLogin && <Login />}
           {showRegister && <Register />} 
           <div className="button-box">
-            <button id="login-button" class="btn" onClick={() => 
+            <button id="login-button" class="btn" role="button" onClick={() => 
               {
                 toggleLogin(true);
                 toggleRegister(false);
                 changeSide(0);
               }}>Login</button>
-              <button id="register-button" class="btn" onClick={() => 
+              <button id="register-button" class="btn" role="button" onClick={() => 
               {
                 toggleRegister(true);
                 toggleLogin(false);
