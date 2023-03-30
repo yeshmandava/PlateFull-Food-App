@@ -1,12 +1,14 @@
 :root{
     --offwhite: #FFFCF5;
     --cream: #FFF6E0;
-    --red-light: #F5936C;
+    --red-light: #f5936c;
+    --shadow-red-light: #bb5c36;
     --red: #DC4E33;
     --gold:  #FEB346;
     --gold: #FEB346;
     --brown-light: #CB6E2D;
     --brown-dark: #633729;
+
 }
 
 .login-card{
@@ -22,6 +24,8 @@
     height:400px;
 
     background-color:var(--red-light);
-    box-shadow: 5px 5px 5px 5px gray;
-
+    box-shadow: 12px 12px 5px var(--shadow-red-light);
 }
+
+/* specific id styling */
+
