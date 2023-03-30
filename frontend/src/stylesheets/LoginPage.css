@@ -45,16 +45,18 @@ body{
 
     background:var(--red);
 
-    animation: login-animation 1s ease-in forwards;
+    animation: login-animation .5s ease-in forwards;
 }
 @keyframes login-animation{
-    0%{
-        background-color:var(--gold);
-        transform: translateX(0);
+    from{
+        left:50%;
+        background-color:var(--brown-light);
+        
     }
-    100%{
+    
+    to{
+        left:0;
         background-color:var(--red);
-        transform:translateX(0%);
     }
 }
 .side-panel[side='1']{
@@ -67,15 +69,17 @@ body{
     position:absolute;
     left:50%;
 
-    animation: register-animation 1s ease-in forwards;
+    animation: register-animation .5s ease-in forwards;
 }
 @keyframes register-animation{
     from{
         left:0;
+        background-color:var(--red);
     }
     
     to{
-        left:100%;
+        left:50%;
+        background-color:var(--brown-light);
     }
 }
 
