@@ -419,8 +419,9 @@ app.post('/api/searchcards', async (req, res, next) =>
 
     app.post('/api/addrecipe', async (req, res, next) =>
     {
+
       let token = require('./createJWT.js');
-      const { userId, recipeName, time, difficulty, description, ingredients, equipment, instructions, image, jwtToken } = req.body;
+      const { userId, recipeName, time, difficulty, description, ingredients, equipment, instructions, image, rating, numOfRatings, sumOfRatings, jwtToken } = req.body;
       
       try
       {
@@ -435,6 +436,7 @@ app.post('/api/searchcards', async (req, res, next) =>
       {
         console.log(e.message);
       }
+    
 
       
       var error = '';
@@ -442,7 +444,7 @@ app.post('/api/searchcards', async (req, res, next) =>
       {
         const newRecipe = new Recipe({UserId: userId, RecipeName: recipeName, Time: time, Difficulty: difficulty, 
           Description: description, Ingredients: ingredients, Equipment: equipment, 
-          Instructions: instructions, Image: image, Rating: 0, NumOfRatings: 0, SumOfRatings: 0});
+          Instructions: instructions, Image: image, Rating: rating, NumOfRatings:numOfRatings, SumOfRatings:sumOfRatings});
 
         newRecipe.save();
       }
@@ -462,6 +464,7 @@ app.post('/api/searchcards', async (req, res, next) =>
         }
 
       var ret = { error: error, jwtToken: refreshedToken };
+      //var ret = { error: error };
       res.status(200).json(ret);
 
     });
@@ -514,6 +517,7 @@ app.post('/api/searchcards', async (req, res, next) =>
     
 
       var ret = { error: error, jwtToken: refreshedToken };
+      //var ret = { error: error };
       res.status(200).json(ret);
 
     }); 
@@ -522,6 +526,8 @@ app.post('/api/searchcards', async (req, res, next) =>
     app.post('/api/searchrecipes', async (req, res, next) => 
     {
       let  error = '';
+	  
+	  
 	  
       let token = require('./createJWT.js');
       const { userId, search, jwtToken} = req.body;
@@ -558,6 +564,10 @@ app.post('/api/searchcards', async (req, res, next) =>
       }
 		
       var ret = { results:results, error: error, jwtToken: refreshedToken };
+
+      //comment out
+	    //var ret = { results:results, error: error};
+      
       res.status(200).json(ret);
 
     });
@@ -602,7 +612,9 @@ app.post('/api/searchcards', async (req, res, next) =>
           console.log(e.message);
       }
 		
-      var ret = { results:results, error: error, jwtToken: refreshedToken };      
+      var ret = { results:results, error: error, jwtToken: refreshedToken };
+	    //var ret = { results:results, error: error};
+      
       res.status(200).json(ret);
 
     });
