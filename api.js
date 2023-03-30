@@ -1,5 +1,8 @@
 require('express');
 require('mongodb');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+require("dotenv").config();
 const mongoose = require('mongoose');
 
 exports.setApp = function(app,client)
@@ -68,16 +71,9 @@ exports.setApp = function(app,client)
 
 
     app.post('/api/register', async (req, res, next) =>
-    {
-      // incoming: userId, color
-      // outgoing: error
-      
+    { 
       const {firstName, lastName, email, login, password} = req.body;
       var error = '';
-
-      //const db = client.db("COP4331-LargeProject");
-
-      // find() is timing out for some reason
       const results = await User.find({Login:login}); 
 
       if( results.length > 0 )
@@ -85,13 +81,17 @@ exports.setApp = function(app,client)
         error = 'Login Taken';
       }
       else
-      {
-        const newUser = new User({FirstName: firstName, LastName: lastName, Email: email, Login: login, Password: password});
-      
+      {      
         try
         {
-          //const db = client.db('COP4331-LargeProject');
-          //const result = db.collection('Users').insertOne(newUser);
+          const hashedPassword = await bcrypt.hash(password, 10); // hash the password with salt factor of 10
+          const newUser = new User({
+            FirstName: firstName,
+            LastName: lastName,
+            Email: email,
+            Login: login,
+            Password: hashedPassword // store the hashed password in the database
+          });
           newUser.save();
         }
         catch(e)
@@ -100,56 +100,48 @@ exports.setApp = function(app,client)
         }
       }
 
-
-
-      //cardList.push( card );
-
       var ret = { error: error };
       res.status(200).json(ret);
     });
 
-
-    app.post('/api/login', async (req, res, next) => 
-    {
-      // incoming: login, password
-      // outgoing: id, firstName, lastName, error
-          
-      var error = '';
+    
+    app.post('/api/login', async (req, res, next) => {
 
       const { login, password } = req.body;
-      const results = await User.find({ Login: login, Password: password });
-
-      var id = -1;
-      var fn = '';
-      var ln = '';
-
+      let error = '';
+      let token = null;
+      let user = null;
     
-      let ret;
-
-      if( results.length > 0 )
-        {
-          id = results[0]._id;
-          fn = results[0].FirstName;
-          ln = results[0].LastName;
-
-
-
-         try
-        {
-            const token = require("./createJWT.js");
-            ret = token.createToken( fn, ln, id );
+      try {
+        const foundUser = await User.findOne({ Login: login });
+        if (!foundUser) {
+          error = 'User not found';
+        } else {
+          const isMatch = await bcrypt.compare(password, foundUser.Password);
+          if (!isMatch) {
+            error = 'Incorrect password';
+          } else {
+            // generate JWT token
+            token = jwt.sign({ userId: foundUser._id }, process.env.ACCESS_TOKEN_SECRET, {
+              expiresIn: '1h'
+            });
+            // extract user info
+            user = {
+              id: foundUser._id,
+              firstName: foundUser.FirstName,
+              lastName: foundUser.LastName
+            };
+          }
         }
-        catch(e)
-        {
-          ret = {error:e.message};
-        }
-        }
-        else
-        {
-            ret = {error:"Login/Password incorrect"};
-        }
-      
-        res.status(200).json(ret);
+      } catch (e) {
+        error = e.toString();
+      }
+    
+      if (error) {
+        return res.status(401).json({ error });
+      }
+    
+      res.json({ token, user });
     });
 
     app.post('/api/searchcards', async (req, res, next) => 
@@ -208,10 +200,9 @@ exports.setApp = function(app,client)
     app.post('/api/addrecipe', async (req, res, next) =>
     {
 
-        //let token = require('./createJWT.js');
-        const { userId, recipeName, time, difficulty, description, ingredients, equipment, instructions, image, rating, numOfRatings, sumOfRatings} = req.body;
-      //const { userId, recipeName, time, difficulty, description, ingredients, equipment, instructions, image, rating, jwtToken } = req.body;
-        /*
+        let token = require('./createJWT.js');
+        const { userId, recipeName, time, difficulty, description, ingredients, equipment, instructions, image, rating, numOfRatings, sumOfRatings, jwtToken } = req.body;
+        
         try
         {
           if( token.isExpired(jwtToken))
@@ -225,7 +216,6 @@ exports.setApp = function(app,client)
         {
           console.log(e.message);
         }
-      */
       
 
         const newRecipe = new Recipe({UserId: userId, RecipeName: recipeName, Time: time, Difficulty: difficulty, 
@@ -242,7 +232,6 @@ exports.setApp = function(app,client)
             error = e.toString();
         }
 
-      /*
           var refreshedToken = null;
           try
           {
@@ -252,11 +241,10 @@ exports.setApp = function(app,client)
           {
           console.log(e.message);
           }
-      */
 
-      //var ret = { error: error, jwtToken: refreshedToken };
-      var ret = { error: error };
-      res.status(200).json(ret);
+        var ret = { error: error, jwtToken: refreshedToken };
+        var ret = { error: error };
+        res.status(200).json(ret);
 
     });
 
