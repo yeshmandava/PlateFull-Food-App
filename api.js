@@ -423,73 +423,73 @@ exports.setApp = function(app,client)
     app.post('/api/editrecipe', async (req, res, next) =>
     {
 
-      //let token = require('./createJWT.js');
-      const { recipeId, recipeName, time, difficulty, description, ingredients, equipment, instructions, image, rating, numOfRatings, sumOfRatings} = req.body;
-      //const { userId, recipeName, time, difficulty, description, ingredients, equipment, instructions, image, rating, jwtToken } = req.body;
-        /*
-        try
+      let token = require('./createJWT.js');
+      const { recipeId, recipeName, time, difficulty, description, ingredients, equipment, instructions, image, rating, numOfRatings, sumOfRatings, jwtToken} = req.body;
+     
+        
+      try
+      {
+        if( token.isExpired(jwtToken))
         {
-          if( token.isExpired(jwtToken))
-          {
-            var r = {error:'The JWT is no longer valid', jwtToken: ''};
-            res.status(200).json(r);
-            return;
-          }
+          var r = {error:'The JWT is no longer valid', jwtToken: ''};
+          res.status(200).json(r);
+          return;
         }
-        catch(e)
-        {
-          console.log(e.message);
-        }
-      */
-      
+      }
+      catch(e)
+      {
+        console.log(e.message);
+      }
+    
+    
       //var _recipeId = recipeId.trim();
 
-        var error = '';
+      var error = '';
 
-        try 
-        {
-          
-          //console.log(mongoose.isValidObjectId(recipeId));
-          await Recipe.updateOne({_id: recipeId},{RecipeName:recipeName,Time:time,Difficulty:difficulty,
-            Description:description,Ingredients:ingredients, Equipment:equipment, Instructions:instructions, Image:image,
-            Rating:rating, NumOfRatings:numOfRatings, SumOfRatings:sumOfRatings});
-
-        }
-          catch (e) 
-        {
-            error += "Recipe:"+e.toString()+" ";
-        }
-
-        try 
-        {
-          
-          //console.log(mongoose.isValidObjectId(recipeId));
-          await SavedRecipe.updateOne({RecipeId: recipeId},{RecipeName:recipeName,Time:time,Difficulty:difficulty,
-            Description:description,Ingredients:ingredients, Equipment:equipment, Instructions:instructions, Image:image,
-            Rating:rating, NumOfRatings:numOfRatings, SumOfRatings:sumOfRatings});
-
-        }
-          catch (e) 
-        {
-            error += "SavedRecipe:"+e.toString();
-        }
-
+      try 
+      {
         
+        //console.log(mongoose.isValidObjectId(recipeId));
+        await Recipe.updateOne({_id: recipeId},{RecipeName:recipeName,Time:time,Difficulty:difficulty,
+          Description:description,Ingredients:ingredients, Equipment:equipment, Instructions:instructions, Image:image,
+          Rating:rating, NumOfRatings:numOfRatings, SumOfRatings:sumOfRatings});
 
-    /*
-        var refreshedToken = null;
-        try
-        {
-        refreshedToken = token.refresh(jwtToken);
-        }
-        catch(e)
-        {
-        console.log(e.message);
-        }
-    */
+      }
+        catch (e) 
+      {
+          error += "Recipe:"+e.toString()+" ";
+      }
 
-      //var ret = { error: error, jwtToken: refreshedToken };
-      var ret = { error: error };
+      try 
+      {
+        
+        //console.log(mongoose.isValidObjectId(recipeId));
+        await SavedRecipe.updateOne({RecipeId: recipeId},{RecipeName:recipeName,Time:time,Difficulty:difficulty,
+          Description:description,Ingredients:ingredients, Equipment:equipment, Instructions:instructions, Image:image,
+          Rating:rating, NumOfRatings:numOfRatings, SumOfRatings:sumOfRatings});
+
+      }
+        catch (e) 
+      {
+          error += "SavedRecipe:"+e.toString();
+      }
+
+      
+
+  
+      var refreshedToken = null;
+      try
+      {
+      refreshedToken = token.refresh(jwtToken);
+      }
+      catch(e)
+      {
+      console.log(e.message);
+      }
+  
+
+      var ret = { error: error, jwtToken: refreshedToken };
+      //var ret = { error: error };
       res.status(200).json(ret);
 
     });
@@ -499,51 +499,51 @@ exports.setApp = function(app,client)
     app.post('/api/deleterecipe', async (req, res, next) =>
     {
 
-        //let token = require('./createJWT.js');
-        const { recipeId } = req.body;
-      //const { userId, recipeName, time, difficulty, description, ingredients, equipment, instructions, image, rating, jwtToken } = req.body;
-        /*
-        try
+      let token = require('./createJWT.js');
+      const { recipeId, jwtToken } = req.body;
+    
+      
+      try
+      {
+        if( token.isExpired(jwtToken))
         {
-          if( token.isExpired(jwtToken))
-          {
-            var r = {error:'The JWT is no longer valid', jwtToken: ''};
-            res.status(200).json(r);
-            return;
-          }
+          var r = {error:'The JWT is no longer valid', jwtToken: ''};
+          res.status(200).json(r);
+          return;
         }
-        catch(e)
-        {
-          console.log(e.message);
-        }
-      */
+      }
+      catch(e)
+      {
+        console.log(e.message);
+      }
+      
       
 
-        var error = '';
-        try 
-        {
+      var error = '';
+      try 
+      {
 
-          await Recipe.deleteOne({_id: recipeId});
-        }
-          catch (e) 
-        {
-            error = e.toString();
-        }
+        await Recipe.deleteOne({_id: recipeId});
+      }
+        catch (e) 
+      {
+          error = e.toString();
+      }
 
-    /*
-        var refreshedToken = null;
-        try
-        {
-        refreshedToken = token.refresh(jwtToken);
-        }
-        catch(e)
-        {
-        console.log(e.message);
-        }
-    */
+  
+      var refreshedToken = null;
+      try
+      {
+      refreshedToken = token.refresh(jwtToken);
+      }
+      catch(e)
+      {
+      console.log(e.message);
+      }
+  
 
-      //var ret = { error: error, jwtToken: refreshedToken };
-      var ret = { error: error };
+      var ret = { error: error, jwtToken: refreshedToken };
+      //var ret = { error: error };
       res.status(200).json(ret);
 
     });
@@ -551,51 +551,51 @@ exports.setApp = function(app,client)
     app.post('/api/removesave', async (req, res, next) =>
     {
 
-        //let token = require('./createJWT.js');
-        const { userId, recipeId } = req.body;
-      //const { userId, recipeName, time, difficulty, description, ingredients, equipment, instructions, image, rating, jwtToken } = req.body;
-        /*
-        try
+      let token = require('./createJWT.js');
+      const { userId, recipeId, jwtToken } = req.body;
+      
+      
+      try
+      {
+        if( token.isExpired(jwtToken))
         {
-          if( token.isExpired(jwtToken))
-          {
-            var r = {error:'The JWT is no longer valid', jwtToken: ''};
-            res.status(200).json(r);
-            return;
-          }
+          var r = {error:'The JWT is no longer valid', jwtToken: ''};
+          res.status(200).json(r);
+          return;
         }
-        catch(e)
-        {
-          console.log(e.message);
-        }
-      */
-
-
-        var error = '';
-        try 
-        {
-
-          await SavedRecipe.deleteOne({UserId: userId, RecipeId: recipeId});
-        }
-          catch (e) 
-        {
-            error = e.toString();
-        }
-
-    /*
-        var refreshedToken = null;
-        try
-        {
-        refreshedToken = token.refresh(jwtToken);
-        }
-        catch(e)
-        {
+      }
+      catch(e)
+      {
         console.log(e.message);
-        }
-    */
+      }
+    
 
-      //var ret = { error: error, jwtToken: refreshedToken };
-      var ret = { error: error };
+
+      var error = '';
+      try 
+      {
+
+        await SavedRecipe.deleteOne({UserId: userId, RecipeId: recipeId});
+      }
+        catch (e) 
+      {
+          error = e.toString();
+      }
+
+    
+      var refreshedToken = null;
+      try
+      {
+      refreshedToken = token.refresh(jwtToken);
+      }
+      catch(e)
+      {
+      console.log(e.message);
+      }
+    
+
+      var ret = { error: error, jwtToken: refreshedToken };
+      //var ret = { error: error };
       res.status(200).json(ret);
 
     });
@@ -603,72 +603,72 @@ exports.setApp = function(app,client)
     app.post('/api/raterecipe', async (req, res, next) =>
     {
 
-      //let token = require('./createJWT.js');
-      const { recipeId, rating, numOfRatings, sumOfRatings, submitRating} = req.body;
+      let token = require('./createJWT.js');
+      const { recipeId, rating, numOfRatings, sumOfRatings, submitRating, jwtToken} = req.body;
 	  
       let sum = sumOfRatings+submitRating;
       let num = numOfRatings+1;
       let newRating = sum/num;
-      //const { userId, recipeName, time, difficulty, description, ingredients, equipment, instructions, image, rating, jwtToken } = req.body;
-        /*
-        try
+      
+        
+      try
+      {
+        if( token.isExpired(jwtToken))
         {
-          if( token.isExpired(jwtToken))
-          {
-            var r = {error:'The JWT is no longer valid', jwtToken: ''};
-            res.status(200).json(r);
-            return;
-          }
+          var r = {error:'The JWT is no longer valid', jwtToken: ''};
+          res.status(200).json(r);
+          return;
         }
-        catch(e)
-        {
-          console.log(e.message);
-        }
-      */
+      }
+      catch(e)
+      {
+        console.log(e.message);
+      }
+      
       
 
-        var error = '';
+      var error = '';
 
-        try 
-        {
-          
-          //console.log(mongoose.isValidObjectId(recipeId));
-          await Recipe.updateOne({_id: recipeId},{Rating:newRating, NumOfRatings:num, SumOfRatings:sum});
+      try 
+      {
+        
+        //console.log(mongoose.isValidObjectId(recipeId));
+        await Recipe.updateOne({_id: recipeId},{Rating:newRating, NumOfRatings:num, SumOfRatings:sum});
 
-        }
-          catch (e) 
-        {
-            error += "Recipe:"+e.toString()+" ";
-        }
+      }
+        catch (e) 
+      {
+          error += "Recipe:"+e.toString()+" ";
+      }
 
-        try 
-        {
-          
-          //console.log(mongoose.isValidObjectId(recipeId));
-          await SavedRecipe.updateOne({RecipeId: recipeId},{Rating:newRating, NumOfRatings:num, SumOfRatings:sum});
+      try 
+      {
+        
+        //console.log(mongoose.isValidObjectId(recipeId));
+        await SavedRecipe.updateOne({RecipeId: recipeId},{Rating:newRating, NumOfRatings:num, SumOfRatings:sum});
 
-        }
-          catch (e) 
-        {
-            error += "SavedRecipe:"+e.toString();
-        }
+      }
+        catch (e) 
+      {
+          error += "SavedRecipe:"+e.toString();
+      }
 
         
 
-    /*
-        var refreshedToken = null;
-        try
-        {
-        refreshedToken = token.refresh(jwtToken);
-        }
-        catch(e)
-        {
-        console.log(e.message);
-        }
-    */
+    
+      var refreshedToken = null;
+      try
+      {
+      refreshedToken = token.refresh(jwtToken);
+      }
+      catch(e)
+      {
+      console.log(e.message);
+      }
+  
 
-      //var ret = { error: error, jwtToken: refreshedToken };
-      var ret = { error: error };
+      var ret = { error: error, jwtToken: refreshedToken };
+      //var ret = { error: error };
       res.status(200).json(ret);
 
     });

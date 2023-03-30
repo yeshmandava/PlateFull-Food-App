@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 import { SaveCookie, ReadCookie } from "../components/Cookies";
 
 function Login() {
@@ -36,13 +37,22 @@ function Login() {
 				} else {
 					storage.storeToken(res);
 
-					var userId = res.id;
-					var firstName = res.fn;
-					var lastName = res.ln;
+					//var userId = res.id;
+					//var firstName = res.fn;
+					//var lastName = res.ln;
+					//var jwt = require("jsonwebtoken");
+				
+					var ud = jwt_decode(storage.retrieveToken(),{complete:true});
+					// const {ud, isExpired} = useJwt(storage.retrieveToken);
+				
+					var userId = ud.userId;
+					var firstName = ud.firstName;
+					var lastName = ud.lastName;
 
 					var user = { firstName: firstName, lastName: lastName, id: userId };
 					// SaveCookie(firstName, lastName, userId);
 					localStorage.setItem("user_data", JSON.stringify(user));
+					setMessage('');
 					window.location.href = "/cards";
 				}
 			})
