@@ -4,6 +4,7 @@
     --red-light: #F5936C;
     --red: #DC4E33;
     --gold:  #FEB346;
+    --shadow-gold: #b8812f;
     --brown-light: #CB6E2D;
     --brown-dark: #633729;
 }
@@ -22,6 +23,6 @@
     height:400px;
 
     background-color:var(--gold);
-    box-shadow: 5px 5px 5px 5px gray;
+    box-shadow: 12px 12px 5px var(--shadow-gold);
 
 }
