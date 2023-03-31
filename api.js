@@ -115,8 +115,6 @@ exports.setApp = function(app,client)
           error = error.toString();
         }
       }
-    
-    
       const ret = { error: error };
       res.status(200).json(ret);
     });
