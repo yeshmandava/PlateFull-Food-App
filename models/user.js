@@ -37,8 +37,11 @@ const UserSchema = new Schema({
     type: Boolean,
     default: false,
   },
+<<<<<<< HEAD
   resetToken: String,
   resetTokenExpiration: Date,
+=======
+>>>>>>> efd205e (Email Verification)
 });
 
 module.exports = User = mongoose.model("Users", UserSchema, "Users");
