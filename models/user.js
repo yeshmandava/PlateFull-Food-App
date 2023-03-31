@@ -30,7 +30,13 @@ const UserSchema = new Schema({
   Password: {
     type: String,
     required: true
-  }
+  },
+  verificationToken: String,
+  VerificationTokenExpires: Date,
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = User = mongoose.model("Users", UserSchema, "Users");
