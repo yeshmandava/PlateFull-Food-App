@@ -1,6 +1,8 @@
 require('express');
 require('mongodb');
 const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
+const uuid = require('uuid');
 const jwt = require('jsonwebtoken');
 require("dotenv").config();
 const mongoose = require('mongoose');
@@ -69,40 +71,81 @@ exports.setApp = function(app,client)
 
     });
 
-
-    app.post('/api/register', async (req, res, next) =>
-    { 
-      const {firstName, lastName, email, login, password} = req.body;
-      var error = '';
-      const results = await User.find({Login:login}); 
-
-      if( results.length > 0 )
-      {
+    app.post('/api/register', async (req, res, next) => {
+      const { firstName, lastName, email, login, password } = req.body;
+      let error = '';
+    
+      const results = await User.find({ Login: login });
+      if (results.length > 0) {
         error = 'Login Taken';
-      }
-      else
-      {      
-        try
-        {
-          const hashedPassword = await bcrypt.hash(password, 10); // hash the password with salt factor of 10
+      } else {
+        try {
+          const hashedPassword = await bcrypt.hash(password, 10);
+          const verificationToken = uuid.v4(); // generate a unique verification token
+    
           const newUser = new User({
             FirstName: firstName,
             LastName: lastName,
             Email: email,
             Login: login,
-            Password: hashedPassword // store the hashed password in the database
+            Password: hashedPassword,
+            verificationToken: verificationToken, // store the verification token in the database
           });
-          newUser.save();
-        }
-        catch(e)
-        {
-          error = e.toString();
+    
+          await newUser.save();
+    
+          // send email with verification link to the user
+          const transporter = nodemailer.createTransport({
+            host: 'smtp.office365.com',
+            port: 587,
+            auth: {
+              user: 'PlateFull111@outlook.com',
+              pass: 'Wsad@12345',
+            },
+            tls: {
+              ciphers: 'SSLv3',
+            },
+          });
+    
+          const verificationLink = `http://localhost:5000/verify?token=${verificationToken}`;
+          const mailOptions = {
+            from: 'PlateFull111@outlook.com',
+            to: email,
+            subject: 'PlateFull: Verify your account',
+            html: `Thanks you for creating an account with PlateFull! Click <a href="${verificationLink}">here</a> to verify your account.`,
+          };
+    
+          await transporter.sendMail(mailOptions);
+
+          return res.status(200).json({ message: 'Registration successful. Please check your email to verify your account.' });
+        } catch (error) {
+          console.error(error);
+          error = error.toString();
         }
       }
-
-      var ret = { error: error };
+      const ret = { error: error };
       res.status(200).json(ret);
     });
+
+app.get('/verify', async (req, res) => {
+  const { token } = req.query;
+  try {
+    // Find user by verification token
+    const user = await User.findOne({ verificationToken: token });
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid verification token' });
+    }
+    // Verify user and save to database
+    user.isVerified = true;
+    user.verificationToken = null;
+    await user.save();
+    // Send response indicating successful verification
+    return res.status(200).json({ message: 'Verification successful' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+}); 
 
     
     app.post('/api/login', async (req, res, next) => {
@@ -116,6 +159,8 @@ exports.setApp = function(app,client)
         const foundUser = await User.findOne({ Login: login });
         if (!foundUser) {
           error = 'User not found';
+        }else if (!foundUser.isVerified) {
+            error = 'User not verified';
         } else {
           const isMatch = await bcrypt.compare(password, foundUser.Password);
           if (!isMatch) {
