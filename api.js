@@ -421,7 +421,7 @@ app.post('/api/searchcards', async (req, res, next) =>
     {
 
       let token = require('./createJWT.js');
-      const { userId, recipeName, time, difficulty, description, ingredients, equipment, instructions, image, rating, numOfRatings, sumOfRatings, jwtToken } = req.body;
+      const { userId, recipeName, time, difficulty, description, ingredients, equipment, instructions, image, jwtToken } = req.body;
       
       try
       {
@@ -444,7 +444,7 @@ app.post('/api/searchcards', async (req, res, next) =>
       {
         const newRecipe = new Recipe({UserId: userId, RecipeName: recipeName, Time: time, Difficulty: difficulty, 
           Description: description, Ingredients: ingredients, Equipment: equipment, 
-          Instructions: instructions, Image: image, Rating: rating, NumOfRatings:numOfRatings, SumOfRatings:sumOfRatings});
+          Instructions: instructions, Image: image, Rating: 0, NumOfRatings: 0, SumOfRatings: 0});
 
         newRecipe.save();
       }
