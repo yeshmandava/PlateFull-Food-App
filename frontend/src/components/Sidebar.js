@@ -1,6 +1,6 @@
 import React from 'react'
 import "../stylesheets/Sidebar.css"
-
+import { Link } from 'react-router-dom';
 export default function Sidebar() {
   return (
     <div className="sidebar">
@@ -17,8 +17,11 @@ export default function Sidebar() {
             <span classname="sidebarListItemText">Home</span>
           </li>
           <li className="sidebarListItem">
-          <img className="sidebarIcon" src="https://cdn-icons-png.flaticon.com/512/481/481490.png" alt=""/> 
+          <Link to="/My-Cookbook">
+            <img className="sidebarIcon" src="https://cdn-icons-png.flaticon.com/512/481/481490.png" alt=""/> 
             <span classname="sidebarListItemText">My Cookbook</span>
+          </Link>
+
           </li>
           <li className="sidebarListItem">
           <img className="sidebarIcon" src="https://cdn-icons-png.flaticon.com/512/6662/6662930.png" alt=""/> 
