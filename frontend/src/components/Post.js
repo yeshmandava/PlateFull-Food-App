@@ -1,7 +1,7 @@
 import React from 'react'
 import "../stylesheets/Post.css"
 
-export default function post() {
+export default function Post() {
   return (
     <div className="post">
         <div className="postWrapper">

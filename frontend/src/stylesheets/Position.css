@@ -1,0 +1,17 @@
+.text-center
+{
+    text-align:center;
+}
+.text-start
+{
+    text-align:end;
+}
+.text-end
+{
+    text-align:end;
+}
+.flex-row{
+    display:flex;
+    flex-direction:row
+
+}

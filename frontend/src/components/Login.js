@@ -54,7 +54,7 @@ function Login() {
   };
 
   return (
-    Sdiv id="loginDiv" className="login-card">
+    <div id="loginDiv" className="login-card">
       <form onSubmit={doLogin}>
         <span id="inner-title">PLEASE LOG IN</span>
         <br />

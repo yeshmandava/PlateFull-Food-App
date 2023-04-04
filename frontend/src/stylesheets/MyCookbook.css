@@ -1,0 +1,35 @@
+:root{
+    --offwhite: #FFFCF5;
+    --cream: #FFF6E0;
+    --red-light: #f5936c;
+    --shadow-red-light: #bb5c36;
+    --red: #DC4E33;
+    --gold:  #FEB346;
+    --gold: #FEB346;
+    --brown-light: #CB6E2D;
+    --brown-dark: #633729;
+}
+
+.container
+{
+    width:80%;
+    margin:30px 0;
+    
+    text-align:center;
+}
+.carousel-wrapper{
+    display: inline-block;
+    width:60%;
+    text-align:center;
+}
+.carousel
+{
+    display:flex inline;
+    flex-direction:row;
+
+    text-align:center;
+
+    height:600px;
+    width:80%;
+    overflow-x:scroll;
+}
