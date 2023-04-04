@@ -18,8 +18,8 @@ exports.setApp = function(app,client)
 
     const SavedRecipe = require("./models/savedRecipe.js");
 
-    app.post('/api/addcard', async (req, res, next) => 
-    {     
+    app.post('/api/addcard', async (req, res, next) =>
+    {
     let token = require('./createJWT.js');
     const { userId, card, jwtToken } = req.body;
     
@@ -524,7 +524,6 @@ app.post('/api/searchcards', async (req, res, next) =>
 
     app.post('/api/addrecipe', async (req, res, next) =>
     {
-
       let token = require('./createJWT.js');
       const { userId, recipeName, time, difficulty, description, ingredients, equipment, instructions, image, rating, numOfRatings, sumOfRatings, jwtToken } = req.body;
       
@@ -541,7 +540,6 @@ app.post('/api/searchcards', async (req, res, next) =>
       {
         console.log(e.message);
       }
-    
 
       
       var error = '';
@@ -569,7 +567,6 @@ app.post('/api/searchcards', async (req, res, next) =>
         }
 
       var ret = { error: error, jwtToken: refreshedToken };
-      //var ret = { error: error };
       res.status(200).json(ret);
 
     });
@@ -622,7 +619,6 @@ app.post('/api/searchcards', async (req, res, next) =>
     
 
       var ret = { error: error, jwtToken: refreshedToken };
-      //var ret = { error: error };
       res.status(200).json(ret);
 
     }); 
@@ -631,8 +627,6 @@ app.post('/api/searchcards', async (req, res, next) =>
     app.post('/api/searchrecipes', async (req, res, next) => 
     {
       let  error = '';
-	  
-	  
 	  
       let token = require('./createJWT.js');
       const { userId, search, jwtToken} = req.body;
@@ -669,10 +663,6 @@ app.post('/api/searchcards', async (req, res, next) =>
       }
 		
       var ret = { results:results, error: error, jwtToken: refreshedToken };
-
-      //comment out
-	    //var ret = { results:results, error: error};
-      
       res.status(200).json(ret);
 
     });
@@ -717,9 +707,7 @@ app.post('/api/searchcards', async (req, res, next) =>
           console.log(e.message);
       }
 		
-      var ret = { results:results, error: error, jwtToken: refreshedToken };
-	    //var ret = { results:results, error: error};
-      
+      var ret = { results:results, error: error, jwtToken: refreshedToken };      
       res.status(200).json(ret);
 
     });
@@ -746,14 +734,12 @@ app.post('/api/searchcards', async (req, res, next) =>
       }
     
     
-      //var _recipeId = recipeId.trim();
 
       var error = '';
 
       try 
       {
         
-        //console.log(mongoose.isValidObjectId(recipeId));
         await Recipe.updateOne({_id: recipeId},{RecipeName:recipeName,Time:time,Difficulty:difficulty,
           Description:description,Ingredients:ingredients, Equipment:equipment, Instructions:instructions, Image:image,
           Rating:rating, NumOfRatings:numOfRatings, SumOfRatings:sumOfRatings});
@@ -767,7 +753,6 @@ app.post('/api/searchcards', async (req, res, next) =>
       try 
       {
         
-        //console.log(mongoose.isValidObjectId(recipeId));
         await SavedRecipe.updateOne({RecipeId: recipeId},{RecipeName:recipeName,Time:time,Difficulty:difficulty,
           Description:description,Ingredients:ingredients, Equipment:equipment, Instructions:instructions, Image:image,
           Rating:rating, NumOfRatings:numOfRatings, SumOfRatings:sumOfRatings});
@@ -793,7 +778,6 @@ app.post('/api/searchcards', async (req, res, next) =>
   
 
       var ret = { error: error, jwtToken: refreshedToken };
-      //var ret = { error: error };
       res.status(200).json(ret);
 
     });
@@ -847,7 +831,6 @@ app.post('/api/searchcards', async (req, res, next) =>
   
 
       var ret = { error: error, jwtToken: refreshedToken };
-      //var ret = { error: error };
       res.status(200).json(ret);
 
     });
@@ -899,7 +882,6 @@ app.post('/api/searchcards', async (req, res, next) =>
     
 
       var ret = { error: error, jwtToken: refreshedToken };
-      //var ret = { error: error };
       res.status(200).json(ret);
 
     });
@@ -936,7 +918,6 @@ app.post('/api/searchcards', async (req, res, next) =>
       try 
       {
         
-        //console.log(mongoose.isValidObjectId(recipeId));
         await Recipe.updateOne({_id: recipeId},{Rating:newRating, NumOfRatings:num, SumOfRatings:sum});
 
       }
@@ -948,7 +929,6 @@ app.post('/api/searchcards', async (req, res, next) =>
       try 
       {
         
-        //console.log(mongoose.isValidObjectId(recipeId));
         await SavedRecipe.updateOne({RecipeId: recipeId},{Rating:newRating, NumOfRatings:num, SumOfRatings:sum});
 
       }
@@ -972,7 +952,6 @@ app.post('/api/searchcards', async (req, res, next) =>
   
 
       var ret = { error: error, jwtToken: refreshedToken };
-      //var ret = { error: error };
       res.status(200).json(ret);
 
     });
