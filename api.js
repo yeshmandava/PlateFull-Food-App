@@ -20,10 +20,6 @@ exports.setApp = function(app,client)
 
     app.post('/api/addcard', async (req, res, next) =>
     {
-    // incoming: userId, color
-    // outgoing: error
-        
-    // const { userId, card } = req.body;
     let token = require('./createJWT.js');
     const { userId, card, jwtToken } = req.body;
     
@@ -40,14 +36,10 @@ exports.setApp = function(app,client)
     {
       console.log(e.message);
     }
-
-    //const newCard = { Card: card, UserId: userId };
     const newCard = new Card({ Card: card, UserId: userId });
     var error = '';
     try 
     {
-        // const db = client.db();
-        // const result = db.collection('Cards').insertOne(newCard);
         newCard.save();
     }
       catch (e) 
@@ -189,11 +181,164 @@ app.get('/verify', async (req, res) => {
       res.json({ jwtToken:token, user });
     });
 
-    app.post('/api/searchcards', async (req, res, next) => 
-    {
-      // incoming: userId, search
-      // outgoing: results[], error
+// Send forgot password email
+app.post('/api/forgotPassword', async (req, res) => {
+  const { email } = req.body;
 
+  try {
+    const user = await User.findOne({ Email: email });
+
+    if (!user) {
+      return res.status(400).json({ message: 'No user with that email address exists' });
+    }
+
+    const resetToken = uuid.v4();
+    user.resetToken = resetToken;
+    user.resetTokenExpiration = Date.now() + 36000000; // 1 hour
+
+    await user.save();
+
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.office365.com',
+      port: 587,
+      auth: {
+        user: 'PlateFull111@outlook.com',
+        pass: 'Wsad@12345',
+      },
+      tls: {
+        ciphers: 'SSLv3',
+      },
+    });
+
+    const resetLink = `http://localhost:5000/api/reset-password/${resetToken}`;
+    const mailOptions = {
+      from: 'PlateFull111@outlook.com',
+      to: email,
+      subject: 'PlateFull: Password Reset',
+      html: `You are receiving this email because you (or someone else) have requested to reset the password for your account.<br /><br />
+      Please click the following link, or paste it into your browser to reset your password:<br />
+      <a href="${resetLink}">${resetLink}</a><br /><br />
+      If you did not request this, please ignore this email and your password will remain unchanged.`,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.status(200).json({ message: 'Email sent with password reset instructions' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// Render reset password page
+app.get('/api/reset-password/:token', (req, res) => {
+  const { token } = req.params;
+  res.send(`
+    <html>
+      <head>
+        <title>Reset Password</title>
+        <link rel="stylesheet" type="text/css" href="/path/to/reset-password.css">
+      </head>
+      <body>
+        <h1>Reset Password</h1>
+        <form id="resetPasswordForm" data-token="${token}">
+          <label for="password">New Password</label>
+          <div style="display: flex;">
+            <input type="password" id="password" name="password" required style="flex-grow: 1;">
+            <label style="margin-left: 10px;">
+              <input type="checkbox" id="showPasswordCheckbox"> Show password
+            </label>
+          </div>
+          <button type="submit">Reset Password</button>
+          <div id="error"></div>
+        </form>
+        <div id="success" style="display:none">
+          <h2>Password has been reset!</h2>
+          <p>You can now <a href="/login">log in</a> with your new password.</p>
+        </div>
+        <script src="/path/to/reset-password.js"></script>
+        <script>
+          const resetPasswordForm = document.querySelector('#resetPasswordForm');
+          const passwordInput = document.querySelector('#password');
+          const showPasswordCheckbox = document.querySelector('#showPasswordCheckbox');
+
+          resetPasswordForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const password = passwordInput.value.trim();
+            const token = resetPasswordForm.dataset.token;
+
+            console.log(password);
+
+            if (!password) {
+              document.querySelector('#error').textContent = 'Password is required';
+              return;
+            }
+
+            try {
+              const response = await fetch(\`/api/reset-password/\${token}\`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ password: password })
+              });
+
+              if (response.ok) {
+                document.querySelector('#success').style.display = 'block';
+                resetPasswordForm.style.display = 'none';
+              } else {
+                const { message } = await response.json();
+                document.querySelector('#error').textContent = message;
+              }
+            } catch (error) {
+              console.error(error);
+              document.querySelector('#error').textContent = 'Internal server error';
+            }
+          });
+
+          showPasswordCheckbox.addEventListener('change', () => {
+            if (showPasswordCheckbox.checked) {
+              passwordInput.type = 'text';
+            } else {
+              passwordInput.type = 'password';
+            }
+          });
+        </script>
+      </body>
+    </html>
+  `);
+});
+
+// Reset password
+app.post('/api/reset-password/:token', async (req, res) => {
+  const { token } = req.params;
+  const { password } = req.body;
+
+  try {
+    const user = await User.findOne({ resetToken: token });
+
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid or expired token' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user.Password = hashedPassword;
+    user.resetToken = undefined;
+    user.resetTokenExpiration = undefined;
+
+    await user.save();
+
+    res.status(200).json({ message: 'Password has been reset' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+app.post('/api/searchcards', async (req, res, next) => 
+    {
       let  error = '';
       let token = require('./createJWT.js');
       const { userId, card, jwtToken } = req.body;
@@ -213,8 +358,6 @@ app.get('/verify', async (req, res) => {
       }
 
       var _search = search.trim();
-      //   const db = client.db();
-      //   const results = await db.collection('Cards').find({ "Card": { $regex: _search + '.*', $options: 'r' } }).toArray();
       const results = await Card.find({ "Card": { $regex: _search + '.*', $options: 'r' } });
     
       
@@ -244,7 +387,6 @@ app.get('/verify', async (req, res) => {
 
     app.post('/api/addrecipe', async (req, res, next) =>
     {
-
       let token = require('./createJWT.js');
       const { userId, recipeName, time, difficulty, description, ingredients, equipment, instructions, image, jwtToken } = req.body;
       
@@ -261,7 +403,6 @@ app.get('/verify', async (req, res) => {
       {
         console.log(e.message);
       }
-    
 
       
       var error = '';
@@ -289,7 +430,6 @@ app.get('/verify', async (req, res) => {
         }
 
       var ret = { error: error, jwtToken: refreshedToken };
-      //var ret = { error: error };
       res.status(200).json(ret);
 
     });
@@ -342,7 +482,6 @@ app.get('/verify', async (req, res) => {
     
 
       var ret = { error: error, jwtToken: refreshedToken };
-      //var ret = { error: error };
       res.status(200).json(ret);
 
     }); 
@@ -350,12 +489,7 @@ app.get('/verify', async (req, res) => {
 
     app.post('/api/searchrecipes', async (req, res, next) => 
     {
-      // incoming: userId, search
-      // outgoing: results[], error
-
       let  error = '';
-	  
-	  
 	  
       let token = require('./createJWT.js');
       const { userId, search, jwtToken} = req.body;
@@ -392,18 +526,12 @@ app.get('/verify', async (req, res) => {
       }
 		
       var ret = { results:results, error: error, jwtToken: refreshedToken };
-
-      //comment out
-	    //var ret = { results:results, error: error};
-      
       res.status(200).json(ret);
 
     });
 
     app.post('/api/searchsavedrecipes', async (req, res, next) => 
     {
-      // incoming: userId, search
-      // outgoing: results[], error
 
       let  error = '';
 	  
@@ -429,8 +557,6 @@ app.get('/verify', async (req, res) => {
 		
       var _search = search.trim();
 	    var _userId = userId.trim();
-      //   const db = client.db();
-      //   const results = await db.collection('Cards').find({ "Card": { $regex: _search + '.*', $options: 'r' } }).toArray();
       const results = await SavedRecipe.find({ "UserId":{ $regex: _userId + '.*'},"RecipeName": { $regex: _search + '.*'} });
 
       
@@ -444,9 +570,7 @@ app.get('/verify', async (req, res) => {
           console.log(e.message);
       }
 		
-      var ret = { results:results, error: error, jwtToken: refreshedToken };
-	    //var ret = { results:results, error: error};
-      
+      var ret = { results:results, error: error, jwtToken: refreshedToken };      
       res.status(200).json(ret);
 
     });
@@ -473,14 +597,12 @@ app.get('/verify', async (req, res) => {
       }
     
     
-      //var _recipeId = recipeId.trim();
 
       var error = '';
 
       try 
       {
         
-        //console.log(mongoose.isValidObjectId(recipeId));
         await Recipe.updateOne({_id: recipeId},{RecipeName:recipeName,Time:time,Difficulty:difficulty,
           Description:description,Ingredients:ingredients, Equipment:equipment, Instructions:instructions, Image:image,
           Rating:rating, NumOfRatings:numOfRatings, SumOfRatings:sumOfRatings});
@@ -494,7 +616,6 @@ app.get('/verify', async (req, res) => {
       try 
       {
         
-        //console.log(mongoose.isValidObjectId(recipeId));
         await SavedRecipe.updateOne({RecipeId: recipeId},{RecipeName:recipeName,Time:time,Difficulty:difficulty,
           Description:description,Ingredients:ingredients, Equipment:equipment, Instructions:instructions, Image:image,
           Rating:rating, NumOfRatings:numOfRatings, SumOfRatings:sumOfRatings});
@@ -520,7 +641,6 @@ app.get('/verify', async (req, res) => {
   
 
       var ret = { error: error, jwtToken: refreshedToken };
-      //var ret = { error: error };
       res.status(200).json(ret);
 
     });
@@ -574,7 +694,6 @@ app.get('/verify', async (req, res) => {
   
 
       var ret = { error: error, jwtToken: refreshedToken };
-      //var ret = { error: error };
       res.status(200).json(ret);
 
     });
@@ -626,7 +745,6 @@ app.get('/verify', async (req, res) => {
     
 
       var ret = { error: error, jwtToken: refreshedToken };
-      //var ret = { error: error };
       res.status(200).json(ret);
 
     });
@@ -663,7 +781,6 @@ app.get('/verify', async (req, res) => {
       try 
       {
         
-        //console.log(mongoose.isValidObjectId(recipeId));
         await Recipe.updateOne({_id: recipeId},{Rating:newRating, NumOfRatings:num, SumOfRatings:sum});
 
       }
@@ -675,7 +792,6 @@ app.get('/verify', async (req, res) => {
       try 
       {
         
-        //console.log(mongoose.isValidObjectId(recipeId));
         await SavedRecipe.updateOne({RecipeId: recipeId},{Rating:newRating, NumOfRatings:num, SumOfRatings:sum});
 
       }
@@ -699,7 +815,6 @@ app.get('/verify', async (req, res) => {
   
 
       var ret = { error: error, jwtToken: refreshedToken };
-      //var ret = { error: error };
       res.status(200).json(ret);
 
     });
