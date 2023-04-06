@@ -18,8 +18,8 @@ exports.setApp = function(app,client)
 
     const SavedRecipe = require("./models/savedRecipe.js");
 
-    app.post('/api/addcard', async (req, res, next) =>
-    {
+    app.post('/api/addcard', async (req, res, next) => 
+    {     
     let token = require('./createJWT.js');
     const { userId, card, jwtToken } = req.body;
     
@@ -67,57 +67,80 @@ exports.setApp = function(app,client)
       const { firstName, lastName, email, login, password } = req.body;
       let error = '';
     
-      const results = await User.find({ Login: login });
-      if (results.length > 0) {
-        error = 'Login Taken';
+      const emptyFields = [];
+      if (!firstName) {
+        emptyFields.push('First Name');
+      }
+      if (!lastName) {
+        emptyFields.push('Last Name');
+      }
+      if (!email) {
+        emptyFields.push('Email');
+      }
+      if (!login) {
+        emptyFields.push('Login');
+      }
+      if (!password) {
+        emptyFields.push('Password');
+      }
+      
+      if (emptyFields.length > 0) {
+        error = ` Missing: ${emptyFields.join(', ')}; Please input all fields.`;
       } else {
-        try {
-          const hashedPassword = await bcrypt.hash(password, 10);
-          const verificationToken = uuid.v4(); // generate a unique verification token
+        const results = await User.find({ Login: login });
+        if (results.length > 0) {
+          error = 'Login Taken';
+        } else {
+          try {
+            const hashedPassword = await bcrypt.hash(password, 10);
+            const verificationToken = uuid.v4(); // generate a unique verification token
     
-          const newUser = new User({
-            FirstName: firstName,
-            LastName: lastName,
-            Email: email,
-            Login: login,
-            Password: hashedPassword,
-            verificationToken: verificationToken, // store the verification token in the database
-          });
+            const newUser = new User({
+              FirstName: firstName,
+              LastName: lastName,
+              Email: email,
+              Login: login,
+              Password: hashedPassword,
+              verificationToken: verificationToken, // store the verification token in the database
+            });
     
-          await newUser.save();
+            await newUser.save();
     
-          // send email with verification link to the user
-          const transporter = nodemailer.createTransport({
-            host: 'smtp.office365.com',
-            port: 587,
-            auth: {
-              user: 'PlateFull111@outlook.com',
-              pass: 'Wsad@12345',
-            },
-            tls: {
-              ciphers: 'SSLv3',
-            },
-          });
+            // send email with verification link to the user
+            const transporter = nodemailer.createTransport({
+              host: 'smtp.office365.com',
+              port: 587,
+              auth: {
+                user: 'PlateFull111@outlook.com',
+                pass: 'Wsad@12345',
+              },
+              tls: {
+                ciphers: 'SSLv3',
+              },
+            });
     
-          const verificationLink = `http://localhost:5000/verify?token=${verificationToken}`;
-          const mailOptions = {
-            from: 'PlateFull111@outlook.com',
-            to: email,
-            subject: 'PlateFull: Verify your account',
-            html: `Thanks you for creating an account with PlateFull! Click <a href="${verificationLink}">here</a> to verify your account.`,
-          };
+            const verificationLink = `http://localhost:5000/verify?token=${verificationToken}`;
+            const mailOptions = {
+              from: 'PlateFull111@outlook.com',
+              to: email,
+              subject: 'PlateFull: Verify your account',
+              html: `Thanks you for creating an account with PlateFull! Click <a href="${verificationLink}">here</a> to verify your account.`,
+            };
     
-          await transporter.sendMail(mailOptions);
-
-          return res.status(200).json({ message: 'Registration successful. Please check your email to verify your account.' });
-        } catch (error) {
-          console.error(error);
-          error = error.toString();
+            await transporter.sendMail(mailOptions);
+    
+            return res.status(200).json({ message: 'Registration successful. Please check your email to verify your account.' });
+          } catch (error) {
+            console.error(error);
+            error = error.toString();
+          }
         }
       }
       const ret = { error: error };
       res.status(200).json(ret);
     });
+    
+    
 
 app.get('/verify', async (req, res) => {
   const { token } = req.query;
@@ -139,11 +162,9 @@ app.get('/verify', async (req, res) => {
   }
 }); 
 
-    
-    app.post('/api/login', async (req, res, next) => {
-
-      const { login, password } = req.body;
-      let error = '';
+app.post('/api/login', async (req, res, next) => {
+  const { login, password } = req.body;
+  let error = '';
     
       const emptyFields = [];
       if (!firstName) {
@@ -243,6 +264,53 @@ app.get('/verify', async (req, res) => {
         return res.status(500).json({ error: error });
       }
     });
+  // check for empty input fields
+  if (!login) {
+    error = 'Login field is empty';
+  } else if (!password) {
+    error = 'Password field is empty';
+  }
+
+  if (error) {
+    return res.status(400).json({ error });
+  }
+
+  let token = null;
+  let user = null;
+
+  try {
+    const foundUser = await User.findOne({ Login: login });
+    if (!foundUser) {
+      error = 'User not found';
+    } else if (!foundUser.isVerified) {
+      error = 'User not verified';
+    } else {
+      const isMatch = await bcrypt.compare(password, foundUser.Password);
+      if (!isMatch) {
+        error = 'Incorrect password';
+      } else {
+        // generate JWT token
+        token = jwt.sign({ userId: foundUser._id }, process.env.ACCESS_TOKEN_SECRET, {
+          expiresIn: '1h'
+        });
+        // extract user info
+        user = {
+          id: foundUser._id,
+          firstName: foundUser.FirstName,
+          lastName: foundUser.LastName
+        };
+      }
+    }
+  } catch (e) {
+    error = e.toString();
+  }
+
+  if (error) {
+    return res.status(401).json({ error });
+  }
+
+  res.json({ jwtToken:token, user });
+});
 
 app.get('/verify', async (req, res) => {
   const { token } = req.query;
