@@ -17,7 +17,7 @@ export default function Sidebar() {
             <span classname="sidebarListItemText">Home</span>
           </li>
           <li className="sidebarListItem">
-          <Link to="/My-Cookbook">
+          <Link to="/cookbook">
             <img className="sidebarIcon" src="https://cdn-icons-png.flaticon.com/512/481/481490.png" alt=""/> 
             <span classname="sidebarListItemText">My Cookbook</span>
           </Link>

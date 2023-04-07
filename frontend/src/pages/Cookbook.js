@@ -3,15 +3,16 @@ import Sidebar from '../components/Sidebar';
 import Banner from '../components/mc_components/Banner';
 import MyRecipes from '../components/mc_components/MyRecipes'
 import DiscoveredRecipes from '../components/mc_components/DiscoverdRecipes'
-function MyCookbook()
+
+export default function Cookbook()
 {
     return(
         <div>
+            <h2>hi</h2>
             <Banner />
             {/* <Sidebar /> */}
-            <MyRecipes />
+            {/* <MyRecipes /> */}
             <DiscoveredRecipes /> 
         </div>
     )
 }
-export default MyCookbook;

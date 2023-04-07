@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import '../../stylesheets/MyCookbook.css';
+import '../../stylesheets/Cookbook.css';
 import Post from '../Post';
-
 import axios from 'axios';
+
 export default function MyRecipes()
 {
     var bp = require('../Path.js');
@@ -47,7 +47,6 @@ export default function MyRecipes()
             var user = { firstName: firstName, lastName: lastName, id: userId };
             // SaveCookie(firstName, lastName, userId);
             localStorage.setItem("user_data", JSON.stringify(user));
-            window.location.href = "/Users";
             }
         })
         .catch(function (error) {
