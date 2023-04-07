@@ -10,13 +10,13 @@ function Login() {
   let loginPassword;
 
   const [message, setMessage] = useState("");
-
   let bp = require("./Path.js");
   let storage = require("../tokenStorage.js");
 
+
   //const response = await fetch(bp.buildPath('api/login'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
 
-  const doLogin = async (event) => {
+  const doLogin = async event => {
     event.preventDefault();
 
     var obj = { login: loginName.value, password: loginPassword.value };
@@ -38,21 +38,25 @@ function Login() {
           setMessage("User/Password combination incorrect");
         } else {
           storage.storeToken(res);
+			
+					var ud = jwt_decode(storage.retrieveToken(),{complete:true});
+				
+					var userId = ud.userId;
+					var firstName = ud.firstName;
+					var lastName = ud.lastName;
 
-          var userId = res.id;
-          var firstName = res.fn;
-          var lastName = res.ln;
-
-          var user = { firstName: firstName, lastName: lastName, id: userId };
-          // SaveCookie(firstName, lastName, userId);
-          localStorage.setItem("user_data", JSON.stringify(user));
-          window.location.href = "/Users";
-        }
-      })
-      .catch(function (error) {
+					var user = { firstName: firstName, lastName: lastName, id: userId };
+					// SaveCookie(firstName, lastName, userId);
+					localStorage.setItem("user_data", JSON.stringify(user));
+          window.location.href = "/home";
+				}
+			})
+			.catch(function (error) {
+        console.log('in error');
         console.log(error);
-      });
-  };
+
+			});
+	};
 
   return (
     <div id="loginDiv" className="login-card">
@@ -77,7 +81,7 @@ function Login() {
           type="submit"
           id="loginButton"
           className="buttons"
-          value="Do It"
+          value="Login"
           onClick={doLogin}
         />
       </form>
