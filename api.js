@@ -83,64 +83,63 @@ exports.setApp = function(app,client)
       if (!password) {
         emptyFields.push('Password');
       }
-      
+    
       if (emptyFields.length > 0) {
         error = ` Missing: ${emptyFields.join(', ')}; Please input all fields.`;
-      } else {
-        const results = await User.find({ Login: login });
-        if (results.length > 0) {
-          error = 'Login Taken';
-        } else {
-          try {
-            const hashedPassword = await bcrypt.hash(password, 10);
-            const verificationToken = uuid.v4(); // generate a unique verification token
-    
-            const newUser = new User({
-              FirstName: firstName,
-              LastName: lastName,
-              Email: email,
-              Login: login,
-              Password: hashedPassword,
-              verificationToken: verificationToken, // store the verification token in the database
-            });
-    
-            await newUser.save();
-    
-            // send email with verification link to the user
-            const transporter = nodemailer.createTransport({
-              host: 'smtp.office365.com',
-              port: 587,
-              auth: {
-                user: 'PlateFull111@outlook.com',
-                pass: 'Wsad@12345',
-              },
-              tls: {
-                ciphers: 'SSLv3',
-              },
-            });
-    
-            const verificationLink = `http://localhost:5000/verify?token=${verificationToken}`;
-            const mailOptions = {
-              from: 'PlateFull111@outlook.com',
-              to: email,
-              subject: 'PlateFull: Verify your account',
-              html: `Thanks you for creating an account with PlateFull! Click <a href="${verificationLink}">here</a> to verify your account.`,
-            };
-    
-            await transporter.sendMail(mailOptions);
-    
-            return res.status(200).json({ message: 'Registration successful. Please check your email to verify your account.' });
-          } catch (error) {
-            console.error(error);
-            error = error.toString();
-          }
-        }
+        return res.status(400).json({ error: error });
       }
-      const ret = { error: error };
-      res.status(200).json(ret);
+    
+      const results = await User.find({ Login: login });
+      if (results.length > 0) {
+        error = 'Login Taken';
+        return res.status(409).json({ error: error });
+      }
+    
+      try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const verificationToken = uuid.v4(); // generate a unique verification token
+    
+        const newUser = new User({
+          FirstName: firstName,
+          LastName: lastName,
+          Email: email,
+          Login: login,
+          Password: hashedPassword,
+          verificationToken: verificationToken, // store the verification token in the database
+        });
+    
+        await newUser.save();
+    
+        // send email with verification link to the user
+        const transporter = nodemailer.createTransport({
+          host: 'smtp.office365.com',
+          port: 587,
+          auth: {
+            user: 'PlateFull111@outlook.com',
+            pass: 'Wsad@12345',
+          },
+          tls: {
+            ciphers: 'SSLv3',
+          },
+        });
+    
+        const verificationLink = `http://localhost:5000/verify?token=${verificationToken}`;
+        const mailOptions = {
+          from: 'PlateFull111@outlook.com',
+          to: email,
+          subject: 'PlateFull: Verify your account',
+          html: `Thanks you for creating an account with PlateFull! Click <a href="${verificationLink}">here</a> to verify your account.`,
+        };
+    
+        await transporter.sendMail(mailOptions);
+    
+        return res.status(200).json({ message: 'Registration successful. Please check your email to verify your account.' });
+      } catch (error) {
+        console.error(error);
+        error = error.toString();
+        return res.status(500).json({ error: error });
+      }
     });
-    
-    
 
 app.get('/verify', async (req, res) => {
   const { token } = req.query;
