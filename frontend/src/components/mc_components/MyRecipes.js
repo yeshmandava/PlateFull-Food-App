@@ -5,8 +5,8 @@ import Post from '../Post';
 import axios from 'axios';
 export default function MyRecipes()
 {
-    var bp = require('./Path.js');
-    var storage = require('../tokenStorage.js');
+    var bp = require('../Path.js');
+    var storage = require('../../tokenStorage.js');
 
     const [searchResults,setResults] = useState('');
     const [postList,setCardList] = useState('');
@@ -36,7 +36,7 @@ export default function MyRecipes()
         .then(function (response) {
             var res = response.data;
             if (res.error) {
-            setMessage("User/Password combination incorrect");
+            // setMessage("User/Password combination incorrect");
             } else {
             storage.storeToken(res);
 
