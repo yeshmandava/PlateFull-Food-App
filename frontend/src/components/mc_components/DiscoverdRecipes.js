@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Post from '../Post';
 
-import '../../stylesheets/MyCookbook.css';
+import '../../stylesheets/Cookbook.css';
 
 export default function DiscoveredRecipes()
 {
