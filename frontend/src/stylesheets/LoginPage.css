@@ -74,7 +74,7 @@ body{
 }
 .side-panel[side='1']{
     height:6000px;
-    width:6000px;
+    width:100%;
     max-width:50%;
     max-height:100%;
     background:var(--brown-light);

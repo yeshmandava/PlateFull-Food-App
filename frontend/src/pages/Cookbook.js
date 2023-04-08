@@ -8,11 +8,10 @@ export default function Cookbook()
 {
     return(
         <div>
-            <h2>hi</h2>
             <Banner />
             {/* <Sidebar /> */}
-            {/* <MyRecipes /> */}
-            <DiscoveredRecipes /> 
+            <MyRecipes />
+            {/* <DiscoveredRecipes />  */}
         </div>
     )
 }

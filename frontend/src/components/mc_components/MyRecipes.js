@@ -9,7 +9,6 @@ export default function MyRecipes()
    var bp = require('../Path.js');
    var storage = require('../../tokenStorage.js');
    const [recipeList,setRecipes] = useState([]);
-   let
    var ud=JSON.parse(localStorage.getItem('user_data'));
    var userId=ud.id;
    var tok = storage.retrieveToken();

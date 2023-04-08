@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import "../stylesheets/Feed.css"
 import Share from "./Share"
-import Post from "./Post"
+import PostList from './PostList'
 
 import axios from "axios"
 
@@ -13,8 +13,10 @@ export default function Feed() {
   const searchRecipes = async (event) => 
   {
     var postName = "";
-    const obj = {userId: "", Search: "", jwtToken: storage.retrieveToken()}
+    const obj = {userId: "", search: "", jwtToken: storage.retrieveToken()}
     const js = JSON.stringify(obj)
+
+    console.log(storage.retrieveToken());
 
     var config = {
 			method: "post",
@@ -34,7 +36,8 @@ export default function Feed() {
         } 
         else
         {
-          setRecipes(res);
+          setRecipes(res.results);
+          console.log(res.results);
         }
       })
       .catch(function (error) 
@@ -48,10 +51,8 @@ export default function Feed() {
     <div className="feed">
       <div className="feedWrapper">
         <Share/>
-        {
-          recipeList.map(recipe => console.log(recipe))
-        }
         <button onClick={searchRecipes}>Search</button>
+        <PostList recipeList = {recipeList}/>
       </div>
     </div>
   )
