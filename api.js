@@ -443,30 +443,6 @@ app.post('/api/searchcards', async (req, res, next) =>
         const newRecipe = new Recipe({UserId: userId, RecipeName: recipeName, Time: time, Difficulty: difficulty, 
           Description: description, Ingredients: ingredients, Equipment: equipment, 
           Instructions: instructions, Image: image, Rating: 0, NumOfRatings: 0, SumOfRatings: 0});
-      let token = require('./createJWT.js');
-      const { userId, recipeName, time, difficulty, description, ingredients, equipment, instructions, image, jwtToken } = req.body;
-      
-      try
-      {
-        if( token.isExpired(jwtToken))
-        {
-          var r = {error:'The JWT is no longer valid', jwtToken: ''};
-          res.status(200).json(r);
-          return;
-        }
-      }
-      catch(e)
-      {
-        console.log(e.message);
-      }
-
-      
-      var error = '';
-      try 
-      {
-        const newRecipe = new Recipe({UserId: userId, RecipeName: recipeName, Time: time, Difficulty: difficulty, 
-          Description: description, Ingredients: ingredients, Equipment: equipment, 
-          Instructions: instructions, Image: image, Rating: 0, NumOfRatings: 0, SumOfRatings: 0});
 
         newRecipe.save();
       }

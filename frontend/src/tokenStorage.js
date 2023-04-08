@@ -2,7 +2,7 @@ exports.storeToken = function ( tok )
 {
     try
     {
-      localStorage.setItem('token_data', tok.accessToken);
+      localStorage.setItem('token_data', tok);
     }
     catch(e)
     {
@@ -23,4 +23,3 @@ exports.retrieveToken = function ()
     }
     return ud;
 }
-
