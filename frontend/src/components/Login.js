@@ -15,49 +15,44 @@ function Login() {
 
 
   //const response = await fetch(bp.buildPath('api/login'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+  const doLogin = async (event) => {
+		event.preventDefault();
 
-  const doLogin = async event => {
-    event.preventDefault();
+		var obj = { login: loginName.value, password: loginPassword.value };
+		var js = JSON.stringify(obj);
 
-    var obj = { login: loginName.value, password: loginPassword.value };
-    var js = JSON.stringify(obj);
+		var config = {
+			method: "post",
+			url: bp.buildPath("api/login"),
+			headers: {
+				"Content-Type": "application/json",
+			},
+			data: js,
+		};
 
-    var config = {
-      method: "post",
-      url: bp.buildPath("api/login"),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: js,
-    };
+		axios(config)
+			.then(function (response) {
+				var res = response.data;
+				if (res.error) {
+					setMessage("User/Password combination incorrect");
+				} else {
+					storage.storeToken(res);
 
-    axios(config)
-      .then(function (response) {
-        var res = response.data;
-        if (res.error) {
-          setMessage("User/Password combination incorrect");
-        } else {
-          storage.storeToken(res);
-			
-					var ud = jwt_decode(storage.retrieveToken(),{complete:true});
-				
-					var userId = ud.userId;
-					var firstName = ud.firstName;
-					var lastName = ud.lastName;
+					var userId = res.id;
+					var firstName = res.fn;
+					var lastName = res.ln;
 
 					var user = { firstName: firstName, lastName: lastName, id: userId };
 					// SaveCookie(firstName, lastName, userId);
 					localStorage.setItem("user_data", JSON.stringify(user));
-          window.location.href = "/home";
+					window.location.href = "/home";
 				}
 			})
 			.catch(function (error) {
-        console.log('in error');
-        console.log(error);
-
+				console.log(error);
 			});
 	};
-
+  
   return (
     <div id="loginDiv" className="login-card">
       <form onSubmit={doLogin}>
