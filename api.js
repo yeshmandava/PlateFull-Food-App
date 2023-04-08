@@ -178,6 +178,9 @@ app.post('/api/login', async (req, res, next) => {
 
   let token = null;
   let user = null;
+  let ret;
+  let fn;
+  let ln;
 
   try {
     const foundUser = await User.findOne({ Login: login });
@@ -189,12 +192,21 @@ app.post('/api/login', async (req, res, next) => {
       const isMatch = await bcrypt.compare(password, foundUser.Password);
       if (!isMatch) {
         error = 'Incorrect password';
-      } else {
+      } else 
+      {
         // generate JWT token
-        token = jwt.sign({ userId: foundUser._id }, process.env.ACCESS_TOKEN_SECRET, {
-          expiresIn: '1h'
-        });
+       // token = jwt.sign({ userId: foundUser._id }, process.env.ACCESS_TOKEN_SECRET, {
+       //   expiresIn: '1h'
+       // });
         // extract user info
+
+        id = foundUser._id;
+        fn = foundUser.FirstName;
+        ln = foundUser.LastName;
+
+        const token = require("./createJWT.js");
+        ret = token.createToken( fn, ln, id );
+
         user = {
           id: foundUser._id,
           firstName: foundUser.FirstName,
@@ -210,7 +222,8 @@ app.post('/api/login', async (req, res, next) => {
     return res.status(401).json({ error });
   }
 
-  res.json({ jwtToken:token, user });
+  res.status(200).json(ret);
+  //res.json({ jwtToken:token, user });
 });
 
 // Send forgot password email
