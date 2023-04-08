@@ -18,29 +18,31 @@ function Login() {
   const doLogin = async (event) => {
 		event.preventDefault();
 
-		var obj = { login: loginName.value, password: loginPassword.value };
-		var js = JSON.stringify(obj);
+    var obj = { login: loginName.value, password: loginPassword.value };
+    var js = JSON.stringify(obj);
 
-		var config = {
-			method: "post",
-			url: bp.buildPath("api/login"),
-			headers: {
-				"Content-Type": "application/json",
-			},
-			data: js,
-		};
+    var config = {
+      method: "post",
+      url: bp.buildPath("api/login"),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: js,
+    };
 
-		axios(config)
-			.then(function (response) {
-				var res = response.data;
-				if (res.error) {
-					setMessage("User/Password combination incorrect");
-				} else {
-					storage.storeToken(res);
-
-					var userId = res.id;
-					var firstName = res.fn;
-					var lastName = res.ln;
+    axios(config)
+      .then(function (response) {
+        var res = response.data;
+        if (res.error) {
+          setMessage("User/Password combination incorrect");
+        } else {
+          storage.storeToken(res);
+			
+					var ud = jwt_decode(storage.retrieveToken(),{complete:true});
+				
+					var userId = ud.userId;
+					var firstName = ud.firstName;
+					var lastName = ud.lastName;
 
 					var user = { firstName: firstName, lastName: lastName, id: userId };
 					// SaveCookie(firstName, lastName, userId);
@@ -49,7 +51,9 @@ function Login() {
 				}
 			})
 			.catch(function (error) {
-				console.log(error);
+        console.log('in error');
+        console.log(error);
+
 			});
 	};
   
