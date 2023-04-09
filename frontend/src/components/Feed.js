@@ -36,8 +36,10 @@ export default function Feed() {
         } 
         else
         {
-          setRecipes(res.results);
-          console.log(res.results);
+            storage.storeToken(res.jwtToken);
+
+            setRecipes(res.results);
+            console.log(res.results);
         }
       })
       .catch(function (error) 

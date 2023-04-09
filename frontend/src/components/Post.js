@@ -5,9 +5,8 @@ export default function Post({recipe}) {
    let bp = require("./Path.js");
    let storage = require("../tokenStorage.js");   
 
-   const [saveStatus, setStatus] = useState("Save Recipe")
-   const saveRecipe = async (event) =>
-   {
+   const [saveStatus, setStatus] = useState("Save Status")
+   const saveRecipe = async (event) =>{
         /*
       Endpoints
       "userId": "hndkdkn3939ndfd", 
@@ -28,6 +27,8 @@ export default function Post({recipe}) {
       */
 
       // data values stored in localStorage
+      event.preventDefault();
+      console.log('in save function')
       let ud = JSON.parse(localStorage.getItem('user_data'))
       let userId = ud.id
       let recipeId = recipe.RecipeId
@@ -53,37 +54,33 @@ export default function Post({recipe}) {
       let config = 
       {
          method: "post",
-         url: bp.buildPath("saverecipe"),
+         url: bp.buildPath("api/saverecipe"),
          headers: {
          "Content-Type": "application/json",
          },
          data: js,  
       }
       axios(config)
-      .then(function (response)
-      {
-         let res = response.data
-         if (res.error)
+         .then(function (response)
          {
-            console.log('failed to save recipe')
-            storage.storeToken(res.jwtToken);
-         }
-         else
+            let res = response.data
+            if (res.error)
+            {
+               console.log('failed to save recipe')
+            }
+            else
+            {
+               console.log('yay recipe saved')
+               storage.storeToken(res.jwtToken);
+            }
+         })
+         .catch(function (error)
          {
-            console.log('yay recipe saved')
-         }
-      })
-      .catch(function (error)
-      {
-         console.log(error)
-      })
-
-      setStatus('saved');
-
-    
-
+            console.log(error)
+         })
 
    }
+
    return (
     <div className="post">
         <div className="postWrapper">
@@ -109,7 +106,7 @@ export default function Post({recipe}) {
               <div className="postServes">Serves:</div> 
             </div>
             <div className="bottomRight">
-              <button className="postSaveButton" onclick={saveRecipe}>{saveStatus}</button>
+              <button className="postSaveButton" onclick={saveRecipe()}>Save Recipe</button>
             </div>
           </div>
         </div>

@@ -8,46 +8,48 @@ export default function MyRecipes()
 {
    var bp = require('../Path.js');
    var storage = require('../../tokenStorage.js');
-   const [recipeList,setRecipes] = useState([]);
-   var ud=JSON.parse(localStorage.getItem('user_data'));
+   const [myRecipes, setMyRecipes] = useState([]);
+   var ud = JSON.parse(localStorage.getItem('user_data'));
+   console.log(ud)
    var userId=ud.id;
-   var tok = storage.retrieveToken();
+   var jwtToken = storage.retrieveToken();
 
-    const getMyRecipes = async event =>  {
-        event.preventDefault();
-
-        // fix these vlues
-        var obj = { userId:userId, search:'',jwtToken: tok};
+    const getMyRecipes = async (event) =>  {
+        var obj = {userId:userId, search:'',jwtToken: jwtToken};
+        console.log(obj)
+        console.log(localStorage.getItem('user_data'))
         var js = JSON.stringify(obj);
 
         var config = 
          {
             method: "post",
-            url: bp.buildPath("api/searchsavedrecipes"),
+            url: bp.buildPath("api/searchrecipes"),
             headers: {
             "Content-Type": "application/json",
             },
             data: js,
          };
 
-        axios(config)
-        .then(function (response) 
-         {
-            var res = response.data;
-            if (res.error) {
-            // setMessage("User/Password combination incorrect");
-            } else {
-            storage.storeToken(res.jwtToken);
-            console.log(res.results);
-            setRecipes(res.results);
-            }
-         })
-        .catch(function (error)
-         {
-            console.log(error);
-         });
+      //   axios(config)
+      //   .then(function (response) 
+      //    {
+      //       var res = response.data;
+      //       if (res.error) {
+      //          console.log('search failed')
+      //       } 
+      //       else 
+      //       {
+      //          storage.storeToken(res.jwtToken);
+      //          console.log(res.results);
+      //          setMyRecipes(res.results);
+      //       }
+      //    })
+      //   .catch(function (error)
+      //    {
+      //       console.log('in error')
+      //       console.log(error);
+      //    });
     }
-    
     getMyRecipes();
     return(
         <div className="container">
@@ -56,7 +58,7 @@ export default function MyRecipes()
             </button>
             <div className="carousel-wrapper">
                 <div className="carousel">
-                    <PostList recipeList = {recipeList}/>
+                    <PostList recipeList = {myRecipes}/>
                 </div>
             </div>
             <button id="next-btn-my-recipe" className="button">

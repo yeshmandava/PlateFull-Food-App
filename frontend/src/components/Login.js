@@ -33,24 +33,22 @@ function Login() {
 		axios(config)
 			.then(function (response) {
 				var res = response.data;
+            console.log(res)
 				if (res.error) {
 					setMessage("User/Password combination incorrect");
 				} else {
 					storage.storeToken(res.jwtToken);
 
-					var userId = res.id;
-					var firstName = res.fn;
-					var lastName = res.ln;
+					var userId = res.user.id;
+					var firstName = res.user.fn;
+					var lastName = res.user.ln;
 
 					var user = { firstName: firstName, lastName: lastName, id: userId };
 					// SaveCookie(firstName, lastName, userId);
 					localStorage.setItem("user_data", JSON.stringify(user));
-					window.location.href = "/home";
-          console.log(res.jwtToken);
-          console.log(localStorage.getItem('token_data'))
-
-
-
+					// window.location.href = "/home";
+               console.log(res.jwtToken);
+               console.log(localStorage.getItem('token_data'))
 				}
 			})
 			.catch(function (error) {
