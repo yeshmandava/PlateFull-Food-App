@@ -3,7 +3,7 @@ import '../../stylesheets/Cookbook.css';
 import axios from 'axios';
 import MCPostList from './MCPostList'
 
-export default function MyRecipes()
+export default function MyRecipes(event)
 {
    var bp = require('../Path.js');
    var storage = require('../../tokenStorage.js');
@@ -14,8 +14,9 @@ export default function MyRecipes()
    
    console.log(localStorage.getItem('token_data'))
    // sends a fetch request to pull up recipes made by user
-   const getMyRecipes = async (event) =>
+   function getMyRecipes()
    {
+
       console.log(storage.retrieveToken())
       // preparing fetch payload
       var ud = JSON.parse(localStorage.getItem('user_data'));
@@ -46,7 +47,7 @@ export default function MyRecipes()
          else 
          {
             storage.storeToken(res.jwtToken);
-            setMyRecipes(res.results);
+            return res.results;
          }
       })
       .catch(function (error)
@@ -55,20 +56,29 @@ export default function MyRecipes()
          console.log(error);
       });
    }
-    getMyRecipes();
-    return(
-        <div className="container">
-            <button id="back-btn-my-recipe" className="button">
-                Insert back arrow
-            </button>
-            <div className="carousel-wrapper">
-                <div className="carousel">
-                    <MCPostList recipeList = {myRecipes}/>
-                </div>
-            </div>
-            <button id="next-btn-my-recipe" className="button">
-                Insert next arrow
-            </button>
-        </div>
-    )
+   
+   function renderFeed()
+   {
+      let ret = getMyRecipes()
+      setMyRecipes(ret);
+      console.log(myRecipes) 
+   }
+
+   renderFeed()
+   return(
+      <div className="container">
+         <button id="back-btn-my-recipe" className="button">
+               Insert back arrow
+         </button>
+         <div className="carousel-wrapper">
+               <div className="carousel">
+                  
+                  <MCPostList recipeList = {myRecipes}/>
+               </div>
+         </div>
+         <button id="next-btn-my-recipe" className="button">
+               Insert next arrow
+         </button>
+      </div>
+   )
 }

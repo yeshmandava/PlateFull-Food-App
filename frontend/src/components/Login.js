@@ -37,7 +37,7 @@ function Login() {
 				if (res.error) {
 					setMessage("User/Password combination incorrect");
 				} else {
-					storage.storeToken(res.jwtToken);
+					localStorage.setItem('token_data', res.jwtToken);
 
                // capturing user data from fetch response
 					var userId = res.user.id;
@@ -51,7 +51,7 @@ function Login() {
                console.log(storage.retrieveToken())
 
                // window change
-					window.location.href = "/home";
+					// window.location.href = "/home";
                
                //show jwt to test
                console.log(localStorage.getItem('token_data'))

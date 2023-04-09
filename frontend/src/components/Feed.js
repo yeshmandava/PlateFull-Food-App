@@ -13,7 +13,7 @@ export default function Feed() {
   const searchRecipes = async (event) => 
   {
     var postName = "";
-    const obj = {userId: "", search: "", jwtToken: storage.retrieveToken()}
+    const obj = {userId: "", search: "", jwtToken: localStorage.getItem('token_data')}
     const js = JSON.stringify(obj)
 
     console.log(storage.retrieveToken());
@@ -37,7 +37,8 @@ export default function Feed() {
         else
         {
             console.log(res.jwtToken)
-            storage.storeToken(res.jwtToken)
+            localStorage.setItem('token_data', res.jwtToken.accessToken)
+            console.log(localStorage.getItem('token_data'))
             console.log(storage.retrieveToken())
 
             setRecipes(res.results);

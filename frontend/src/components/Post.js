@@ -27,12 +27,11 @@ export default function Post({recipe}) {
       */
 
       // data values stored in localStorage
-      event.preventDefault();
       console.log('in save function')
       let ud = JSON.parse(localStorage.getItem('user_data'))
       let userId = ud.id
-      let recipeId = recipe.RecipeId
-      let recipeName = recipe.RecipeId
+      let RecipeId = recipe.RecipeId
+      let recipeName = recipe.RecipeName
       let time = recipe.Time
       let difficulty = recipe.Difficulty
       let ingredients = recipe.Ingredients
@@ -44,7 +43,7 @@ export default function Post({recipe}) {
       let sumOfRatings = recipe.SumOfRatings
       let jwtToken = storage.retrieveToken()
 
-      let obj = {userId:userId, recipeId:recipeId, recipeName:recipeName, time:time, 
+      let obj = {userId:userId, RecipeId:RecipeId, recipeName:recipeName, time:time, 
                  difficulty:difficulty, ingredients:ingredients, equipment:equipment, 
                  instructions:instructions, image:image, rating:rating, numOfRatings:numOfRatings,
                  sumOfRatings:sumOfRatings, jwtToken:jwtToken};
@@ -106,7 +105,7 @@ export default function Post({recipe}) {
               <div className="postServes">Serves:</div> 
             </div>
             <div className="bottomRight">
-              <button className="postSaveButton" onclick={saveRecipe()}>Save Recipe</button>
+              <button className="postSaveButton" >Save Recipe</button>
             </div>
           </div>
         </div>
