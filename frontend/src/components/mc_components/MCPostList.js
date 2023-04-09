@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import MCPost from './Post'
+import MCPost from './MCPost'
 export default function PostList({recipeList})
 {
    return(

@@ -39,18 +39,25 @@ function Login() {
 				} else {
 					storage.storeToken(res.jwtToken);
 
+               // capturing user data from fetch response
 					var userId = res.user.id;
-					var firstName = res.user.fn;
-					var lastName = res.user.ln;
+					var firstName = res.user.firstName;
+					var lastName = res.user.lastName;
 
-					var user = { firstName: firstName, lastName: lastName, id: userId };
-					// SaveCookie(firstName, lastName, userId);
+               // saving user data onto localStorage; in place of cookies
+					var user = {firstName:firstName, lastName:lastName, id:userId};
 					localStorage.setItem("user_data", JSON.stringify(user));
-					// window.location.href = "/home";
-               console.log(res.jwtToken);
+               console.log(localStorage.getItem('user_data'))
+               console.log(storage.retrieveToken())
+
+               // window change
+					window.location.href = "/home";
+               
+               //show jwt to test
                console.log(localStorage.getItem('token_data'))
 				}
 			})
+         // error catching
 			.catch(function (error) {
 				console.log(error);
 			});

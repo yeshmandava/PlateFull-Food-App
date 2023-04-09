@@ -20,13 +20,13 @@ const LoginPage = () =>
           {showLogin && <Login />}
           {showRegister && <Register />} 
           <div className="button-box">
-            <button id="login-button" class="btn" role="button" onClick={() => 
+            <button id="login-button" className="btn" role="button" onClick={() => 
               {
                 toggleLogin(true);
                 toggleRegister(false);
                 changeSide(0);
               }}>Login</button>
-              <button id="register-button" class="btn" role="button" onClick={() => 
+              <button id="register-button" className="btn" role="button" onClick={() => 
               {
                 toggleRegister(true);
                 toggleLogin(false);

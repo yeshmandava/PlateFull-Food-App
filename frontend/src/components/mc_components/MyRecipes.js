@@ -1,55 +1,60 @@
 import React, {useState} from 'react';
 import '../../stylesheets/Cookbook.css';
-import Post from '../Post';
 import axios from 'axios';
-import PostList from '../PostList'
+import MCPostList from './MCPostList'
 
 export default function MyRecipes()
 {
    var bp = require('../Path.js');
    var storage = require('../../tokenStorage.js');
+
+   // states
    const [myRecipes, setMyRecipes] = useState([]);
-   var ud = JSON.parse(localStorage.getItem('user_data'));
-   console.log(ud)
-   var userId=ud.id;
-   var jwtToken = storage.retrieveToken();
+   
+   
+   console.log(localStorage.getItem('token_data'))
+   // sends a fetch request to pull up recipes made by user
+   const getMyRecipes = async (event) =>
+   {
+      console.log(storage.retrieveToken())
+      // preparing fetch payload
+      var ud = JSON.parse(localStorage.getItem('user_data'));
+      var userId=ud.id;
+      var jwtToken = storage.retrieveToken();
 
-    const getMyRecipes = async (event) =>  {
-        var obj = {userId:userId, search:'',jwtToken: jwtToken};
-        console.log(obj)
-        console.log(localStorage.getItem('user_data'))
-        var js = JSON.stringify(obj);
+      // creating fetch payload
+      var obj = {userId:userId, search:'',jwtToken:jwtToken};
+      console.log(obj)
+      var js = JSON.stringify(obj)
+      var config = 
+      {
+         method: "post",
+         url: bp.buildPath("api/searchrecipes"),
+         headers: {
+         "Content-Type": "application/json",
+         },
+         data: js,
+      };
 
-        var config = 
+      axios(config)
+      .then(function (response) 
+      {
+         var res = response.data;
+         if (res.error) {
+            console.log('search failed')
+         } 
+         else 
          {
-            method: "post",
-            url: bp.buildPath("api/searchrecipes"),
-            headers: {
-            "Content-Type": "application/json",
-            },
-            data: js,
-         };
-
-      //   axios(config)
-      //   .then(function (response) 
-      //    {
-      //       var res = response.data;
-      //       if (res.error) {
-      //          console.log('search failed')
-      //       } 
-      //       else 
-      //       {
-      //          storage.storeToken(res.jwtToken);
-      //          console.log(res.results);
-      //          setMyRecipes(res.results);
-      //       }
-      //    })
-      //   .catch(function (error)
-      //    {
-      //       console.log('in error')
-      //       console.log(error);
-      //    });
-    }
+            storage.storeToken(res.jwtToken);
+            setMyRecipes(res.results);
+         }
+      })
+      .catch(function (error)
+      {
+         console.log('in error')
+         console.log(error);
+      });
+   }
     getMyRecipes();
     return(
         <div className="container">
@@ -58,7 +63,7 @@ export default function MyRecipes()
             </button>
             <div className="carousel-wrapper">
                 <div className="carousel">
-                    <PostList recipeList = {myRecipes}/>
+                    <MCPostList recipeList = {myRecipes}/>
                 </div>
             </div>
             <button id="next-btn-my-recipe" className="button">

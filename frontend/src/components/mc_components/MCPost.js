@@ -1,10 +1,7 @@
 import React, {useState} from 'react'
-import "../stylesheets/Post.css"
 import axios from 'axios'
 export default function Post({recipe}) {
-   let bp = require("./Path.js");
-   let storage = require("../tokenStorage.js");   
-
+   let bp = require("../Path.js");
    const [saveStatus, setStatus] = useState("Save Status")
 
    return (
@@ -32,7 +29,7 @@ export default function Post({recipe}) {
               <div className="postServes">Serves:</div> 
             </div>
             <div className="bottomRight">
-              <button className="postSaveButton" onclick={saveRecipe()}>Save Recipe</button>
+              <button className="postSaveButton">Save Recipe</button>
             </div>
           </div>
         </div>

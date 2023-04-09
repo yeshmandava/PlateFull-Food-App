@@ -36,7 +36,9 @@ export default function Feed() {
         } 
         else
         {
-            storage.storeToken(res.jwtToken);
+            console.log(res.jwtToken)
+            storage.storeToken(res.jwtToken)
+            console.log(storage.retrieveToken())
 
             setRecipes(res.results);
             console.log(res.results);
