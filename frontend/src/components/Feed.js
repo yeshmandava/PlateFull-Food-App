@@ -58,7 +58,6 @@ export default function Feed() {
    useEffect(() => {searchRecipes()}, [])
    useEffect(() => 
    {
-      console.log(searchQuery)
       searchRecipes()
    } , [searchQuery])
    const handleSearch = (event) =>

@@ -5,54 +5,62 @@ import '../stylesheets/Register.css'
 
 export default function Register()
 {
-   var bp = require('./Path.js');
-
-   var firstName = 'placeholder';
-   var lastName = 'placeholder';
-   var email = 'placeholder';
-   var login = 'placeholder';
-   var password = 'placeholder';
+   // textbox inputs
+   let firstName ;
+   let lastName;
+   let email;
+   let login;
+   let password;
 
    const [message, setMessage] = useState('');
-   
-   // function that registers new user
+   let bp = require("./Path.js");
+   let storage = require("../tokenStorage.js");
+
+   // sends api fetch request to register a new user
    const doRegister = async event =>
    {
       event.preventDefault();
 
-      var obj = {firstName:firstName.value,lastName:lastName.value,email:email.value,login:login.value,password:password.value}
-      var js = JSON.stringify(obj);
-
-
       // defining the data to be input to the register api
-      try
-      {
-         const response = await fetch(
-            bp.buildPath('api/register'), 
+      let obj = {
+         firstName:firstName.value, 
+         lastName:lastName.value, 
+         email:email.value, 
+         login:login.value, 
+         password:password.value
+      }
+
+      let js = JSON.stringify(obj);
+
+      // sets up fetch configuration for api request
+      let config = {
+         method: "post",
+         url: bp.buildPath("api/register"),
+         headers: {
+            "Content-Type": "application/json",
+         },
+         data: js,
+      };
+
+      axios(config)
+         .then(function (response){
+            let res = response.data
+            console.log(res)
+            if (res.error)
             {
-               method:'POST',
-               body:js,
-               headers:
-               {'Content-Type': 'application/json'}
+               setMessage( "Register API Error:" + res.error);
             }
-         );
+            else
+            {
+               console.log('New User Registered')
+               setMessage('Registered Successfully. Now Please Verify Your Account In Your Email');
 
-         var txt = await response.text();
-         var res = JSON.parse(txt);
-
-         if (res.error.length > 0)
-         {
-            setMessage( "Register API Error:" + res.error);
-         }
-         else
-         {
-            setMessage('New User Registered');
             }
-         }
-         catch(e)
+         })
+         .catch(function(error)
          {
-            setMessage(e.toString());
-         }
+            console.log(error);
+         })
 
       };
 

@@ -6,60 +6,59 @@ import { SaveCookie, ReadCookie } from "../components/Cookies";
 import '../stylesheets/Login.css'
 
 function Login() {
-  let loginName;
-  let loginPassword;
+   let loginName;
+   let loginPassword;
 
-  const [message, setMessage] = useState("");
-  let bp = require("./Path.js");
-  let storage = require("../tokenStorage.js");
+   const [message, setMessage] = useState("");
+   let bp = require("./Path.js");
+   let storage = require("../tokenStorage.js");
 
+   // sends api fetch request to login user
+   const doLogin = async (event) => {
+      event.preventDefault();
 
-  //const response = await fetch(bp.buildPath('api/login'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
-  const doLogin = async (event) => {
-		event.preventDefault();
+      let obj = { login: loginName.value, password: loginPassword.value };
+      let js = JSON.stringify(obj);
 
-		var obj = { login: loginName.value, password: loginPassword.value };
-		var js = JSON.stringify(obj);
+      let config = {
+         method: "post",
+         url: bp.buildPath("api/login"),
+         headers: {
+            "Content-Type": "application/json",
+         },
+         data: js,
+      };
 
-		var config = {
-			method: "post",
-			url: bp.buildPath("api/login"),
-			headers: {
-				"Content-Type": "application/json",
-			},
-			data: js,
-		};
-
-		axios(config)
-			.then(function (response) {
-				var res = response.data;
+      axios(config)
+         .then(function (response) {
+            let res = response.data;
             console.log(res)
-				if (res.error) {
-					setMessage("User/Password combination incorrect");
-				} else {
-					storage.storeToken(res);
+            if (res.error) {
+               setMessage("User/Password combination incorrect");
+            } else {
+               storage.storeToken(res);
 
                // capturing user data from fetch response
-					var userId = res.id;
-					var firstName = res.fn;
-					var lastName = res.ln;
+               let userId = res.id;
+               let firstName = res.fn;
+               let lastName = res.ln;
 
                // saving user data onto localStorage; in place of cookies
-					var user = {firstName:firstName, lastName:lastName, id:userId};
-					localStorage.setItem("user_data", JSON.stringify(user));
+               let user = {firstName:firstName, lastName:lastName, id:userId};
+               localStorage.setItem("user_data", JSON.stringify(user));
                console.log(localStorage.getItem('user_data'))
 
                // window change
-					// window.location.href = "/home";
+               window.location.href = "/home";
                
                //show jwt to test
-				}
-			})
+            }
+         })
          // error catching
-			.catch(function (error) {
-				console.log(error);
-			});
-	};
+         .catch(function (error) {
+            console.log(error);
+         });
+   };
   
   return (
     <div id="loginDiv" className="login-card">

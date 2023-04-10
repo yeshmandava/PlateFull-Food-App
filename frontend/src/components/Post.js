@@ -4,8 +4,9 @@ import axios from 'axios'
 export default function Post({recipe}) {
    let bp = require("./Path.js");
    let storage = require("../tokenStorage.js");   
+   // console.log(recipe)
 
-   const [saveStatus, setStatus] = useState("Save Status")
+   const [saveStatus, setStatus] = useState('Save Recipe')
    const saveRecipe = async (event) =>{
         /*
       Endpoints
@@ -26,11 +27,11 @@ export default function Post({recipe}) {
 
       */
 
+      console.log(recipe);
       // data values stored in localStorage
-      console.log('in save function')
       let ud = JSON.parse(localStorage.getItem('user_data'))
       let userId = ud.id
-      let RecipeId = recipe.RecipeId
+      let recipeId = recipe._id
       let recipeName = recipe.RecipeName
       let time = recipe.Time
       let difficulty = recipe.Difficulty
@@ -43,10 +44,20 @@ export default function Post({recipe}) {
       let sumOfRatings = recipe.SumOfRatings
       let jwtToken = storage.retrieveToken()
 
-      let obj = {userId:userId, RecipeId:RecipeId, recipeName:recipeName, time:time, 
-                 difficulty:difficulty, ingredients:ingredients, equipment:equipment, 
-                 instructions:instructions, image:image, rating:rating, numOfRatings:numOfRatings,
-                 sumOfRatings:sumOfRatings, jwtToken:jwtToken};
+      let obj = {
+         userId:userId, 
+         recipeId:recipeId, 
+         recipeName:recipeName, 
+         time:time, 
+         difficulty:difficulty, 
+         ingredients:ingredients, 
+         equipment:equipment, 
+         instructions:instructions, 
+         image:image, 
+         rating:rating, 
+         numOfRatings:numOfRatings,
+         sumOfRatings:sumOfRatings, 
+         jwtToken:jwtToken};
       
       let js = JSON.stringify(obj)
 
@@ -69,7 +80,6 @@ export default function Post({recipe}) {
             }
             else
             {
-               console.log('yay recipe saved')
                storage.storeToken(res.jwtToken);
             }
          })
@@ -77,6 +87,8 @@ export default function Post({recipe}) {
          {
             console.log(error)
          })
+
+      setStatus("Saved");
 
    }
 
@@ -105,7 +117,7 @@ export default function Post({recipe}) {
               <div className="postServes">Serves:</div> 
             </div>
             <div className="bottomRight">
-              <button className="postSaveButton" >Save Recipe</button>
+              <button className="postSaveButton" onClick={saveRecipe} >{saveStatus}</button>
             </div>
           </div>
         </div>
