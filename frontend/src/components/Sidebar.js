@@ -13,8 +13,10 @@ export default function Sidebar() {
         <ul className="sidebarList">
 
           <li className="sidebarListItem">
-            <img className="sidebarIcon" src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt=""/> 
-            <span className="sidebarListItemText">Home</span>
+            <Link to="/home">
+               <img className="sidebarIcon" src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt=""/> 
+               <span className="sidebarListItemText">Home</span>
+            </Link>
           </li>
           <li className="sidebarListItem">
           <Link to="/cookbook">
@@ -24,16 +26,20 @@ export default function Sidebar() {
 
           </li>
           <li className="sidebarListItem">
-          <img className="sidebarIcon" src="https://cdn-icons-png.flaticon.com/512/6662/6662930.png" alt=""/> 
-            <span className="sidebarListItemText">Random Recipe</span>
+            <Link to="/add-recipe">
+               <img className="sidebarIcon" src="https://cdn-icons-png.flaticon.com/512/6662/6662930.png" alt="Add Recipe Icon"/> 
+               <span className="sidebarListItemText">Add a Recipe</span>
+            </Link>
           </li>
           <li className="sidebarListItem">
           <img className="sidebarIcon" src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt=""/> 
             <span className="sidebarListItemText">Profile</span>
           </li>
           <li className="sidebarListItem">
-          <img className="sidebarIcon" src="https://cdn.icon-icons.com/icons2/2518/PNG/512/logout_icon_151219.png" alt=""/> 
-            <span className="sidebarListItemText">Logout</span>
+            <Link to="/">
+               <img className="sidebarIcon" src="https://cdn.icon-icons.com/icons2/2518/PNG/512/logout_icon_151219.png" alt=""/> 
+               <span className="sidebarListItemText">Logout</span>
+            </Link>
           </li>
         </ul>
 

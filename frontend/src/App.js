@@ -17,7 +17,7 @@ function App() {
 				<Route path="/login" index element={<LoginPage />} />
 				<Route path="/home" index element={<HomePage />} />
 				<Route path="/cookbook" index element={<Cookbook/>} />
-				<Route path="/new-recipe" index element={<NewRecipePage/>} />
+				<Route path="/add-recipe" index element={<NewRecipePage/>} />
 			</Routes>
 		</BrowserRouter>
 	);

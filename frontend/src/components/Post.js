@@ -86,9 +86,9 @@ export default function Post({recipe}) {
 
           <div className="topHalf">
             <div className="topLeft">
-              <div className="postName">{recipe.RecipeName}</div>
+              <div className="postName">Recipe: {recipe.RecipeName}</div>
               <div className="postDescription">
-                {recipe.Description}
+                Description: {recipe.Description}
               </div>
             </div>
 
@@ -100,8 +100,8 @@ export default function Post({recipe}) {
 
           <div className="bottomHalf">
             <div className="bottomLeft">
-              <div className="postTime">{recipe.Time}</div>
-              <div className="postDifficulty">{recipe.Difficulty}</div>
+              <div className="postTime">Time (hrs): {recipe.Time}</div>
+              <div className="postDifficulty">Difficulty: {recipe.Difficulty}/5</div>
               <div className="postServes">Serves:</div> 
             </div>
             <div className="bottomRight">

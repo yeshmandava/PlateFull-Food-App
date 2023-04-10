@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import PageTitle from '../components/PageTitle';
 import Login from '../components/Login';
 import Register from '../components/Register';
 
@@ -15,7 +14,7 @@ const LoginPage = () =>
       {<div className="side-panel" side={panelSide}/>}
       <div className="container">
         <div className="info" side={panelSide}>
-          <h2>Welcome to Plateful</h2>
+          <h2>Welcome to Platefull</h2>
           <img src="../img/sample-logo.png" alt="logo"/>
           {showLogin && <Login />}
           {showRegister && <Register />} 

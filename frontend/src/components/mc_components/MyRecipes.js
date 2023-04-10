@@ -1,84 +1,79 @@
-import React, {useState} from 'react';
-import '../../stylesheets/Cookbook.css';
-import axios from 'axios';
+import React, {useState, useEffect, useRef} from 'react'
+import "../../stylesheets/Cookbook.css";
 import MCPostList from './MCPostList'
 
-export default function MyRecipes(event)
-{
-   var bp = require('../Path.js');
-   var storage = require('../../tokenStorage.js');
+import axios from "axios"
 
-   // states
-   const [myRecipes, setMyRecipes] = useState([]);
+export default function MyRecipes() {
+   // file path access variables
+   let bp = require("../Path.js");
+   let storage = require("../../tokenStorage.js");
+  
+   // states that work with api
+   const [recipeList, setRecipes] = useState([]);
+   const [message, setMessage] = useState("");
    
-   
-   console.log(localStorage.getItem('token_data'))
-   // sends a fetch request to pull up recipes made by user
-   function getMyRecipes()
+   // sends a fetch request to searchrecipe apie
+   // value of search has been passed into Feed.js as a prop: 'searchQuery'
+   const ud = JSON.parse(localStorage.getItem('user_data'))
+   const userId = ud.id;
+   console.log(userId);
+   const searchRecipes = async (event) => 
    {
+      const obj = {userId: userId, search: "", jwtToken: storage.retrieveToken()}
+      const js = JSON.stringify(obj)
 
-      console.log(storage.retrieveToken())
-      // preparing fetch payload
-      var ud = JSON.parse(localStorage.getItem('user_data'));
-      var userId=ud.id;
-      var jwtToken = storage.retrieveToken();
-
-      // creating fetch payload
-      var obj = {userId:userId, search:'',jwtToken:jwtToken};
-      console.log(obj)
-      var js = JSON.stringify(obj)
-      var config = 
-      {
+      // request payload
+      var config = {
          method: "post",
          url: bp.buildPath("api/searchrecipes"),
          headers: {
-         "Content-Type": "application/json",
+            "Content-Type": "application/json",
          },
          data: js,
       };
 
       axios(config)
-      .then(function (response) 
+      .then(function (response)
       {
          var res = response.data;
-         if (res.error) {
-            console.log('search failed')
+         console.log(res)
+         if (res.error){
+            setMessage("Search failed");
          } 
-         else 
+         else
          {
-            storage.storeToken(res.jwtToken);
-            return res.results;
+            // update token
+            storage.retrieveToken('token_data', res.jwt)
+            setRecipes(res.results);
          }
       })
-      .catch(function (error)
+      .catch(function (error) 
       {
-         console.log('in error')
+         console.log("Search failed")
          console.log(error);
-      });
+      })
    }
+   useEffect(() => {searchRecipes()}, [])
    
-   function renderFeed()
-   {
-      let ret = getMyRecipes()
-      setMyRecipes(ret);
-      console.log(myRecipes) 
-   }
-
-   renderFeed()
-   return(
+   return (
       <div className="container">
-         <button id="back-btn-my-recipe" className="button">
+         <div className="myRecipe-wrapper">
+            <button id="back-btn-disc-recipe" className="button">
                Insert back arrow
-         </button>
-         <div className="carousel-wrapper">
+            </button>
+            <div className="carousel-wrapper">
                <div className="carousel">
-                  
-                  <MCPostList recipeList = {myRecipes}/>
+                  <MCPostList recipeList = {recipeList}/>
                </div>
+              
+            </div>
+            <button id="next-btn-disc-recipe" className="button">
+                  Insert next arrow
+               </button>  
          </div>
-         <button id="next-btn-my-recipe" className="button">
-               Insert next arrow
-         </button>
       </div>
    )
+
+  
 }

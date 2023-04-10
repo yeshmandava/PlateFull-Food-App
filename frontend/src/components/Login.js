@@ -38,24 +38,21 @@ function Login() {
 					setMessage("User/Password combination incorrect");
 				} else {
 					storage.storeToken(res);
-               console.log(storage.retrieveToken())
 
                // capturing user data from fetch response
-					var userId = res.accessToken.id;
-					var firstName = res.accessToken.fn;
-					var lastName = res.accessToken.ln;
+					var userId = res.id;
+					var firstName = res.fn;
+					var lastName = res.ln;
 
                // saving user data onto localStorage; in place of cookies
 					var user = {firstName:firstName, lastName:lastName, id:userId};
 					localStorage.setItem("user_data", JSON.stringify(user));
                console.log(localStorage.getItem('user_data'))
-               console.log(storage.retrieveToken())
 
                // window change
-					window.location.href = "/home";
+					// window.location.href = "/home";
                
                //show jwt to test
-               console.log(localStorage.getItem('token_data'))
 				}
 			})
          // error catching

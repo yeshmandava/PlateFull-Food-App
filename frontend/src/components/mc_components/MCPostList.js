@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
 import MCPost from './MCPost'
-export default function PostList({recipeList})
+export default function MCPostList({recipeList})
 {
    return(
       recipeList.map(recipe => {
          return(
-            <MCPost recipe = {recipe}/>
+            <MCPost key = {recipe._id} recipe = {recipe}/>
          )
       })
    )

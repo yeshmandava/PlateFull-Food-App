@@ -7,7 +7,7 @@ function Welcome() {
 			<div className="left-section">
 				<h1 className="welcome-title">PlateFull</h1>
 				<p className="welcome-description">
-					Share and discover delicious recipes with your friends.
+               Be your own personal Chef
 				</p>
 				<PlateAnimation />
 			</div>

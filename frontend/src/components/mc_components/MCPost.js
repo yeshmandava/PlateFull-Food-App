@@ -29,7 +29,6 @@ export default function Post({recipe}) {
               <div className="postServes">Serves:</div> 
             </div>
             <div className="bottomRight">
-              <button className="postSaveButton">Save Recipe</button>
             </div>
           </div>
         </div>
