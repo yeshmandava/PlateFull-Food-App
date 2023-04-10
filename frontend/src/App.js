@@ -8,6 +8,7 @@ import WelcomePage from "./pages/WelcomePage";
 import HomePage from "./pages/HomePage"
 import NewRecipePage from "./pages/NewRecipePage";
 import Cookbook from "./pages/Cookbook";
+import CurrentRecipePage from "./pages/CurrentRecipePage";
 
 function App() {
 	return (
@@ -17,7 +18,8 @@ function App() {
 				<Route path="/login" index element={<LoginPage />} />
 				<Route path="/home" index element={<HomePage />} />
 				<Route path="/cookbook" index element={<Cookbook/>} />
-				<Route path="/add-recipe" index element={<NewRecipePage/>} />
+				<Route path="/new-recipe" index element={<NewRecipePage/>} />
+				<Route path="/current-recipe" index element={<CurrentRecipePage/>} />
 			</Routes>
 		</BrowserRouter>
 	);
