@@ -1,0 +1,86 @@
+.recipeContainer 
+{
+    display: flex;
+    width: 788px;
+    height: 424px;
+    border-radius: 10px;
+}
+
+.recipeImage
+{
+    width: 407px;
+    height: 424px;
+    background-color: #ccc;
+}
+
+.recipeAndDescriptionContainer
+{
+    width: 300px;
+    height: 400px;
+    text-align: center;
+    justify-content: center;
+    
+}
+
+.recipeName, .ingredientsTitle, .stepsTitle
+{
+    background-color: #CB6E2D;
+    display: flex;
+    width: 381px;
+    height: 76px;
+    font-weight: bold;
+    font-size: 24px;
+    justify-content: center;
+    align-items: center;
+}
+
+.ingrdientsContainer
+{
+    margin-right: 15px;
+    width: 394px;
+    height: 424px;
+    text-align: center;
+    justify-content: center;
+    background-color: rgb(196, 196, 196);
+    
+}
+
+.stepsContainer
+{
+    margin-left: 55px;
+    width: 394px;
+    height: 424px;
+    text-align: center;
+    justify-content: center;
+    background-color: rgb(196, 196, 196);
+    
+}
+
+
+.recipeDescription
+{
+    width: 361px;
+    height: 348px;
+    flex: 1;
+    font-size: 16px;
+    padding: 0px 10px;
+    background-color: white;
+}
+
+.recipeIngredientAndStep
+{
+    width: 361px;
+    height: 348px;
+    flex: 1;
+    font-size: 16px;
+    padding: 0px 10px;
+}
+
+.recipe
+{
+
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-top: 80px;
+}
