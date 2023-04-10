@@ -37,12 +37,13 @@ function Login() {
 				if (res.error) {
 					setMessage("User/Password combination incorrect");
 				} else {
-					localStorage.setItem('token_data', res.jwtToken);
+					storage.storeToken(res);
+               console.log(storage.retrieveToken())
 
                // capturing user data from fetch response
-					var userId = res.user.id;
-					var firstName = res.user.firstName;
-					var lastName = res.user.lastName;
+					var userId = res.accessToken.id;
+					var firstName = res.accessToken.fn;
+					var lastName = res.accessToken.ln;
 
                // saving user data onto localStorage; in place of cookies
 					var user = {firstName:firstName, lastName:lastName, id:userId};
@@ -51,7 +52,7 @@ function Login() {
                console.log(storage.retrieveToken())
 
                // window change
-					// window.location.href = "/home";
+					window.location.href = "/home";
                
                //show jwt to test
                console.log(localStorage.getItem('token_data'))

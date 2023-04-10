@@ -1,64 +1,79 @@
-import React, {useState} from 'react'
-import "../stylesheets/Feed.css"
+import React, {useState, useEffect, useRef} from 'react'
+import "../stylesheets/Home.css";
 import Share from "./Share"
 import PostList from './PostList'
 
 import axios from "axios"
 
 export default function Feed() {
-  let bp = require("./Path.js");
-  let storage = require("../tokenStorage.js");
-  const [recipeList, setRecipes] = useState([]);
-  const [message, setMessage] = useState("");
-  const searchRecipes = async (event) => 
-  {
-    var postName = "";
-    const obj = {userId: "", search: "", jwtToken: localStorage.getItem('token_data')}
-    const js = JSON.stringify(obj)
+   // file path access variables
+   let bp = require("./Path.js");
+   let storage = require("../tokenStorage.js");
+  
+   // states that work with api
+   const [recipeList, setRecipes] = useState([]);
+   const [message, setMessage] = useState("");
 
-    console.log(storage.retrieveToken());
+   // states that work with search bar
+   const [searchQuery, setQuery] = useState('');
+   const searchRef = useRef();
+   
+   // sends a fetch request to searchrecipe apie
+   // value of search has been passed into Feed.js as a prop: 'searchQuery'
+   const searchRecipes = async (event) => 
+   {
+      const obj = {userId: "", search: searchQuery, jwtToken: storage.retrieveToken()}
+      const js = JSON.stringify(obj)
 
-    var config = {
-			method: "post",
-			url: bp.buildPath("api/searchrecipes"),
-			headers: {
-				"Content-Type": "application/json",
-			},
-			data: js,
-		};
+      // request payload
+      var config = {
+         method: "post",
+         url: bp.buildPath("api/searchrecipes"),
+         headers: {
+            "Content-Type": "application/json",
+         },
+         data: js,
+      };
 
-    axios(config)
+      axios(config)
       .then(function (response)
       {
-        var res = response.data;
-        if (res.error){
-          setMessage("Search failed");
-        } 
-        else
-        {
-            console.log(res.jwtToken)
-            localStorage.setItem('token_data', res.jwtToken.accessToken)
-            console.log(localStorage.getItem('token_data'))
-            console.log(storage.retrieveToken())
-
+         var res = response.data;
+         if (res.error){
+            setMessage("Search failed");
+         } 
+         else
+         {
+            // update token
+            storage.retrieveToken('token_data', res.jwt)
             setRecipes(res.results);
-            console.log(res.results);
-        }
+         }
       })
       .catch(function (error) 
       {
-        console.log("in error")
-        console.log(error);
+         console.log("Search failed")
+         console.log(error);
       })
-  }
-  return (
-  
-    <div className="feed">
+   }
+   useEffect(() => {searchRecipes()}, [])
+   useEffect(() => 
+   {
+      console.log(searchQuery)
+      searchRecipes()
+   } , [searchQuery])
+   const handleSearch = (event) =>
+   {
+      setQuery(event.target.value)
+   }
+   return (
+      <div className="feed">
       <div className="feedWrapper">
-        <Share/>
-        <button onClick={searchRecipes}>Search</button>
-        <PostList recipeList = {recipeList}/>
+         <form id='search-form'>
+            <input type="text" placeholder="Search" ref={searchRef} onChange={handleSearch}/>
+         </form>
+         {/* <button onClick={searchRecipes}>Search</button> */}
+         <PostList recipeList = {recipeList}/>
       </div>
-    </div>
-  )
+      </div>
+   )
 }

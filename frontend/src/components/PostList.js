@@ -5,7 +5,7 @@ export default function PostList({recipeList})
    return(
       recipeList.map(recipe => {
          return(
-            <Post recipe = {recipe}/>
+            <Post key = {recipe._id} recipe = {recipe}/>
          )
       })
    )

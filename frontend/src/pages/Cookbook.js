@@ -10,7 +10,7 @@ export default function Cookbook()
         <div>
             <Banner />
             {/* <Sidebar /> */}
-            <MyRecipes />
+            {/* <MyRecipes /> */}
             {/* <DiscoveredRecipes />  */}
         </div>
     )
