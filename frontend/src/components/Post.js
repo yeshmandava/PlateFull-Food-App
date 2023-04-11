@@ -20,19 +20,30 @@ export default function Post({recipe, savedNames}) {
       if (isSaved) {tempMessage = 'Unsave Recipe'}
       else {tempMessage = 'Save Recipe'}
    }
+   
    useEffect(() => {checkStatus()}, [])
    useEffect(() => {
       let tempMessage;
       if (isSaved) {tempMessage = 'Unsave Recipe'}
       else {tempMessage = 'Save Recipe'}
       setMessage(tempMessage)
-
    }, [isSaved])
 
+   function toggleStatus()
+   {
+      if (isSaved)
+      {
+         removeSave();
+      }
+      else
+      {
+         saveRecipe();
+      }
+   }
 
+   // saves post whose save button is pressed
+   // calls api/saverecipe to associate a user with that saved recipe
    const saveRecipe = async (event) =>{
-      if (isSaved) {return}
-      
       console.log(recipe);
       // data values stored in localStorage
       let ud = JSON.parse(localStorage.getItem('user_data'))
@@ -76,13 +87,57 @@ export default function Post({recipe, savedNames}) {
             else
             {
                storage.storeToken(res.jwtToken);
+               setSave(true)
             }
          })
          .catch(function (error)
          {
             console.log(error)
          })
-      setMessage('Unsave')
+      // setMessage('Unsave')
+   }
+
+   // removes the association between the current user and a recipe
+   // calls api/removeSave
+   function removeSave()
+   {
+      let ud = JSON.parse(localStorage.getItem('user_data'))
+      let userId = ud.id
+      let obj ={
+         userId:userId, 
+         recipeId:recipe._id,
+         jwtToken:storage.retrieveToken() 
+      }
+      let js = JSON.stringify(obj)
+      let config = 
+      {
+         method: "post",
+         url: bp.buildPath("api/removesave"),
+         headers: {
+         "Content-Type": "application/json",
+         },
+         data: js,  
+      }
+      axios(config)
+         .then(function (response)
+         {
+            let res = response.data
+            console.log(res)
+            if (res.error)
+            {
+               console.log('failed to unsave recipe')
+            }
+            else
+            {
+               storage.storeToken(res.jwtToken);
+               setSave(false)
+            }
+         })
+         .catch(function (error)
+         {
+            console.log(error)
+         })
+      // setMessage('Save')
    }
   
    return (
@@ -110,7 +165,7 @@ export default function Post({recipe, savedNames}) {
               <div className="postServes">Serves:</div> 
             </div>
             <div className="bottomRight">
-              <button className="postSaveButton" onClick={saveRecipe} >{saveMessage}</button>
+              <button className="postSaveButton" onClick={toggleStatus} >{saveMessage}</button>
             </div>
           </div>
         </div>
