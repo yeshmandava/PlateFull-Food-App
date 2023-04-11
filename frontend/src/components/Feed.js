@@ -70,7 +70,6 @@ export default function Feed() {
          <form id='search-form'>
             <input type="text" placeholder="Search" ref={searchRef} onChange={handleSearch}/>
          </form>
-         {/* <button onClick={searchRecipes}>Search</button> */}
          <PostList recipeList = {recipeList}/>
       </div>
       </div>

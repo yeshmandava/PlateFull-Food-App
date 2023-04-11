@@ -13,13 +13,13 @@ export default function MyRecipes() {
    const [recipeList, setRecipes] = useState([]);
    const [message, setMessage] = useState("");
    
-   // sends a fetch request to searchrecipe apie
-   // value of search has been passed into Feed.js as a prop: 'searchQuery'
-   const ud = JSON.parse(localStorage.getItem('user_data'))
-   const userId = ud.id;
-   console.log(userId);
    const searchRecipes = async (event) => 
    {
+      // sends a fetch request to searchrecipe apie
+      // value of search has been passed into Feed.js as a prop: 'searchQuery'
+      const ud = JSON.parse(localStorage.getItem('user_data'))
+      const userId = ud.id;
+
       const obj = {userId: userId, search: "", jwtToken: storage.retrieveToken()}
       const js = JSON.stringify(obj)
 
@@ -37,7 +37,6 @@ export default function MyRecipes() {
       .then(function (response)
       {
          var res = response.data;
-         console.log(res)
          if (res.error){
             setMessage("Search failed");
          } 
@@ -58,6 +57,7 @@ export default function MyRecipes() {
    
    return (
       <div className="container">
+         <h2>My Plates</h2>
          <div className="myRecipe-wrapper">
             <button id="back-btn-disc-recipe" className="button">
                Insert back arrow

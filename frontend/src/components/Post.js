@@ -1,63 +1,58 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import "../stylesheets/Post.css"
 import axios from 'axios'
-export default function Post({recipe}) {
+export default function Post({recipe, savedNames}) {
    let bp = require("./Path.js");
    let storage = require("../tokenStorage.js");   
-   // console.log(recipe)
+   const [saveMessage, setMessage] = useState('')   // console.log(recipe)
 
-   const [saveStatus, setStatus] = useState('Save Recipe')
+   const [isSaved, setSave] = useState(false)
+   
+  
+   // checks if the recipe has already been saved by the user
+   const checkStatus = () =>{
+      if (savedNames.indexOf(recipe.RecipeName)!= -1)
+      {
+         console.log(recipe.RecipeName);
+         setSave(true)
+      }
+      let tempMessage;
+      if (isSaved) {tempMessage = 'Unsave Recipe'}
+      else {tempMessage = 'Save Recipe'}
+   }
+   useEffect(() => {checkStatus()}, [])
+   useEffect(() => {
+      let tempMessage;
+      if (isSaved) {tempMessage = 'Unsave Recipe'}
+      else {tempMessage = 'Save Recipe'}
+      setMessage(tempMessage)
+
+   }, [isSaved])
+
+
    const saveRecipe = async (event) =>{
-        /*
-      Endpoints
-      "userId": "hndkdkn3939ndfd", 
-      "recipeId": "ncdidnd8933nn7",
-      "recipeName": "test0",
-      "time": [2,30], 
-      "difficulty": 3, 
-      "description": "words", 
-      "ingredients": ["sugar","salt"], 
-      "equipment": ["spoon","fork"], 
-      "instructions":["step1","step2"], 
-      "image":"imageLink", 
-      "rating":4,
-      "numOfRatings": 3,
-      "sumOfRatings": 12,
-      “jwtToken”: “gsgsuhhshjsbsh72gsv”
-
-      */
-
+      if (isSaved) {return}
+      
       console.log(recipe);
       // data values stored in localStorage
       let ud = JSON.parse(localStorage.getItem('user_data'))
       let userId = ud.id
-      let recipeId = recipe._id
-      let recipeName = recipe.RecipeName
-      let time = recipe.Time
-      let difficulty = recipe.Difficulty
-      let ingredients = recipe.Ingredients
-      let equipment = recipe.Equipment
-      let instructions = recipe.Instructions
-      let image = recipe.Image
-      let rating = recipe.Rating
-      let numOfRatings = recipe.NumOfRatings
-      let sumOfRatings = recipe.SumOfRatings
-      let jwtToken = storage.retrieveToken()
 
       let obj = {
          userId:userId, 
-         recipeId:recipeId, 
-         recipeName:recipeName, 
-         time:time, 
-         difficulty:difficulty, 
-         ingredients:ingredients, 
-         equipment:equipment, 
-         instructions:instructions, 
-         image:image, 
-         rating:rating, 
-         numOfRatings:numOfRatings,
-         sumOfRatings:sumOfRatings, 
-         jwtToken:jwtToken};
+         recipeId:recipe._id, 
+         recipeName:recipe.RecipeName, 
+         time:recipe.Time, 
+         difficulty:recipe.Difficulty, 
+         ingredients:recipe.Ingredients, 
+         equipment:recipe.Equipment, 
+         instructions:recipe.Instructions, 
+         image:recipe.Image, 
+         rating:recipe.Rating, 
+         numOfRatings:recipe.NumOfRatings,
+         sumOfRatings:recipe.SumOfRatings, 
+         jwtToken:storage.retrieveToken()
+      };
       
       let js = JSON.stringify(obj)
 
@@ -87,11 +82,9 @@ export default function Post({recipe}) {
          {
             console.log(error)
          })
-
-      setStatus("Saved");
-
+      setMessage('Unsave')
    }
-
+  
    return (
     <div className="post">
         <div className="postWrapper">
@@ -117,7 +110,7 @@ export default function Post({recipe}) {
               <div className="postServes">Serves:</div> 
             </div>
             <div className="bottomRight">
-              <button className="postSaveButton" onClick={saveRecipe} >{saveStatus}</button>
+              <button className="postSaveButton" onClick={saveRecipe} >{saveMessage}</button>
             </div>
           </div>
         </div>

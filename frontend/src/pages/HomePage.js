@@ -1,8 +1,9 @@
-import React, {useState, useRef, useEffect } from 'react'
+import React, {useState} from 'react'
 import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
 import Feed from "../components/Feed";
 import Rightbar from "../components/Rightbar";
+
 import "../stylesheets/Home.css";
 
 export default function Home() {
@@ -15,7 +16,6 @@ export default function Home() {
           <Feed/>
           <Rightbar/>
         </div>
-       
     </div>
   )
 }

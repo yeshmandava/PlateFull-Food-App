@@ -11,7 +11,7 @@ export default function Cookbook()
             <Banner />
             {/* <Sidebar /> */}
             <MyRecipes />
-            {/* <DiscoveredRecipes />  */}
+            <DiscoveredRecipes /> 
         </div>
     )
 }
