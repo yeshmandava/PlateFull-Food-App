@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-export default function Post({recipe}) {
+
+export default function MCPost({recipe}) {
    let bp = require("../Path.js");
    const [saveStatus, setStatus] = useState("Save Status")
 

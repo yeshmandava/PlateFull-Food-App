@@ -40,7 +40,9 @@ export default function PostList({recipeList})
                // setSaved(res.results)
                let tempNames = []
                res.results.map(recipe => {tempNames.push(recipe.RecipeName)})
+               
                setNames(tempNames)
+             
                storage.storeToken(res.jwtToken)
             }
          })

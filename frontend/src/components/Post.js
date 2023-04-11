@@ -1,24 +1,26 @@
 import React, {useState, useEffect} from 'react'
+import { useNavigate } from "react-router-dom";
+
 import "../stylesheets/Post.css"
 import axios from 'axios'
 export default function Post({recipe, savedNames}) {
    let bp = require("./Path.js");
    let storage = require("../tokenStorage.js");   
-   const [saveMessage, setMessage] = useState('')   // console.log(recipe)
-
-   const [isSaved, setSave] = useState(false)
    
-  
+   const [isSaved, setSave] = useState(false)
+   const [saveMessage, setMessage] = useState('')
+   
+   let navigate = useNavigate();
    // checks if the recipe has already been saved by the user
    const checkStatus = () =>{
       if (savedNames.indexOf(recipe.RecipeName)!= -1)
       {
-         console.log(recipe.RecipeName);
          setSave(true)
       }
       let tempMessage;
       if (isSaved) {tempMessage = 'Unsave Recipe'}
       else {tempMessage = 'Save Recipe'}
+      setMessage(tempMessage)
    }
    
    useEffect(() => {checkStatus()}, [])
@@ -44,7 +46,6 @@ export default function Post({recipe, savedNames}) {
    // saves post whose save button is pressed
    // calls api/saverecipe to associate a user with that saved recipe
    const saveRecipe = async (event) =>{
-      console.log(recipe);
       // data values stored in localStorage
       let ud = JSON.parse(localStorage.getItem('user_data'))
       let userId = ud.id
@@ -122,7 +123,6 @@ export default function Post({recipe, savedNames}) {
          .then(function (response)
          {
             let res = response.data
-            console.log(res)
             if (res.error)
             {
                console.log('failed to unsave recipe')
@@ -138,6 +138,13 @@ export default function Post({recipe, savedNames}) {
             console.log(error)
          })
       // setMessage('Save')
+   }
+
+   function openFullRecipe(event)
+   {
+      localStorage.setItem('current_recipe', JSON.stringify(recipe))
+      console.log(JSON.parse(localStorage.getItem('current_recipe')))
+      navigate('/current-recipe')
    }
   
    return (
@@ -166,6 +173,7 @@ export default function Post({recipe, savedNames}) {
             </div>
             <div className="bottomRight">
               <button className="postSaveButton" onClick={toggleStatus} >{saveMessage}</button>
+              <button onClick = {openFullRecipe}>Open Recipe</button>
             </div>
           </div>
         </div>
