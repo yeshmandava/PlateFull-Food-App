@@ -137,7 +137,6 @@ export default function Post({recipe, savedNames}) {
          {
             console.log(error)
          })
-      // setMessage('Save')
    }
 
    function openFullRecipe(event)

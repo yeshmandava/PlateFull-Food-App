@@ -9,6 +9,9 @@ export default function PostList({recipeList})
    const storage = require('../tokenStorage')
    const [savedNames, setNames] = useState([])
    // gets a list of saved recipes
+
+   const chronoList = recipeList.reverse()
+
    const getSavedRecipes = async event =>
    {
       let ud = JSON.parse(localStorage.getItem('user_data'));
@@ -54,9 +57,9 @@ export default function PostList({recipeList})
    useEffect(() => {getSavedRecipes()}, [])
 
    return(
-      recipeList.map(recipe => {
+      chronoList.map(recipe => {
          return(
-            <Post key = {recipe._id} recipe = {recipe} savedNames= {savedNames} />
+            <Post key = {recipe._id} recipe = {recipe} savedNames = {savedNames} />
          )
       })
    )

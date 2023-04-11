@@ -1,10 +1,19 @@
 import React, {useState} from 'react'
-import axios from 'axios'
+import { useNavigate } from "react-router-dom"
 
 export default function MCPost({recipe}) {
    let bp = require("../Path.js");
    const [saveStatus, setStatus] = useState("Save Status")
 
+   const navigate = useNavigate();
+   
+   function openEdit(event)
+   {
+      event.preventDefault();
+      localStorage.setItem('current_recipe', JSON.stringify(recipe))
+      navigate('/edit-recipe');
+      
+   }
    return (
     <div className="post">
         <div className="postWrapper">
@@ -30,6 +39,7 @@ export default function MCPost({recipe}) {
               <div className="postServes">Serves:</div> 
             </div>
             <div className="bottomRight">
+               <button onClick={openEdit}>Edit Recipes</button>
             </div>
           </div>
         </div>

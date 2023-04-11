@@ -1,10 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState} from 'react'
+
 import axios from 'axios';
 
-export default function NewRecipe(){
-   var bp = require('./Path.js');
-   const storage = require('../tokenStorage')
+export default function EditForm() {
+   var bp = require('../Path.js');
+   const storage = require('../../tokenStorage')
    
+   const curentRecipe = JSON.parse(localStorage.getItem('current_recipe'))
+
    var ud = JSON.parse(localStorage.getItem('user_data'))
    var userId = ud.id;
    var recipeName;
@@ -77,12 +80,12 @@ export default function NewRecipe(){
         
     return(
         <div>
-            <h2>Add new recipe</h2>
+            <h2>Edit Recipe</h2>
             <form onSubmit={addRecipe}>
                
-               <input type="text" id="recipeName" ref={(c) => recipeName = c} placeholder="Recipe name" />
+               <input type="text" id="recipeName" ref={(c) => recipeName = c} placeholder={currentRecipe.RecipeName} />
                <br />
-               <input type="text" id="time" ref={(c) => time = c} placeholder ="Time (hrs)" />
+               <input type="text" id="time" ref={(c) => time = c} placeholder ={currentRecipe.Time} />
 
                <br />
                <select id="difficulty" ref={(c) => difficulty= c}>
@@ -93,7 +96,7 @@ export default function NewRecipe(){
                   <option value="5">5 - I hope you are a chef</option>
                </select>
                <br />
-               <textarea id="description" ref={(c) => description= c} placeholder="Description" />
+               <textarea id="description" ref={(c) => description= c} placeholder={currentRecipe.Description} />
                <br />
                <input type="text" id="ingredient" ref={(c) => ingredient = c} placeholder="Ingredient" />
                <br />

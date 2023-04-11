@@ -1,14 +1,14 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios';
 import "../stylesheets/RecipeTopBar.css"
+import { useNavigate } from "react-router-dom"
 
-export default function RecipeTopBar() {
-   
-   const recipe = JSON.parse(localStorage.getItem('current_recipe'))
-   
+export default function RecipeTopBar({recipe}) {
+
    const bp = require('./Path');
    const storage = require('../tokenStorage')
-   
+   const navigate = useNavigate();
+
    const [savedNames, setNames] = useState([])
    const [isSaved, setSave] = useState(false)
    const [saveMessage, setMessage] = useState('')
@@ -189,7 +189,11 @@ export default function RecipeTopBar() {
          })
       // setMessage('Save')
    }
-
+   function exitPage(event)
+   {
+      event.preventDefault();
+      navigate(-1);
+   }
    return (
     <div className="recipeTopContainer">
         <div className="recipeTopBarLeft">
@@ -210,7 +214,7 @@ export default function RecipeTopBar() {
         <div className="recipeButtons">
             <div className="saveAndExitContainer">
                 <button className="recipeToggleSave" onClick={toggleStatus}>{saveMessage}</button>
-                <button className="recipeExit">Exit</button>
+                <button className="recipeExit" onClick={exitPage}>Exit</button>
             </div>
         </div>
     </div>
