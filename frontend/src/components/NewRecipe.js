@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import axios from 'axios';
+import "../stylesheets/NewRecipe.css";
 
 export default function NewRecipe(){
    var bp = require('./Path.js');
@@ -78,90 +79,112 @@ export default function NewRecipe(){
     return(
         <div>
             <h2>Add new recipe</h2>
-            <form onSubmit={addRecipe}>
-               
-               <input type="text" id="recipeName" ref={(c) => recipeName = c} placeholder="Recipe name" />
-               <br />
-               <input type="text" id="time" ref={(c) => time = c} placeholder ="Time (hrs)" />
+            <form className="recipeForm" onSubmit={addRecipe}>
+               <div className="recipeFormWrap">
+                  <div className="recipeNameToDescription">
+                     
+                     <h3>Recipe Name</h3>
+                     <input type="text" id="recipeName" ref={(c) => recipeName = c} placeholder="Recipe name" />
+                     <br />
 
-               <br />
-               <select id="difficulty" ref={(c) => difficulty= c}>
-                  <option value="1">1 - I could do this in my sleep</option>
-                  <option value="2">2 - this isn't too bad</option>
-                  <option value="3">3 - this is possible</option>
-                  <option value="4">4 - come prepared</option>
-                  <option value="5">5 - I hope you are a chef</option>
-               </select>
-               <br />
-               <textarea id="description" ref={(c) => description= c} placeholder="Description" />
-               <br />
-               <input type="text" id="ingredient" ref={(c) => ingredient = c} placeholder="Ingredient" />
-               <br />
-               <input type="submit" id="add-ingredient-button" className="buttons" value = "add-ingredient-button" onClick={e=> {
-                  e.preventDefault();
-                  setIngredients(prevIngredients =>
-                  {
-                     return prevIngredients.concat(ingredient.value);
-                  })
+                     <h3>Time</h3>
+                     <input type="text" id="time" ref={(c) => time = c} placeholder ="Time (hrs)" />
+                     <br />
 
-                  }} />
-               <div  id="ingredients">
-                  <ol>
-                     {
-                     ingredientList.map(ingredient => {
-                        return (
-                        <li>{ingredient}</li>
-                        )
-                     })
-                     }
-                  </ol>
+                     <h3>Select Difficulty</h3>
+                     <select id="difficulty" ref={(c) => difficulty= c}>
+                        <option value="1">1 - I could do this in my sleep</option>
+                        <option value="2">2 - this isn't too bad</option>
+                        <option value="3">3 - this is possible</option>
+                        <option value="4">4 - come prepared</option>
+                        <option value="5">5 - I hope you are a chef</option>
+                     </select>
+                     <br />
+                     <h3>Description</h3>
+                     <textarea id="description" ref={(c) => description= c} placeholder="Description" />
+                     <br />
+                  </div>
+                  <div className="ingredientsToInstructions">
+                     <h3>Ingredients</h3>
+                     <div className="boxAndButton">
+                        <input type="text" id="ingredient" ref={(c) => ingredient = c} placeholder="Ingredient" />
+                        <br />
+                        <input type="submit" id="add-ingredient-button" className="buttons" value = "Add Ingredient" onClick={e=> {
+                           e.preventDefault();
+                           setIngredients(prevIngredients =>
+                           {
+                              
+                              return prevIngredients.concat(ingredient.value);
+                              
+                           })
+
+                           }} />
+                     </div>
+                     <div  id="ingredients">
+                        <ul>
+                           {
+                           ingredientList.map(ingredient => {
+                              return (
+                              <li>{ingredient}</li>
+                              
+                              )
+                           })
+                           }
+                        </ul>
+                     </div>
+                     <h3>Equipment</h3>
+                     <div className="boxAndButton">
+                        <input type="text" id="equipmentBox" ref={(c) => equipmentItem= c} placeholder="Equipment" />
+                        <br />
+                        <input type="submit" id="add-equipment-button" className="buttons" value = "Add Equipment" onClick={e=> {
+                           e.preventDefault();
+                           setEquipment(prevEquipment =>
+                           {
+                              return prevEquipment.concat(equipmentItem.value);
+                           })
+                           }} />
+                     </div>
+                     <div id="equipment">
+                        <ul>
+                           {
+                           equipmentList.map(equipment => {
+                              return (
+                              <li>{equipment}</li>
+                              )
+                           })
+                           }
+                        </ul>
+                     </div>
+                     <h3>Instructions</h3>
+
+                     <div className="boxAndButton">
+                        <input type="text" id="instruction" ref={(c) => instruction= c} placeholder="Instruction" />
+                        <br />
+                        <input type="submit" id="add-instruction-button" className="buttons" value = "Add Instruction" onClick={e=> {
+                           e.preventDefault();
+                           setInstructions(prevInstructions =>
+                           {
+                              return prevInstructions.concat(instruction.value);
+                           })
+                           }} />
+                     </div>
+
+                     <div id="instructions">
+                        <ol>
+                           {
+                           instructionList.map(instruction => {
+                              return (
+                              <li>{instruction}</li>
+                              )
+                           })
+                           }
+                        </ol>
+                     </div>
+                  </div>
                </div>
-            
-               <input type="text" id="equipment" ref={(c) => equipmentItem= c} placeholder="Equipment" />
-               <br />
-               <input type="submit" id="add-equipment-button" className="buttons" value = "add-equipment-button" onClick={e=> {
-                  e.preventDefault();
-                  setEquipment(prevEquipment =>
-                  {
-                     return prevEquipment.concat(equipmentItem.value);
-                  })
-                  }} />
-               <div id="equipment">
-                  <ol>
-                     {
-                     equipmentList.map(equipment => {
-                        return (
-                        <li>{equipment}</li>
-                        )
-                     })
-                     }
-                  </ol>
-               </div>
-            
-               <input type="text" id="instruction" ref={(c) => instruction= c} placeholder="Instruction" />
-               <br />
-               <input type="submit" id="add-instruction-button" className="buttons" value = "add-instruction-button" onClick={e=> {
-                  e.preventDefault();
-                  setInstructions(prevInstructions =>
-                  {
-                     return prevInstructions.concat(instruction.value);
-                  })
-                  }} />
-               <div id="instructions">
-                  <ol>
-                     {
-                     instructionList.map(instruction => {
-                        return (
-                        <li>{instruction}</li>
-                        )
-                     })
-                     }
-                  </ol>
-               </div>
-      
                <br />
                <br />
-               <button onClick={addRecipe} value="Add recipe">
+               <button id="add-recipe-button" onClick={addRecipe} value="Add recipe">
                   add recipe
                </button>
                <span>{message}</span>
