@@ -19,6 +19,7 @@
 .topbarCenter
 {
     flex: 6;
+    text-align: center;
 }
 
 .logo 
