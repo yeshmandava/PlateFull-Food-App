@@ -82,7 +82,7 @@ function Login() {
         <input
           type="submit"
           id="loginButton"
-          className="buttons"
+          className="buttons btn btn-primary"
           value="Login"
           onClick={doLogin}
         />

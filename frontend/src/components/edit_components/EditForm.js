@@ -5,20 +5,19 @@ import axios from 'axios';
 export default function EditForm() {
    var bp = require('../Path.js');
    const storage = require('../../tokenStorage')
-   
-   const curentRecipe = JSON.parse(localStorage.getItem('current_recipe'))
+   const currentRecipe = JSON.parse(localStorage.getItem('current_recipe'))
 
    var ud = JSON.parse(localStorage.getItem('user_data'))
    var userId = ud.id;
-   var recipeName;
-   var time;
-   var difficulty;
-   var description;
+   var recipeName = '';
+   var time = '';
+   var difficulty = '';
+   var description = '';
    
    // interact with state variables
-   var ingredient;
-   var equipmentItem;
-   var instruction;
+   var ingredient = '';
+   var equipmentItem = '';
+   var instruction = '';
 
    var image = 'placeholder'; //this should be an image link
 
@@ -36,16 +35,20 @@ export default function EditForm() {
       
       var obj = 
       {
-        userId:userId,
-        recipeName:recipeName.value,
-        time:time.value,
-        difficulty:difficulty.value,
-        description:description.value,
-        ingredients:ingredients,
-        equipment:equipment,
-        instructions:instructions,
-        image:image,
-        jwtToken: storage.retrieveToken()
+         recipeId: currentRecipe._id,
+         recipeName:recipeName.value,
+         time:time.value,
+         userId:userId,
+         difficulty:difficulty.value,
+         description:description.value,
+         ingredients:ingredients,
+         equipment:equipment,
+         instructions:instructions,
+         image:image,
+         rating:currentRecipe.Rating,
+         numOfRatings: currentRecipe.NumOfRatings,
+         sumOfRatings:currentRecipe.SumOfRatings,
+         jwtToken: storage.retrieveToken()
       }
       var js = JSON.stringify(obj);
 
@@ -62,13 +65,14 @@ export default function EditForm() {
          .then(function(response){
             let res = response
             console.log(res)
+            console.log(res)
             if (res.error)
             {
                setMessage( "Register API Error:" + res.error);
             }
             else
             {
-               setMessage('New Recipe Posted');
+               setMessage('Recipe Edited');
             }
          })
          .catch(function(error)
