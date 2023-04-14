@@ -1,0 +1,111 @@
+#ingredients ul > li
+{  
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+#equipment ul > li
+{
+    
+    margin-bottom: 5px;
+    text-align: left;
+    width: 100% !important;
+}
+
+#equipmentBox
+{
+    text-align: center;
+    width: 150px;
+}
+
+#instructions ol > li
+{
+    
+    margin-bottom: 10px;
+    text-align: left;
+    
+
+}
+
+#instructions ol
+{
+    text-align: center;
+    
+}
+
+#instructions
+{
+    width: 100%;
+}
+
+.recipeForm
+{
+    width: 75%;
+    align-self: center;
+    justify-self: center;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.recipeFormWrap
+{   
+    display: flex;
+    flex-direction: row;
+
+    width: 100%;
+}
+
+#add-equipment-button, #recipeName, #time, #ingredient, 
+#add-ingredient-button, #instruction, #add-instruction-button, #add-recipe-button
+{
+    text-align: center;
+    width: 150px;
+
+}
+
+#add-recipe-button
+{
+    align-self: center;
+}
+
+#difficulty
+{
+    width: 150px;
+}
+
+.recipeNameToDescription
+{
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+    align-items: center;
+}
+
+#description
+{
+    max-width: 60%;
+    max-height: 400px;
+}
+
+.ingredientsToInstructions
+{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    text-align:left;
+    width: 50%;
+    word-wrap: break-word;
+}
+
+.ingredientsToInstructions > h3
+{
+    margin-left: 120px;
+}
+
+.boxAndButton
+{
+    display: flex;
+    gap: 10px;
+}
