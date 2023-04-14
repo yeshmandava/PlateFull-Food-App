@@ -5,13 +5,10 @@ export default function Topbar() {
   return (
         <div className="topbarContainer">
             <div className="topbarLeft">
-                <span className="logo">PlateFull</span>
             </div>
 
             <div className="topbarCenter">
-                <div className="searchbar">
-                    <input placeholder="Search" className="searchInput"/>
-                </div>
+            <span className="logo">PlateFull</span>
             </div>
 
             <div className="topbarRight">
