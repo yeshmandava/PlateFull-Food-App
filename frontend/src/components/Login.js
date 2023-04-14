@@ -1,11 +1,8 @@
 
 import React, { useState } from "react";
 import axios from "axios";
-import jwt_decode from "jwt-decode";
-import { SaveCookie, ReadCookie } from "../components/Cookies";
-import '../stylesheets/Login.css'
 
-function Login() {
+function Login({option}) {
    let loginName;
    let loginPassword;
 
@@ -61,9 +58,9 @@ function Login() {
    };
   
   return (
-    <div id="loginDiv" className="login-card">
+    <div id="#login" className="form-card login-card" option={option}> 
       <form onSubmit={doLogin}>
-        <span id="inner-title">PLEASE LOG IN</span>
+        <h5 id="inner-title" className="mb-2">PLEASE LOG IN</h5>
         <br />
         <input
           type="text"
@@ -82,7 +79,7 @@ function Login() {
         <input
           type="submit"
           id="loginButton"
-          className="buttons btn btn-primary"
+          className="buttons btn btn-dark mt-3 mb-1"
           value="Login"
           onClick={doLogin}
         />

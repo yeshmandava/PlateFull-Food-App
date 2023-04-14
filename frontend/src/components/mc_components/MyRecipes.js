@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useRef} from 'react'
-import "../../stylesheets/Cookbook.css";
 import MCPostList from './MCPostList'
 
 import axios from "axios"
@@ -56,21 +55,21 @@ export default function MyRecipes() {
    useEffect(() => {searchRecipes()}, [])
    
    return (
-      <div className="container">
-         <h2>My Plates</h2>
-         <div className="myRecipe-wrapper">
-            <button id="back-btn-disc-recipe" className="button">
-               Insert back arrow
-            </button>
-            <div className="carousel-wrapper">
-               <div className="carousel">
+      <div id="my-recipes">
+         <div className="container-lg my-5">
+            
+            <div className="slider-wrapper my-2">
+               <button id="back-btn-disc-recipe" className="btn btn-dark">
+                  Insert back arrow
+               </button>   
+               <div className="slider">
                   <MCPostList recipeList = {recipeList}/>
                </div>
-              
-            </div>
-            <button id="next-btn-disc-recipe" className="button">
+               <button id="next-btn-disc-recipe" className="btn btn-dark">
                   Insert next arrow
-               </button>  
+            </button> 
+            </div>
+             
          </div>
       </div>
    )

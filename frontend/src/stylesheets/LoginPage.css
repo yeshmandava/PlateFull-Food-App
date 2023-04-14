@@ -2,9 +2,11 @@
     --offwhite: #FFFCF5;
     --cream: #FFF6E0;
     --red-light: #F5936C;
+    --shadow-red-light: #bb5c36;
     --red-light-active: #e97f56;
     --red: #DC4E33;
     --gold:  #FEB346;
+    --shadow-gold: #b8812f;
     --gold-active: #f3a022;
     --gold: #FEB346;
     --brown-light: #CB6E2D;
@@ -17,41 +19,43 @@ body{
     height:100%;
 }
 
-.container{
+.floating-container{
     position:relative;
-    display:inline-block;
-    width:80%;
     height:100%;
     text-align:center;
     margin: 0 auto; 
 }
 /* wrapper for the register box and buttons */
-.info{
+#site-title{
+   background:var(--offwhite);
+       border: 5px solid var(--brown-dark);
+
+}
+#info{
     margin: auto auto; 
-    height:1000px;
-    width:400px;
+    height:800px;
+    width:500px;
+    max-width:80%;
     max-height:100%;
 
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
-
 }
+/* Side panel description and animations */
 .side-panel{
    position:fixed;
    left:0%;
    height:100%;
-   width:6000px;
-   max-width:50%;
+   width:50%;
    background:var(--red);
 }
-.side-panel[side='0']{
+.side-panel[option='0']{
     position:fixed;
     left:0%;
     height:100%;
-    width:6000px;
-    max-width:50%;
+    width:50%;
     background:var(--red);
 
     animation: login-animation .5s ease-in forwards;
@@ -60,15 +64,13 @@ body{
     from{
         left:50%;
         background-color:var(--brown-light);
-        
     }
-    
     to{
         left:0;
         background-color:var(--red);
     }
 }
-.side-panel[side='1']{
+.side-panel[option='1']{
    position:fixed; 
    height:100%;
    width:100%;
@@ -103,8 +105,7 @@ body{
 }
 
 /*buttons*/
-
-.btn {
+.shadow-button {
   align-items: center;
   background-color: white;
   border: 2px solid #111;
@@ -128,7 +129,7 @@ body{
   touch-action: manipulation;
 }
 
-.btn:after {
+.shadow-button:after {
   background-color: #111;
   border-radius: 8px;
   content: "";
@@ -143,24 +144,20 @@ body{
   z-index: -1;
 }
 
-.btn:hover:after {
+.shadow-button:hover:after {
   transform: translate(0, 0);
 }
 
-.btn:active {
+.shadow-button:active {
   outline: 0;
 }
 
 
-.btn:hover {
+.shadow-button:hover {
   outline: 0;
 }
 
-@media (min-width: 768px) {
-  .btn {
-    padding: 0 40px;
-  }
-}
+
 #login-button{
     background-color:var(--red-light);
     align-self:flex-start;
@@ -177,12 +174,84 @@ body{
     background-color: var(--gold-active)
 }
 
+/************ Login and Register Form Wrappers ******************/
+
+/* login option */
+.form-card[option='0']{
+   display:flex;
+   flex-direction:column;
+   justify-content:center;
+   align-items:center;
+   text-align:center;
+   
+   box-sizing:border-box;
+   width:100%;
+   padding:10px;
+   height:400px;
+   background-color:var(--red-light);
+   box-shadow: 12px 12px 5px var(--shadow-red-light);
+
+   animation: login-card-animation .5s ease-in forwards;
+}
+@keyframes login-card-animation{
+   from{
+      background-color:var(--gold);
+      box-shadow: 12px 12px 5px var(--shadow-gold);
+   }
+   to{
+      background-color:var(--red-light);
+      box-shadow: 12px 12px 5px var(--shadow-red-light);
+   }
+}
+
+
+/* register option */
+.form-card[option='1']{
+   display:flex;
+   flex-direction:column;
+   justify-content:center;
+   align-items:center;
+   text-align:center;
+   
+   box-sizing:border-box;
+   width:100%;
+   padding:10px;
+   height:400px;
+   background-color:var(--gold);
+   box-shadow: 12px 12px 5px var(--shadow-gold);
+
+   animation: register-card-animation .5s ease-in forwards;
+}
+@keyframes register-card-animation{
+   from{
+      background-color:var(--red-light);
+      box-shadow: 12px 12px 5px var(--shadow-red-light); 
+   }
+   to{
+      background-color:var(--gold);
+      box-shadow: 12px 12px 5px var(--shadow-gold);
+   }
+}
+
 /* form stuff */
 
+
 form{
-    background:var(--offwhite);
-    padding:10px;
-    margin:30px;
-    border: 4px solid black;
-    box-shadow: 7px 7px black;
+   width:600px;
+   max-width:80%;
+   background:var(--offwhite);
+   padding:20px 10px;
+   margin:30px;
+   border: 4px solid black;
+   box-shadow: 7px 7px black;
 }
+input{
+   width:80%;
+}
+
+
+@media (min-width: 768px) {
+   .shadow-button {
+     padding: 0 40px;
+   }
+ }

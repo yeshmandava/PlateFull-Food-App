@@ -1,4 +1,4 @@
-.post
+.mc-post
 {
    display:inline-block;
    width: 600px;
@@ -8,13 +8,13 @@
    flex-shrink:0;
 }
 
-.postWrapper
+.mc-postWrapper
 {
     padding: 0px;
     height: 400px;
 }
 
-.postTop
+.mc-postTop
 {
     display: flex;
     align-items: center;
@@ -22,7 +22,7 @@
 }
 
 
-.postCenter
+.mc-postCenter
 {
     margin: 20px 0;
 }
@@ -51,20 +51,20 @@
     padding-right: 25px;
 }
 
-.postName
+.mc-postName
 {
     border: none;
     width: 80%;
     padding-bottom: 25px;
 }
 
-.postDescription
+.mc-postDescription
 {
     border: none;
     width: 80%;
 }
 
-.postPhoto
+.mc-postPhoto
 {
     width: 100px;
     height: 100px;
@@ -89,21 +89,21 @@
 
 }
 
-.postTime
+.mc-postTime
 {
     border: none;
     width: 80%;
     padding-bottom: 25px;
 }
 
-.postDifficulty
+.mc-postDifficulty
 {
     border: none;
     width: 80%;
     padding-bottom: 25px;
 }
 
-.postServes
+.mc-postServes
 {
     border: none;
     width: 80%;
@@ -119,7 +119,7 @@
 
 }
 
-.postSaveButton
+.mc-postSaveButton
 {
     width: 100px;
     height: 50px;

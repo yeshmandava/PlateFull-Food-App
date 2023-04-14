@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-import '../stylesheets/Register.css'
-
-export default function Register()
+export default function Register({option})
 {
    // textbox inputs
    let firstName ;
@@ -66,9 +64,9 @@ export default function Register()
 
       
    return(
-      <div id="registerDiv" className="register-card">
+      <div id="register" className="form-card register-card" option={option}>
          <form onSubmit={doRegister}>
-            <span id="register-title">Register</span>
+            <h5 id="register-title" className="mb-2"> Register</h5>
             <br/>
             <input type="text" id="firstName" placeholder="First Name" ref={(c) => firstName = c} /><br />
             <input type="text" id="lastName" placeholder="Last Name" ref={(c) => lastName = c} /><br />
@@ -76,7 +74,7 @@ export default function Register()
             <input type="text" id="loginName" placeholder="Username" ref={(c) => login = c} /><br />
             <input type="password" id="loginPassword" placeholder="Password" ref={(c) => password = c} /><br />
             
-            <input type="submit" id="loginButton" className="buttons" value = "Register" onClick={doRegister} />
+            <input type="submit" id="loginButton" className="buttons btn btn-dark mt-3 mb-1" value = "Register" onClick={doRegister} />
         </form>
         <span id="registerResult">{message}</span>
 

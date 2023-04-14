@@ -17,7 +17,7 @@
     
     text-align:center;
 }
-.carousel-wrapper{
+/* .carousel-wrapper{
     display: inline-block;
     display:flex;
     width:60%;
@@ -35,13 +35,25 @@
 
    height:600px;
    width:100%;
-}
+} */
 
 .myRecipe-wrapper, .discoveredWrapper{
-   display: flex;
-   flex-direction:row;
-   justify-content:center;
-   align-items:center;
+
+}
+
+#my-recipes{
+
+}
+
+/* image slider */
+.slider-wrapper{
    
-   
+}
+.slider-wrapper .slider{
+   white-space:nowrap !important;
+}
+.slider .post{
+   height:340px;
+   object-fit: cover;
+   max-width: calc(100vw/3);
 }

@@ -1,0 +1,68 @@
+
+:root{
+   --offwhite: #FFFCF5;
+   --cream: #FFF6E0;
+   --red-light: #f5936c;
+   --shadow-red-light: #bb5c36;
+   --red: #DC4E33;
+   --gold:  #FEB346;
+   --gold: #FEB346;
+   --brown-light: #CB6E2D;
+   --brown-dark: #633729;
+}
+*{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+body{
+   background:var(--cream) !important;
+}
+
+#my-recipes{
+   display:  flex;
+   align-items:center;
+   justify-content:center;
+   min-height:100vh;
+}
+
+/* image slider */
+.slider-wrapper{
+   max-width:1200px;
+   &:first-child{
+      left:-23px;
+   }
+   &:last-child{
+      right:-23px !important;
+   }
+}
+.slider-wrapper .slider{
+   white-space:nowrap !important;
+   cursor: grab;
+
+   .mc-post{
+      height:340px;
+      width: calc(100% / 3);
+  } 
+}
+
+// .slider .post{
+//    &:first-child{
+//       margin-left:0;
+//    } 
+// }
+
+// @media screen and (max-width: 90px){
+//    .carousel .post{
+//       width: calc(100% / 2) !important;
+
+//    }
+// }
+
+// @media screen and (max-width: 550px){
+//    .carousel .post{
+//       width: calc(100%) !important;
+
+//    }
+// }

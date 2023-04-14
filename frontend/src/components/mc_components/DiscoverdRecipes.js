@@ -1,10 +1,7 @@
 import React, {useState, useEffect} from 'react';
-
 import MCPostList from './MCPostList';
 
 import axios from 'axios'
-
-import '../../stylesheets/Cookbook.css';
 
 export default function DiscoveredRecipes()
 {
@@ -55,7 +52,7 @@ export default function DiscoveredRecipes()
 
    useEffect(() =>{getSavedRecipes()}, [])
    return(
-      <div className="container">
+      <div id="my-recipes">
          <h2>Discovered Plates</h2>
          <div className="myRecipe-wrapper">
             <button id="back-btn-disc-recipe" className="button">

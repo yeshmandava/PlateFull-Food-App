@@ -1,10 +1,11 @@
 // overwrite them variables
-$primary: red;
 $brown: #334434;
+$dark: black;
+
 
 .btn{
    border-width: 100px;
-   border-color: $primary;
+   border-color: $dark;
 }
 
 @import "../node_modules/bootstrap/scss/bootstrap"
