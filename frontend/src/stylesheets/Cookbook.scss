@@ -6,7 +6,7 @@
    --shadow-red-light: #bb5c36;
    --red: #DC4E33;
    --gold:  #FEB346;
-   --gold: #FEB346;
+   --shadow-gold: #b8812f;
    --brown-light: #CB6E2D;
    --brown-dark: #633729;
 }
@@ -35,6 +35,7 @@ body{
    .mc-post{
       width:90%;
       margin-left:10px;
+      border-radius:0;
       pointer-events:none;
   } 
 }
@@ -43,10 +44,16 @@ body{
    .slider{
       background:var(--red-light);
    }
+   .slider > .mc-post{
+      box-shadow:0 5px 15px 5px var(--shadow-red-light);
+   }
 }
 #discovered-recipes{
    .slider{
       background:var(--gold);
+   }
+   .slider > .mc-post{
+      box-shadow:0 5px 15px 5px var(--shadow-gold);
    }
 }
 .snaps-inline{
@@ -67,7 +74,4 @@ body{
    .slider{
       grid-auto-columns:91%;
    }
-}
-.slider-btn{
-
 }
