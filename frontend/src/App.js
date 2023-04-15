@@ -1,3 +1,4 @@
+'use client';
 import React from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -9,7 +10,6 @@ import AddRecipePage from "./pages/AddRecipePage";
 import Cookbook from "./pages/Cookbook";
 import CurrentRecipePage from "./pages/CurrentRecipePage";
 import EditRecipePage from "./pages/EditRecipePage";
-
 function App() {
 	return (
 		<BrowserRouter>

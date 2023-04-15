@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react'
-import MCPostList from './MCPostList'
-
 import axios from "axios"
+
+import MCPostList from './MCPostList'
 
 export default function MyRecipes() {
    // file path access variables
@@ -10,12 +10,9 @@ export default function MyRecipes() {
   
    // states that work with api
    const [recipeList, setRecipes] = useState([]);
-   const [message, setMessage] = useState("");
    
    const searchRecipes = async (event) => 
    {
-      // sends a fetch request to searchrecipe apie
-      // value of search has been passed into Feed.js as a prop: 'searchQuery'
       const ud = JSON.parse(localStorage.getItem('user_data'))
       const userId = ud.id;
 
@@ -37,7 +34,6 @@ export default function MyRecipes() {
       {
          var res = response.data;
          if (res.error){
-            setMessage("Search failed");
          } 
          else
          {
@@ -55,22 +51,16 @@ export default function MyRecipes() {
    useEffect(() => {searchRecipes()}, [])
    
    return (
-      <div id="my-recipes">
-         <div className="container-lg my-5">
-            
-            <div className="slider-wrapper my-2">
-               <button id="back-btn-disc-recipe" className="btn btn-dark">
-                  Insert back arrow
-               </button>   
-               <div className="slider">
-                  <MCPostList recipeList = {recipeList}/>
-               </div>
-               <button id="next-btn-disc-recipe" className="btn btn-dark">
-                  Insert next arrow
-            </button> 
-            </div>
-             
+      <div id="my-recipes" className="mb-3">
+         <div className="slider snaps-inline">
+            <MCPostList recipeList = {recipeList}/>
          </div>
+         {/* <button id="back-btn-disc-recipe" className="btn btn-dark slider-btn">
+               Insert back arrow
+         </button>  
+         <button id="next-btn-disc-recipe slider-btn" className="btn btn-dark">
+            Insert next arrow
+         </button>  */}
       </div>
    )
 

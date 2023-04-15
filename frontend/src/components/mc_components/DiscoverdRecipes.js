@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+
 import MCPostList from './MCPostList';
 
 import axios from 'axios'
@@ -52,21 +53,19 @@ export default function DiscoveredRecipes()
 
    useEffect(() =>{getSavedRecipes()}, [])
    return(
-      <div id="my-recipes">
-         <h2>Discovered Plates</h2>
-         <div className="myRecipe-wrapper">
-            <button id="back-btn-disc-recipe" className="button">
+      <div id="discovered-recipes">
+         <div className="slider snaps-inline">
+            <MCPostList recipeList = {recipeList}/>
+         </div>
+         <div className="button-box">
+            {/* <button id="back-btn-disc-recipe" className="btn btn-dark">
                Insert back arrow
             </button>
-            <div className="carousel-wrapper">
-               <div className="carousel">
-                  <MCPostList recipeList = {recipeList}/>
-               </div>
-            </div>
-            <button id="next-btn-disc-recipe" className="button">
-                  Insert next arrow
-            </button>  
+            <button id="next-btn-disc-recipe" className="btn btn-dark">
+               Insert next arrow
+            </button>  */}
          </div>
+         
       </div>
    )
 }
