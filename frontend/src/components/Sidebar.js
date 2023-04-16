@@ -15,8 +15,8 @@ export default function Sidebar() {
 
   return (
     <div className="sidebar">
-      <Link to='#' className='menu-bars'>
-          <FaIcons.FaBars onClick={showSidebar} />
+      <Link to='#' className='menu-arrow'>
+          <FaIcons.FaChevronRight onClick={showSidebar} />
         </Link>
       <nav className={sidebarr ? 'nav-menu active' : 'nav-menu'}>
         <div className="sidebarWrapper nav-menu-items" onClick={showSidebar}>
