@@ -3,7 +3,7 @@ import axios from "axios"
 
 import MCPostList from './MCPostList'
 
-export default function MyRecipes() {
+export default function MyRecipes({functionAlert}) {
    // file path access variables
    let bp = require("../Path.js");
    let storage = require("../../tokenStorage.js");
@@ -49,9 +49,12 @@ export default function MyRecipes() {
       })
    }
    useEffect(() => {searchRecipes()}, [])
-   
+   function sendBack(event){
+      functionAlert('hiya');
+   }
    return (
       <div id="my-recipes" className="mb-3">
+         <button onClick = {sendBack}>Test</button>
          <div className="slider snaps-inline">
             <MCPostList recipeList = {recipeList}/>
          </div>

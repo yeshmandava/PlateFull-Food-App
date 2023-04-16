@@ -245,7 +245,7 @@ form{
    border: 4px solid black;
    box-shadow: 7px 7px black;
 }
-input{
+form > input, form> textarea{
    width:80%;
 }
 

@@ -35,7 +35,7 @@ const RecipeSchema = new Schema({
     required: true
   },
   Image: {
-    type: String,
+    type: Object,
     required: true
   },
   Rating: {

@@ -32,7 +32,7 @@ const SavedRecipeSchema = new Schema({
     type: []
   },
   Image: {
-    type: String
+    type: Object
   },
   Rating: {
     type: Number

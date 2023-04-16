@@ -109,3 +109,13 @@
     display: flex;
     gap: 10px;
 }
+
+#add-form > .slider{
+   grid-auto-columns: 30% !important;
+}
+#add-form > .snaps-inline > * {
+   scroll-snap-align:center !important;
+}
+#add-form .form-card form{
+   width:100%;
+}

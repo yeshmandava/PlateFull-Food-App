@@ -1,7 +1,20 @@
 // overwrite them variables
+$primary:black;
 $brown: #334434;
 $dark: black;
 
+a{
+   text-decoration:none !important;
+   &:hover{
+      text-decoration: underline !important;
+   }
+   &:visited{
+
+   }
+   &:active{
+      color:gray !important;
+   }
+}
 
 .btn{
    border-width: 100px;
