@@ -221,6 +221,11 @@ body{
 
    animation: register-card-animation .5s ease-in forwards;
 }
+
+.form-card input{
+   width:100%;
+}
+
 @keyframes register-card-animation{
    from{
       background-color:var(--red-light);
