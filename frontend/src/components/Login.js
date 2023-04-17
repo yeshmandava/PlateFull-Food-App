@@ -53,7 +53,7 @@ function Login({option}) {
          })
          // error catching
          .catch(function (error) {
-            setMessage("User/Password combination incorrect");
+            setMessage("User/Password combination incorrect.");
             console.log(error);
          });
    };
