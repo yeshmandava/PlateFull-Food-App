@@ -7,12 +7,22 @@
     justify-content: start;
     align-items: center;
     position: sticky;
+    z-index: 1;
 }
 
 .menu-bars {
+    margin-left: 10rem;
+    font-size: 3rem;
+    background: none;
+  }
+
+  .menu-arrow
+  {
     margin-left: 2rem;
     font-size: 2rem;
     background: none;
+    position: fixed !important;
+
   }
 
   .nav-menu {

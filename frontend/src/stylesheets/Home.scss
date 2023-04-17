@@ -31,18 +31,60 @@
 /************************* Post Stuff ******************************/
 .postWrapper
 {
-   display:inline-block;
    width: 600px;
    border-radius: 10px;
-   box-shadow: 0px 0px 16px -8px rgba(0,0,0,0.68);
-   margin: 30px 0;
+   margin: 30px 30px;
    flex-shrink:0;
+   position: relative;
+}
+
+
+/*.post:hover .postWrapper
+{
+    transform: rotateY(180Deg);
+    transform-style: preserve-3d;
+    transition: all 0.5s ease;
+    backface-visibility: hidden;
+}
+
+.post:hover .postWrapperBack
+{
+    transform: rotateY(0Deg);
+    transform-style: preserve-3d;
+    transition: all 0.5s ease;
+}*/
+
+
+.postWrapperSwapped
+{
+    padding: 0px;
+    height: 400px;
+    transform: rotateY(180Deg);
+    transform-style: preserve-3d;
+    transition: all 0.5s ease;
+    backface-visibility: hidden;
+}
+
+.postWrapperBackSwapped
+{
+    transform: rotateY(0Deg);
+    transform-style: preserve-3d;
+    transition: all 0.5s ease;
+    position: absolute;
+    width: 600px;
+    height:400px;
+    top: -5px;
+    backface-visibility: hidden;
 }
 
 .post
 {
     padding: 0px;
     height: 400px;
+    transform-style: preserve-3d;
+    transition: all 0.5s ease;
+    transform: rotateY(0Deg);
+    
 }
 
 .postTop
@@ -66,6 +108,35 @@
     height: 35%;
     background-color: rgb(138, 138, 138);
     align-items: center;
+}
+
+/*.postWrapper:active, .postWrapperBack:active
+{
+    transform-style: preserve-3d;
+    transition: all 0.5s ease;
+    transform: rotateY(180deg);
+    backface-visibility: hidden;
+}*/
+
+.postWrapperBack
+{
+    position: absolute;
+    transform: rotateY(180Deg);
+    transform-style: preserve-3d;
+    transition: all 0.5s ease;
+    backface-visibility: hidden;
+    background-color: green;
+    width: 600px;
+    height:400px;
+    top: -5px;
+    
+}
+
+.ingredients
+{
+    width: 100%;
+    height: 100%;
+    text-align: center;
 }
 
 .topLeft
