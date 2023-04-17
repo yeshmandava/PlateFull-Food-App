@@ -9,6 +9,11 @@ export default function Post({recipe, savedNames}) {
    
    const [isSaved, setSave] = useState(false)
    const [saveMessage, setMessage] = useState('')
+   const [isClicked, setClicked] = useState(false)
+
+   const checkClick = () => {
+      setClicked(!isClicked)
+   }
    
    let navigate = useNavigate();
    // checks if the recipe has already been saved by the user
@@ -31,8 +36,10 @@ export default function Post({recipe, savedNames}) {
       setMessage(tempMessage)
    }, [isSaved])
 
-   function toggleStatus()
+   function toggleStatus(e)
    {
+      // i think this should stop the card from flipping when save is also clicked.
+      e.stopPropagation();
       if (isSaved)
       {
          removeSave();
@@ -147,35 +154,52 @@ export default function Post({recipe, savedNames}) {
    }
   
    return (
-    <div className="post">
-        <div className="postWrapper">
+    <div className="post" onClick={checkClick}>
+        <div className={isClicked ? "postWrapperSwapped" : "postWrapper"}>
+            
+               <div className="topHalf">
+                  <div className="topLeft">
+                     <div className="postName">Recipe: {recipe.RecipeName}</div>
+                     <div className="postDescription">
+                        Description: {recipe.Description}
+                     </div>
+                  </div>
 
-          <div className="topHalf">
-            <div className="topLeft">
-              <div className="postName">Recipe: {recipe.RecipeName}</div>
-              <div className="postDescription">
-                Description: {recipe.Description}
-              </div>
-            </div>
+                  <div className="topRight">
+                     <img className="postPhoto"  src="https://static.wikia.nocookie.net/kenneths-td-big-brother/images/0/01/TDBB8Logo.png" alt=""/>
+                  </div>
+               </div>
 
-            <div className="topRight">
-              <img className="postPhoto"  src="https://static.wikia.nocookie.net/kenneths-td-big-brother/images/0/01/TDBB8Logo.png" alt=""/>
-            </div>
-
-          </div>
-
-          <div className="bottomHalf">
-            <div className="bottomLeft">
-              <div className="postTime">Time (hrs): {recipe.Time}</div>
-              <div className="postDifficulty">Difficulty: {recipe.Difficulty}/5</div>
-              <div className="postServes">Serves:</div> 
-            </div>
-            <div className="bottomRight">
-              <button className="postSaveButton" onClick={toggleStatus} >{saveMessage}</button>
-              <button onClick = {openFullRecipe}>Open Recipe</button>
-            </div>
-          </div>
+               <div className="bottomHalf">
+                  <div className="bottomLeft">
+                     <div className="postTime">Time (hrs): {recipe.Time}</div>
+                     <div className="postDifficulty">Difficulty: {recipe.Difficulty}/5</div>
+                     <div className="postServes">Serves:</div> 
+                  </div>
+                  <div className="bottomRight">
+                     <button className="postSaveButton" onClick={toggleStatus} >{saveMessage}</button>
+                     <button onClick = {openFullRecipe}>Open Recipe</button>
+                  </div>
+               </div>
         </div>
+
+        <div className={isClicked ? "postWrapperBackSwapped" : "postWrapperBack"}>
+            <div className="topHalf">
+               <div className="topLeft">
+                  <div className="postName">Recipe: {recipe.RecipeName}</div>
+                  <div className="postDescription">
+                     Description: {recipe.Description}
+                  </div>
+               </div>
+
+               <div className="topRight">
+                  <img className="postPhoto"  src="https://static.wikia.nocookie.net/kenneths-td-big-brother/images/0/01/TDBB8Logo.png" alt=""/>
+               </div>
+            </div>
+            <div className="bottomHalf">
+                     <div className="ingredients">Ingredients: {recipe.Ingredients}</div>
+               </div>
+         </div>
     </div>
   )
 }
