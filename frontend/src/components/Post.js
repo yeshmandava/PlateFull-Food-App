@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { useNavigate } from "react-router-dom";
-import default_recipe_image from '../img/default_recipe_image.png'
+
+import "../stylesheets/Post.scss"
 import axios from 'axios'
 export default function Post({recipe, savedNames}) {
    let bp = require("./Path.js");
@@ -153,7 +154,6 @@ export default function Post({recipe, savedNames}) {
    }
   
    return (
-    <div className="postWrapper">
     <div className="post" onClick={checkClick}>
         <div className={isClicked ? "postWrapperSwapped" : "postWrapper"}>
             
@@ -170,23 +170,17 @@ export default function Post({recipe, savedNames}) {
                   </div>
                </div>
 
-            <div className="topRight">
-              <img className="postPhoto"  src={recipe.Image.myFile || default_recipe_image} alt=""/>
-            </div>
-
-          </div>
-
-          <div className="bottomHalf">
-            <div className="bottomLeft">
-              <div className="postTime">Time (hrs): {recipe.Time}</div>
-              <div className="postDifficulty">Difficulty: {recipe.Difficulty}/5</div>
-              <div className="postServes">Serves:</div> 
-            </div>
-            <div className="bottomRight">
-              <button className="postSaveButton" onClick={toggleStatus} >{saveMessage}</button>
-              <button onClick = {openFullRecipe}>Open Recipe</button>
-            </div>
-          </div>
+               <div className="bottomHalf">
+                  <div className="bottomLeft">
+                     <div className="postTime">Time (hrs): {recipe.Time}</div>
+                     <div className="postDifficulty">Difficulty: {recipe.Difficulty}/5</div>
+                     <div className="postServes">Serves:</div> 
+                  </div>
+                  <div className="bottomRight">
+                     <button className="postSaveButton" onClick={toggleStatus} >{saveMessage}</button>
+                     <button onClick = {openFullRecipe}>Open Recipe</button>
+                  </div>
+               </div>
         </div>
 
         <div className={isClicked ? "postWrapperBackSwapped" : "postWrapperBack"}>

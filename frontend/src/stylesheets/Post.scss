@@ -1,0 +1,203 @@
+.post
+{
+   width: 600px;
+   border-radius: 10px;
+   margin: 30px 30px;
+   flex-shrink:0;
+   position: relative;
+}
+
+
+/*.post:hover .postWrapper
+{
+    transform: rotateY(180Deg);
+    transform-style: preserve-3d;
+    transition: all 0.5s ease;
+    backface-visibility: hidden;
+}
+
+.post:hover .postWrapperBack
+{
+    transform: rotateY(0Deg);
+    transform-style: preserve-3d;
+    transition: all 0.5s ease;
+}*/
+
+
+.postWrapperSwapped
+{
+    padding: 0px;
+    height: 400px;
+    transform: rotateY(180Deg);
+    transform-style: preserve-3d;
+    transition: all 0.5s ease;
+    backface-visibility: hidden;
+}
+
+.postWrapperBackSwapped
+{
+    transform: rotateY(0Deg);
+    transform-style: preserve-3d;
+    transition: all 0.5s ease;
+    position: absolute;
+    width: 600px;
+    height:400px;
+    top: -5px;
+    backface-visibility: hidden;
+}
+
+.postWrapper
+{
+    padding: 0px;
+    height: 400px;
+    transform-style: preserve-3d;
+    transition: all 0.5s ease;
+    transform: rotateY(0Deg);
+    
+}
+
+.postTop
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.postCenter
+{
+    margin: 20px 0;
+}
+
+
+
+.topHalf
+{
+    display: flex;
+    height: 35%;
+    background-color: rgb(138, 138, 138);
+    align-items: center;
+}
+
+/*.postWrapper:active, .postWrapperBack:active
+{
+    transform-style: preserve-3d;
+    transition: all 0.5s ease;
+    transform: rotateY(180deg);
+    backface-visibility: hidden;
+}*/
+
+.postWrapperBack
+{
+    position: absolute;
+    transform: rotateY(180Deg);
+    transform-style: preserve-3d;
+    transition: all 0.5s ease;
+    backface-visibility: hidden;
+    background-color: green;
+    width: 600px;
+    height:400px;
+    top: -5px;
+    
+}
+
+.ingredients
+{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.topLeft
+{
+    width: 50%;
+    padding-left: 15px;
+
+}
+
+.topRight
+{
+    width: 50%;
+    text-align: right;
+    padding-right: 25px;
+}
+
+.postName
+{
+    border: none;
+    width: 80%;
+    padding-bottom: 25px;
+}
+
+.postDescription
+{
+    border: none;
+    width: 80%;
+}
+
+.postPhoto
+{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    
+
+}
+
+
+.bottomHalf
+{
+    height: 65%;
+    background-color: lightgray;
+    display: flex;
+    align-items: center;
+}
+
+.bottomLeft
+{
+    width: 50%;
+    padding-left: 15px;
+
+}
+
+.postTime
+{
+    border: none;
+    width: 80%;
+    padding-bottom: 25px;
+}
+
+.postDifficulty
+{
+    border: none;
+    width: 80%;
+    padding-bottom: 25px;
+}
+
+.postServes
+{
+    border: none;
+    width: 80%;
+    padding-bottom: 25px;
+}
+
+
+.bottomRight
+{
+    width: 50%;
+    text-align: right;
+    padding-right: 25px;
+
+}
+
+.postSaveButton
+{
+    width: 100px;
+    height: 50px;
+    border: none;
+    border-radius: 5px;
+    background-color: green;
+    font-weight: 500;
+    cursor: pointer;
+    color: white;
+}
