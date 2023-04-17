@@ -4,12 +4,12 @@ import Sidebar from "../components/Sidebar";
 import Feed from "../components/Feed";
 import Rightbar from "../components/Rightbar";
 
-import "../stylesheets/Home.css";
+import "../stylesheets/Home.scss";
 
 export default function Home() {
    
    return (
-    <div>
+    <div id='homepage'>
         <Topbar/>
         <div className="homeContainer">
           <Sidebar/>

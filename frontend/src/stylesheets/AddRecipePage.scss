@@ -1,121 +1,209 @@
-#ingredients ul > li
-{  
-    margin-bottom: 5px;
-    text-align: left;
+:root{
+   --offwhite: #FFFCF5;
+   --cream: #FFF6E0;
+   --red-light: #f5936c;
+   --shadow-red-light: #bb5c36;
+   --red: #DC4E33;
+   --gold:  #FEB346;
+   --shadow-gold: #b8812f;
+   --brown-light: #CB6E2D;
+   --shadow-brown-light: rgba(203, 111, 45, 0.391);
+   --brown-dark: #633729;
+   --green:#08a300;
 }
 
-#equipment ul > li
-{
-    
-    margin-bottom: 5px;
-    text-align: left;
-    width: 100% !important;
+.title-box{
+   display:inline-flex;
+   justify-content:center;
+   align-items:center;
+   width:90%;
+
+   padding:10px;
+   background:var(--brown-dark);
+   border: 5px solid black;
+   border-radius:5px;
+}
+.title-box-buttons{
+   flex:auto;
+   display:flex;
+   justify-content:flex-end;
 }
 
-#equipmentBox
-{
-    text-align: center;
-    width: 150px;
+
+#add-recipe-page{
+   overflow-x:hidden;
 }
-
-#instructions ol > li
-{
-    
-    margin-bottom: 10px;
-    text-align: left;
-    
-
+#add-form{
+   display:inline-block;
+   padding:0 !important;
+   width:90%;
 }
-
-#instructions ol
-{
-    text-align: center;
-    
-}
-
-#instructions
-{
-    width: 100%;
-}
-
-.recipeForm
-{
-    width: 75%;
-    align-self: center;
-    justify-self: center;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    
-}
-
-.recipeFormWrap
-{   
-    display: flex;
-    flex-direction: row;
-
-    width: 100%;
-}
-
-#add-equipment-button, #recipeName, #time, #ingredient, 
-#add-ingredient-button, #instruction, #add-instruction-button, #add-recipe-button
-{
-    text-align: center;
-    width: 150px;
-
-}
-
-#add-recipe-button
-{
-    align-self: center;
-}
-
-#difficulty
-{
-    width: 150px;
-}
-
-.recipeNameToDescription
-{
-    display: flex;
-    width: 50%;
-    flex-direction: column;
-    align-items: center;
-}
-
-#description
-{
-    max-width: 60%;
-    max-height: 400px;
-}
-
-.ingredientsToInstructions
-{
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    text-align:left;
-    width: 50%;
-    word-wrap: break-word;
-}
-
-.ingredientsToInstructions > h3
-{
-    margin-left: 120px;
-}
-
-.boxAndButton
-{
-    display: flex;
-    gap: 10px;
-}
-
-#add-form > .slider{
-   grid-auto-columns: 30% !important;
-}
-#add-form > .snaps-inline > * {
-   scroll-snap-align:center !important;
-}
-#add-form .form-card form{
+#add-form .form-card{
    width:100%;
 }
+#add-form form{
+   display:inline-block;
+   padding:30px;
+   input[type=text], textarea, .form-heading, select{
+      width:100%;
+      display:block;
+      text-align:center;
+   }
+   img{
+      width:50%
+   }
+}
+
+
+#add-form ul{
+   display:flex;
+   flex-wrap:wrap;
+   width:100%;
+}
+#add-form li{
+   padding:15px;
+   list-style:none;
+}
+// swiper stuff
+.swiper-container {
+   width: 90%;
+   height: 100%;
+   text-align:center;
+ }
+ 
+ .swiper-slide {
+   font-size: 18px;
+   
+   /* Center slide text vertically */
+   display: flex;
+   justify-content: center;
+   align-items: center;
+ }
+ .swiper-slide  {
+   display: block;
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   cursor:grab;
+ }
+
+ .swiper-pagination-progressbar-fill{
+   background:var(--green) !important;
+ }
+
+ .swiper-button-next, .swiper-button-prev{
+   color:black;
+ }
+ .submit-done{
+   background-color:var(--green);
+ }
+ // #ingredients ul > li
+// {  
+//     margin-bottom: 5px;
+//     text-align: left;
+// }
+
+// #equipment ul > li
+// {
+//    margin-bottom: 5px;
+//    text-align: left;
+//    width: 100% !important;
+// }
+
+// #equipmentBox
+// {
+//     text-align: center;
+//     width: 150px;
+// }
+
+// #instructions ol > li
+// {
+    
+//     margin-bottom: 10px;
+//     text-align: left;
+    
+
+// }
+
+// #instructions ol
+// {
+//     text-align: center;
+    
+// }
+
+// #instructions
+// {
+//     width: 100%;
+// }
+
+// .recipeForm
+// {
+//     width: 75%;
+//     align-self: center;
+//     justify-self: center;
+//     margin: 0 auto;
+//     display: flex;
+//     flex-direction: column;
+    
+// }
+
+// .recipeFormWrap
+// {   
+//     display: flex;
+//     flex-direction: row;
+
+//     width: 100%;
+// }
+
+// #add-equipment-button, #recipeName, #time, #ingredient, 
+// #add-ingredient-button, #instruction, #add-instruction-button, #add-recipe-button
+// {
+//     text-align: center;
+//     width: 150px;
+
+// }
+
+// #add-recipe-button
+// {
+//     align-self: center;
+// }
+
+// #difficulty
+// {
+//     width: 150px;
+// }
+
+// .recipeNameToDescription
+// {
+//     display: flex;
+//     width: 50%;
+//     flex-direction: column;
+//     align-items: center;
+// }
+
+// #description
+// {
+//     max-width: 60%;
+//     max-height: 400px;
+// }
+
+// .ingredientsToInstructions
+// {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: left;
+//     text-align:left;
+//     width: 50%;
+//     word-wrap: break-word;
+// }
+
+// .ingredientsToInstructions > h3
+// {
+//     margin-left: 120px;
+// }
+
+// .boxAndButton
+// {
+//     display: flex;
+//     gap: 10px;
+// }

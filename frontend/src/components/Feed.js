@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react'
-import "../stylesheets/Home.css";
+import "../stylesheets/Home.scss";
 import Share from "./Share"
 import PostList from './PostList'
 
@@ -65,8 +65,8 @@ export default function Feed() {
       setQuery(event.target.value)
    }
    return (
-      <div className="feed">
       <div className="feedWrapper">
+      <div className="feed">
          <form id='search-form'>
             <input type="text" placeholder="Search" ref={searchRef} onChange={handleSearch}/>
          </form>

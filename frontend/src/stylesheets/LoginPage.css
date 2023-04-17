@@ -182,8 +182,7 @@ body{
    flex-direction:column;
    justify-content:center;
    align-items:center;
-   text-align:center;
-   
+   text-align:center !important;
    box-sizing:border-box;
    width:100%;
    padding:10px;
@@ -237,16 +236,17 @@ body{
 
 
 form{
-   width:600px;
+   display:block;
+   width:100%;
    max-width:80%;
    background:var(--offwhite);
    padding:20px 10px;
-   margin:30px;
+   margin:30px !important;
    border: 4px solid black;
    box-shadow: 7px 7px black;
 }
 form > input, form> textarea{
-   width:80%;
+   display:block !important;
 }
 
 

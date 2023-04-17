@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useNavigate } from "react-router-dom";
-
-import "../stylesheets/Post.css"
+import default_recipe_image from '../img/default_recipe_image.png'
 import axios from 'axios'
 export default function Post({recipe, savedNames}) {
    let bp = require("./Path.js");
@@ -147,8 +146,8 @@ export default function Post({recipe, savedNames}) {
    }
   
    return (
-    <div className="post">
-        <div className="postWrapper">
+    <div className="postWrapper">
+        <div className="post">
 
           <div className="topHalf">
             <div className="topLeft">
@@ -159,7 +158,7 @@ export default function Post({recipe, savedNames}) {
             </div>
 
             <div className="topRight">
-              <img className="postPhoto"  src="https://static.wikia.nocookie.net/kenneths-td-big-brother/images/0/01/TDBB8Logo.png" alt=""/>
+              <img className="postPhoto"  src={recipe.Image.myFile || default_recipe_image} alt=""/>
             </div>
 
           </div>

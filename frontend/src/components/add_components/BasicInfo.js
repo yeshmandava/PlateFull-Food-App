@@ -3,9 +3,6 @@ import React, {useState, useEffect} from 'react'
 export default function BasicInfo({defaultName, defaultDesc, basicSetter, imageSetter}) {
    
    const [postImage, setPostImage] = useState( { myfile : ''})
-   const handleSubmit = (event) =>{
-      event.preventDefault();
-   }
 
    const handleFileUpload = async (event) =>{
       const file = event.target.files[0]
@@ -15,11 +12,18 @@ export default function BasicInfo({defaultName, defaultDesc, basicSetter, imageS
 
    let nameRef = '';
    let descRef = '';
+   let submitRef = '';
 
    function transferInfo(event)
    {
       event.preventDefault();
+      if (nameRef.value === '' || descRef.value ==='')
+      {
+         alert('Please fill out all fields.')
+         return;
+      }
       basicSetter(nameRef.value, descRef.value)
+      submitRef.value = 'Done';
    }
 
    useEffect(() => {
@@ -27,10 +31,25 @@ export default function BasicInfo({defaultName, defaultDesc, basicSetter, imageS
    },[postImage])
 
    return (
-    <div className='form-card'>
-      <form>
-         <input type='text' ref={(c) => nameRef = c} placeholder={defaultName}></input>
-         <textarea ref={(c) => descRef = c} placeholder={defaultDesc}></textarea>
+    <div className="form-card text-center">
+      <form className='text-start'>
+         <h4 className='form-heading mb-3'>Basic Info</h4>
+         <label for='recipe-name'>Choose a Recipe Name</label>
+         <input 
+         type='text' 
+         ref={(c) => 
+         nameRef = c} 
+         name='recipe-name' 
+         placeholder={defaultName} 
+         className='mb-3'/>
+
+         <label for='recipe-description'>Write a Description</label>
+         <textarea 
+         ref={(c) => descRef = c} 
+         placeholder={defaultDesc}
+         className='mb-3'></textarea>
+         
+         <label for='recipe-image'>Pick an Image</label>
          <input 
             type='file' 
             label='Image' 
@@ -38,9 +57,10 @@ export default function BasicInfo({defaultName, defaultDesc, basicSetter, imageS
             id='file-upoload' 
             accept='.jpeg, .png ,.jpg' 
             onChange={(handleFileUpload)}
+            className='mb-1'
          />
-         <input type='submit' className='btn btn-dark my-2' onClick={transferInfo}></input>
          <img src={postImage.myFile} alt="recipe image" />
+         <input type='submit' className='btn btn-dark my-2' ref={(c) => submitRef = c} onClick={transferInfo}/>
 
       </form>
     </div>

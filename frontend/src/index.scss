@@ -1,3 +1,15 @@
+:root{
+   --offwhite: #FFFCF5;
+   --cream: #FFF6E0;
+   --red-light: #f5936c;
+   --shadow-red-light: #bb5c36;
+   --red: #DC4E33;
+   --gold:  #FEB346;
+   --shadow-gold: #b8812f;
+   --brown-light: #CB6E2D;
+   --shadow-brown-light: rgba(203, 111, 45, 0.391);
+   --brown-dark: #633729;
+}
 body {
 	margin: 0;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -120,4 +132,28 @@ code {
   to {
     transform: rotateY(360deg);
   }
+}
+
+
+/* modular bootstrap style classes */
+.text-white{
+   color:white;
+}
+.bg-brown-light{
+   background-color:var(--brown-light);
+}
+.bg-cream{
+   background-color:var(--cream);
+}
+
+.fill-screen{
+   height:100vh;
+   width:100vw;
+}
+
+
+.btn-red{
+   background:var(--red);
+   border: 5px solid black;
+   border-radius: 10px;
 }

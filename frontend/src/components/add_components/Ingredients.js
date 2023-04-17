@@ -7,8 +7,13 @@ export default function Ingredients({ingredientSetter}) {
    // adds curent contents of Ingredient input into Ingredient list
    function addToList(event)
    {
-      event.preventDefault();
       
+      event.preventDefault();
+      if (ingredientRef.value.trim()==='')
+      {
+         alert('Please enter an ingredient')
+         return
+      }
       changeList(prevList =>{
          return [...prevList, ingredientRef.value]
       });
@@ -21,10 +26,13 @@ export default function Ingredients({ingredientSetter}) {
    },[ingredientList])
 
    return (
-    <div className='form-card'>
-      <form>
-         <input type='text' ref={(c) => ingredientRef = c} placeholder='Ingredient'></input>
-         <input type='submit' className='btn btn-dark my-2' onClick={addToList}></input>
+    <div className='form-card text-center'>
+      <form className='text-start'>
+         <h4 className='form-heading mb-3'>Ingredients</h4>
+
+         <label>Add your ingredients</label>
+         <input type='text' ref={(c) => ingredientRef = c} placeholder='Ingredient' className='mb-3'/>
+         <input type='submit' className='btn btn-dark my-2' onClick={addToList}/>
          <ul>
          {
             ingredientList.map(ingredient =>{

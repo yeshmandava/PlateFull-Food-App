@@ -1,15 +1,34 @@
 import React, {useState} from 'react';
-
-
+import {useNavigate} from 'react-router-dom'
 import BasicInfo from './BasicInfo'
 import TimeDiff from './TimeDiff'
 import Ingredients from './Ingredients'
 import Equipment from './Equipment'
 import Instructions from './Instructions'
 
+
 import axios from 'axios';
 
+// swiper imports
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/swiper.min.css"
+import "swiper/css/navigation"
+import "swiper/css/pagination"
+
+
+// import Swiper core and required modules
+import SwiperCore, {
+  Pagination,Navigation
+} from 'swiper/core';
+
+// install Swiper modules
+SwiperCore.use([Pagination,Navigation]);
+
 export default function NewRecipe(){
+   const navigate = useNavigate();
+
    // const [recName, changeName] = useState('')
    // const [recDesc, changeDesc] = useState('')
    // const [recTime, changeTime] = useState('')
@@ -44,7 +63,27 @@ export default function NewRecipe(){
       // let ingredients = JSON.stringify(recIngredients);
       // let equipment = JSON.stringify(recEquipment);
       // let instructions = JSON.stringify(recInstructions);
-      
+      if (!recName || !recDesc || !recTime || !recImage || !recTime || 
+          !recDiff || recIngredients.length==0  || recEquipment.length==0 || recInstructions.length==0 )
+      {
+         let object = 
+      {
+        userId:userId,
+        recipeName:recName,
+        time:recTime,
+        difficulty:recDiff,
+        description:recDesc,
+        ingredients:recIngredients,
+        equipment:recEquipment,
+        instructions:recInstructions,
+        image:recImage,
+        jwtToken: storage.retrieveToken()
+      }
+      console.log(object);
+         alert('Please go back and fill all sections.')
+         return
+      }
+
       let obj = 
       {
         userId:userId,
@@ -81,6 +120,7 @@ export default function NewRecipe(){
             else
             {
                setMessage('New Recipe Posted');
+               setTimeout(navigate, 2000, '/home')
             }
          })
          .catch(function(error)
@@ -100,11 +140,10 @@ export default function NewRecipe(){
    }
    function addImage(newImage){
       recImage = newImage
-      console.log(recImage)
    }
-   function addTimeDiff(newTime, newDiff)
+   function addTimeDiff(newHrs, newMins, newDiff)
    {
-      recTime = newTime
+      recTime = [newHrs, newMins]
       recDiff = newDiff
       console.log(recTime)
       console.log(recDiff)
@@ -123,25 +162,53 @@ export default function NewRecipe(){
    {
       recInstructions = newInstruction
    }
+
    return(
       // BasicInfo: recipe name + description
       // TimeExp: time, difficulty
       // Ingredients: ingredients
       // Equipment:
       // Instruction:instructions
-      <section id='add-form' >
-         <div className='slider snaps-inline'>
-            <BasicInfo defaultName='Recipe Name' defaultDesc='Recipe Description' basicSetter={addBasicInfo} imageSetter={addImage}/>
-            <TimeDiff defaultTime='Time in Hrs' timeDiffSetter={addTimeDiff}/>
-            <Ingredients ingredientSetter={addIngredients}/>
-            <Equipment equipmentSetter={addEquipment}/>
-            <Instructions instructionSetter={addInstruction}/>
-         </div>
-         <button onClick={addRecipe}>Add New Recipe</button>
-         <span>{message}</span>
+      <section id='add-form'>
+         <Swiper 
+         pagination={{"type": "progressbar"}} 
+         navigation={true} 
+         className="mySwiper">
+            <SwiperSlide>
+               <BasicInfo 
+               defaultName='Recipe Name' 
+               defaultDesc='Recipe Description' 
+               basicSetter={addBasicInfo} 
+               imageSetter={addImage}
+               />
+            </SwiperSlide>
+            <SwiperSlide>
+               <TimeDiff 
+               defaultHrs='Hours' 
+               defaultMins='Minutes'
+               timeDiffSetter={addTimeDiff}
+               />
+            </SwiperSlide>
+            <SwiperSlide>
+               <Ingredients ingredientSetter={addIngredients}/>
+            </SwiperSlide>
+            <SwiperSlide>
+               <Equipment equipmentSetter={addEquipment}/>
+            </SwiperSlide>
+            <SwiperSlide>
+               <Instructions instructionSetter={addInstruction}/>
+            </SwiperSlide>
+            <SwiperSlide >
+               <div className='form-card text-center'>
+                  <form className='text-center'>
+                     <button className='btn btn-dark' onClick={addRecipe}>Add New Recipe</button>
+                     <h1>{message}</h1>
+                  </form>
+               </div>
+            </SwiperSlide>
+         </Swiper>
+         
       </section>
       
    );   
-        
-    
 }

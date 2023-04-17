@@ -1,4 +1,35 @@
-.post
+.homeContainer
+{
+    display: flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    width: 100%;
+    height: 100%;
+}
+.feedWrapper
+{
+   width:100%;
+   max-height:100vh;
+   overflow-y:scroll;
+
+   padding: 20px 40px;
+}
+.feed
+{
+   width:100%;
+   display:flex;
+   flex-direction:column;
+   justify-content:center;
+   align-items:center;
+}
+
+#homepage form > input[type=text]{
+      width:100% !important;
+}
+
+/************************* Post Stuff ******************************/
+.postWrapper
 {
    display:inline-block;
    width: 600px;
@@ -8,7 +39,7 @@
    flex-shrink:0;
 }
 
-.postWrapper
+.post
 {
     padding: 0px;
     height: 400px;
@@ -46,7 +77,8 @@
 
 .topRight
 {
-    width: 50%;
+   height:100%; 
+   width: 50%;
     text-align: right;
     padding-right: 25px;
 }
@@ -64,13 +96,9 @@
     width: 80%;
 }
 
-.postPhoto
-{
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    
-
+.post img{
+   height:100%; 
+   object-fit:cover;
 }
 
 

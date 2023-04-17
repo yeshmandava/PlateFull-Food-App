@@ -11,7 +11,9 @@ const LoginPage = () =>
   
   return(
     <div>
-      {<div className="side-panel" option={option}/>}
+      <div className="side-panel" option={option}>
+         
+      </div>
       <div className="container-lg floating-container text-center">
         <div id ="info" className='text-center' option={option}>
           <h2 id="site-title" className="mt-5 mb-3">Welcome to Platefull</h2>

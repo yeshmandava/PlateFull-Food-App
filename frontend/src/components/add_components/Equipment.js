@@ -8,7 +8,11 @@ export default function Equipment({equipmentSetter}) {
    function addToList(event)
    {
       event.preventDefault();
-      
+      if (equipmentRef.value.trim()==='')
+      {
+         alert('Please enter an piece of equipment')
+         return
+      }
       changeList(prevList =>{
          return [...prevList, equipmentRef.value]
       });
@@ -21,10 +25,13 @@ export default function Equipment({equipmentSetter}) {
    },[equipmentList])
 
    return (
-    <div className='form-card'>
-      <form>
-         <input type='text' ref={(c) => equipmentRef = c} placeholder='Equpipment'></input>
-         <input type='submit' className='btn btn-dark my-2' onClick={addToList}></input>
+    <div className='form-card text-center'>
+      <form className='text-start'>
+         <h4 className='form-heading mb-3'>Equipment</h4>
+
+         <label>What equipment do you need?</label>
+         <input type='text' ref={(c) => equipmentRef = c} placeholder='Equipment' className='mb-3'/>
+         <input type='submit' className='btn btn-dark my-2' onClick={addToList}/>
          <ul>
          {
             equipmentList.map(equipment =>{

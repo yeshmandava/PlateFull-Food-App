@@ -8,7 +8,11 @@ export default function Instructions({instructionSetter}) {
    function addToList(event)
    {
       event.preventDefault();
-      
+      if (instructionRef.value.trim()==='')
+      {
+         alert('Please enter an instruction')
+         return
+      }
       changeList(prevList =>{
          return [...prevList, `Step ${instructionList.length + 1}: ${instructionRef.value}`]
       });
@@ -23,6 +27,7 @@ export default function Instructions({instructionSetter}) {
    return (
     <div className='form-card'>
       <form>
+         <h4 className='form-heading mb-3'>Instructions</h4>
          <input type='text' ref={(c) => instructionRef = c} placeholder='Instruction'></input>
          <input type='submit' className='btn btn-dark my-2' onClick={addToList}></input>
          <ul>
