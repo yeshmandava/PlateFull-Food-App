@@ -255,7 +255,7 @@ app.post('/api/forgotPassword', async (req, res) => {
       },
     });
 
-    const resetLink = `http://localhost:5000/api/reset-password/${resetToken}`;
+    const resetLink = `http://large-project-poos.herokuapp.com/api/reset-password/${resetToken}`;
     const mailOptions = {
       from: 'PlateFull111@outlook.com',
       to: email,
