@@ -123,7 +123,7 @@ exports.setApp = function(app,client)
           },
         });
     
-        const verificationLink = `http://localhost:5000/verify?token=${verificationToken}`;
+        const verificationLink = `http://large-project-poos.herokuapp.com/verify?token=${verificationToken}`;
         const mailOptions = {
           from: 'PlateFull111@outlook.com',
           to: email,
@@ -255,7 +255,7 @@ app.post('/api/forgotPassword', async (req, res) => {
       },
     });
 
-    const resetLink = `http://localhost:5000/api/reset-password/${resetToken}`;
+    const resetLink = `http://large-project-poos.herokuapp.com/api/reset-password/${resetToken}`;
     const mailOptions = {
       from: 'PlateFull111@outlook.com',
       to: email,
