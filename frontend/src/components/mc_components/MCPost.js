@@ -4,7 +4,6 @@ import '../../stylesheets/MCPost.css'
 import default_recipe_image from '../../img/default_recipe_image.png'
 export default function MCPost({recipe, isPoster}) {
    let bp = require("../Path.js");
-   const [saveStatus, setStatus] = useState("Save Status")
    const navigate = useNavigate();
    
    const ud = JSON.parse(localStorage.getItem('user_data'))
