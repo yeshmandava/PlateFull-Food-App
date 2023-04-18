@@ -148,7 +148,6 @@ export default function ButtonBox({recipe}) {
          {
             console.log(error)
          })
-      // setMessage('Unsave')
    }
 
    // removes the association between the current user and a recipe
@@ -162,6 +161,7 @@ export default function ButtonBox({recipe}) {
          recipeId:recipe._id,
          jwtToken:storage.retrieveToken() 
       }
+      console.log(obj)
       let js = JSON.stringify(obj)
       let config = 
       {
@@ -185,7 +185,6 @@ export default function ButtonBox({recipe}) {
                storage.storeToken(res.jwtToken);
                setSave(false)
                console.log('unsave')
-
             }
          })
          .catch(function (error)
