@@ -171,7 +171,6 @@ export default function Post({recipe, savedNames}) {
                <div className="bottomHalfOne">
                   <div className="postTime">Time (hrs): {recipe.Time}</div>
                   <div className="postDifficulty">Difficulty: {recipe.Difficulty}/5</div>
-                  <div className="postServes">Serves: {recipe.Serves}</div> 
                </div>
                <div className="bottomHalfTwo">
                   <button className="btn btn-green me-3" onClick={toggleStatus} >{saveMessage}</button>
@@ -189,7 +188,7 @@ export default function Post({recipe, savedNames}) {
                   <div key={index}>{ingredient}</div>
         ))}
 
-                     {recipe.Ingredients}</div>
+                    </div>
                </div>
 
                <div className="wall"></div>
@@ -201,7 +200,7 @@ export default function Post({recipe, savedNames}) {
                   <div key={index}>{equipment}</div>
         ))}
 
-                     {recipe.Equipment}</div>
+                     </div>
 
                </div>
             </div>
