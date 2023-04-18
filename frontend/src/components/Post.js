@@ -168,34 +168,43 @@ export default function Post({recipe, savedNames}) {
                </div>
 
                <div className="bottomHalf">
-                  <div className="bottomLeft">
-                     <div className="postTime">Time (hrs): {recipe.Time}</div>
-                     <div className="postDifficulty">Difficulty: {recipe.Difficulty}/5</div>
-                     <div className="postServes">Serves:</div> 
-                  </div>
-                  <div className="bottomRight">
-                     <button className="postSaveButton" onClick={toggleStatus} >{saveMessage}</button>
-                     <button onClick = {openFullRecipe}>Open Recipe</button>
-                  </div>
+               <div className="bottomHalfOne">
+                  <div className="postTime">Time (hrs): {recipe.Time}</div>
+                  <div className="postDifficulty">Difficulty: {recipe.Difficulty}/5</div>
+                  <div className="postServes">Serves: {recipe.Serves}</div> 
                </div>
+               <div className="bottomHalfTwo">
+                  <button className="postSaveButton" onClick={toggleStatus} >{saveMessage}</button>
+                  <button className="postOpenButton" onClick = {openFullRecipe}>Open Recipe</button>
+               </div>
+            </div>
         </div>
 
         <div className={isClicked ? "postWrapperBackSwapped" : "postWrapperBack"}>
-            <div className="topHalf">
-               <div className="topLeft">
-                  <div className="postName">Recipe: {recipe.RecipeName}</div>
-                  <div className="postDescription">
-                     Description: {recipe.Description}
-                  </div>
+            <div className="backCard">
+               <div className= "backLeft">
+                  <h2 className="backTitle">Ingredients</h2>
+                  <div className="ingredients">
+                  {recipe.Ingredients.map((ingredient, index) => (
+                  <div key={index}>{ingredient}</div>
+        ))}
+
+                     {recipe.Ingredients}</div>
                </div>
 
-               <div className="topRight">
-                  <img className="postPhoto"  src="https://static.wikia.nocookie.net/kenneths-td-big-brother/images/0/01/TDBB8Logo.png" alt=""/>
+               <div className="wall"></div>
+
+               <div className= "backRight">
+                  <h2 className="backTitle">Equipment</h2>
+                  <div className="equipment">
+                  {recipe.Equipment.map((equipment, index) => (
+                  <div key={index}>{equipment}</div>
+        ))}
+
+                     {recipe.Equipment}</div>
+
                </div>
             </div>
-            <div className="bottomHalf">
-                     <div className="ingredients">Ingredients: {recipe.Ingredients}</div>
-               </div>
          </div>
     </div>
   )
