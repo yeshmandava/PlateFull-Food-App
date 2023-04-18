@@ -64,7 +64,7 @@
     width: 80%;
 }
 
-.mc-postPhoto
+.mc-postPhoto, .postPhoto
 {
     width: 100px;
     height: 100px;

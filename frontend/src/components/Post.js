@@ -174,8 +174,8 @@ export default function Post({recipe, savedNames}) {
                   <div className="postServes">Serves: {recipe.Serves}</div> 
                </div>
                <div className="bottomHalfTwo">
-                  <button className="postSaveButton" onClick={toggleStatus} >{saveMessage}</button>
-                  <button className="postOpenButton" onClick = {openFullRecipe}>Open Recipe</button>
+                  <button className="btn btn-green me-3" onClick={toggleStatus} >{saveMessage}</button>
+                  <button className="btn btn-gold" onClick = {openFullRecipe}>Open Recipe</button>
                </div>
             </div>
         </div>

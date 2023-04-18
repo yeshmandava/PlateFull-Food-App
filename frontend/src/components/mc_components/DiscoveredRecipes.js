@@ -58,7 +58,7 @@ export default function DiscoveredRecipes()
       return(
          <div id="discovered-recipes" className="my-3">
             <div className="slider snaps-inline">
-               <MCPostList recipeList = {recipeList} isPoster={false}/>
+               {recipeList && <MCPostList recipeList = {recipeList} isPoster={false}/>}
             </div>
          </div>
       )

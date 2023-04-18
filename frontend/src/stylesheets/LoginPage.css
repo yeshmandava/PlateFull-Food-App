@@ -27,8 +27,8 @@ body{
 }
 /* wrapper for the register box and buttons */
 #site-title{
-   background:var(--offwhite);
-       border: 5px solid var(--brown-dark);
+   background:var(--brown-light);
+   border: 2px solid black;
 
 }
 #info{

@@ -16,8 +16,6 @@ const LoginPage = () =>
       </div>
       <div className="container-lg floating-container text-center">
         <div id ="info" className='text-center' option={option}>
-          <h2 id="site-title" className="mt-5 mb-3">Welcome to Platefull</h2>
-          <img src="../img/sample-logo.png" alt="logo"/>
           {showLogin && <Login option={option}/>}
           {showRegister && <Register option={option}/>} 
           <div className="button-box">
