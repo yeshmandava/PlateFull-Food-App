@@ -7,7 +7,8 @@ export default function BasicInfo({defaultName, defaultDesc, basicSetter, defaul
    const handleFileUpload = async (event) =>{
       const file = event.target.files[0]
       const base64 = await(convertToBase64(file))
-      setPostImage({...postImage, myFile : base64})
+      setPostImage({...postImage, myFile : base64.slice("data:image/jpeg;base64,".length)})
+      console.log(base64)
    }
 
    let nameRef = '';

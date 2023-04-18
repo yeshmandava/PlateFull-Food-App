@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { useNavigate } from "react-router-dom";
 
+import default_recipe_image from '../img/default_recipe_image.png'
 import "../stylesheets/Post.scss"
 import axios from 'axios'
 export default function Post({recipe, savedNames}) {
@@ -162,7 +163,7 @@ export default function Post({recipe, savedNames}) {
                   </div>
 
                   <div className="topRight">
-                     <img className="postPhoto"  src="https://static.wikia.nocookie.net/kenneths-td-big-brother/images/0/01/TDBB8Logo.png" alt=""/>
+                     <img className="postPhoto"  src={("data:image/jpeg;base64," + recipe.Image.myFile) || default_recipe_image}alt=""/>
                   </div>
                </div>
 

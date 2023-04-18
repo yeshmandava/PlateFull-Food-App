@@ -35,7 +35,7 @@ export default function MCPost({recipe, isPoster}) {
             </div>
          
             <div className="photo-wrapper">
-              <img className='mc-postPhoto' src={recipe.Image.myFile || default_recipe_image} alt="recipe image"/>
+              <img className='mc-postPhoto' src={("data:image/jpeg;base64," + recipe.Image.myFile) || default_recipe_image} alt="recipe image"/>
             </div>
          </div>
          

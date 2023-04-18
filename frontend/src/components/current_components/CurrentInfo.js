@@ -38,7 +38,7 @@ export default function CurrentInfo({recipe}) {
       >
          <SwiperSlide>
             <div className = 'slide-container'>
-               <img src={recipe.Image.myFile || default_recipe_image} alt = "recipe image" />
+               <img src={("data:image/jpeg;base64," + recipe.Image.myFile) || default_recipe_image} alt = "recipe image" />
             </div>
          </SwiperSlide>
          <SwiperSlide>
