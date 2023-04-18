@@ -171,7 +171,6 @@ export default function Post({recipe, savedNames}) {
                <div className="bottomHalfOne">
                   <div className="postTime">Time (hrs): {recipe.Time}</div>
                   <div className="postDifficulty">Difficulty: {recipe.Difficulty}/5</div>
-                  <div className="postServes">Serves: {recipe.Serves}</div> 
                </div>
                <div className="bottomHalfTwo">
                   <button className="postSaveButton" onClick={toggleStatus} >{saveMessage}</button>
