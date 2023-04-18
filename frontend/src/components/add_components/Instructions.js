@@ -30,7 +30,7 @@ export default function Instructions({defaultList, instructionSetter}) {
     <div className='form-card'>
       <form>
          <h4 className='form-heading mb-3'>Instructions</h4>
-         <input type='text' ref={(c) => instructionRef = c} placeholder='Instruction'></input>
+         <textarea ref={(c) => instructionRef = c} placeholder='Instruction'></textarea>
          <input type='submit' className='btn btn-dark my-2' onClick={addToList}></input>
          <div className='text-center'>
             <button className='btn btn-gold' onClick={clearList}>Clear Ingredients</button>
@@ -39,7 +39,7 @@ export default function Instructions({defaultList, instructionSetter}) {
          {
             instructionList.map((equipment, index)=>{
                return(
-                  <li>Step {index + 1} : {equipment}</li>
+                  <div><li>Step {index + 1} : {equipment}</li></div>
                )
             })
          }

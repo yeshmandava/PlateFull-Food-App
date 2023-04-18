@@ -24,7 +24,7 @@ export default function Sidebar() {
             <Link to='#' className='menu-bars'>
                <AiIcons.AiOutlineClose />
             </Link>
-         <img className="sidebarTopImg" src="https://static.wikia.nocookie.net/kenneths-td-big-brother/images/b/b7/ByronS8.png" alt=""/> 
+         {/* <img className="sidebarTopImg" src="https://static.wikia.nocookie.net/kenneths-td-big-brother/images/b/b7/ByronS8.png" alt=""/>  */}
          </div>
          
          <hr className="sidebarHr"/>

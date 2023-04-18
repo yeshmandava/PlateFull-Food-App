@@ -74,10 +74,10 @@ export default function AddRecipePage(){
    }
    const navigate = useNavigate();
    return(
-        <div id='edit-recipe-page' className="fill-screen bg-brown-light">
+        <div id='edit-recipe-page' className="fill-screen bg-red-light">
             <Topbar />
-            <div className="fill-screen bg-brown-light">
-               <div className='container-xl text-center my-5 pb-5 bg-brown-light' >
+            <div className="fill-screen bg-red-light">
+               <div className='container-xl text-center my-5 pb-5 bg-red-light' >
                   <div className='title-box text-center mb-3'>
                      <h1 className='text-white d-block text-center me-2'>Edit Recipe</h1>
                      <button className='btn btn-gold' onClick={deleteRecipe}>{deleteMessage}</button> 

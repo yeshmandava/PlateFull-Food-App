@@ -53,7 +53,7 @@
       text-align:center;
    }
    textarea{
-      height:200px !important;
+      height:150px !important;
    }
    img{
       width:50%
@@ -71,6 +71,9 @@
    width:100%;
 }
 #add-form li{
+   word-wrap:normal !important;
+   display:inline-block;
+   max-width:100% !important;
    padding:15px;
    list-style:none;
 }

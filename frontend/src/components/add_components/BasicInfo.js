@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 
 export default function BasicInfo({defaultName, defaultDesc, basicSetter, defaultImage, imageSetter}) {
    
-   const [postImage, setPostImage] = useState( { myfile : ''})
+   const [postImage, setPostImage] = useState( {myfile : ''} )
 
    const handleFileUpload = async (event) =>{
       const file = event.target.files[0]

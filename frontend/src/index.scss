@@ -147,6 +147,9 @@ code {
 .bg-cream{
    background-color:var(--cream);
 }
+.bg-red-light{
+   background-color: var(--red-light)
+}
 
 .fill-screen{
    height:100vh;
@@ -164,19 +167,19 @@ code {
 }
 .btn-red{
    background:var(--red)!important;
-   border: 5px solid black!important;;
-   border-radius: 10px!important;;
+   border: 2px solid black!important;
+   border-radius: 10px!important;
 }
 
 .btn-green{
-   background:var(--green)!important;;
-   border: 5px solid black!important;;
-   border-radius: 10px!important;;
+   background:var(--green)!important;
+   border: 2px solid black!important;
+   border-radius: 10px!important;
 }
 .btn-gold{
-   background:var(--gold)!important;;
-   border: 5px solid black!important;;
-   border-radius: 10px!important;;
+   background:var(--gold)!important;
+   border: 2px solid black!important;
+   border-radius: 10px!important;
 }
 
 // swiper stuff
