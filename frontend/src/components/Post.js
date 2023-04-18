@@ -188,7 +188,7 @@ export default function Post({recipe, savedNames}) {
                   <div key={index}>{ingredient}</div>
         ))}
 
-                     {recipe.Ingredients}</div>
+                    </div>
                </div>
 
                <div className="wall"></div>
@@ -200,7 +200,7 @@ export default function Post({recipe, savedNames}) {
                   <div key={index}>{equipment}</div>
         ))}
 
-                     {recipe.Equipment}</div>
+                     </div>
 
                </div>
             </div>
