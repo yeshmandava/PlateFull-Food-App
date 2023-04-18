@@ -26,7 +26,7 @@ export default function EditForm() {
    const [equipmentList, setEquipment] = useState([]);
    const [instructionList, setInstructions] = useState([]);
    // function that registers new user
-   const addRecipe = async event =>
+   const editRecipe = async event =>
    {
       event.preventDefault();
       var ingredients = JSON.stringify(ingredientList);
@@ -55,7 +55,7 @@ export default function EditForm() {
       let config = 
       {
          method: "post",
-         url: bp.buildPath("api/addrecipe"),
+         url: bp.buildPath("api/editrecipe"),
          headers: {
          "Content-Type": "application/json",
          },
@@ -85,7 +85,7 @@ export default function EditForm() {
     return(
         <div>
             <h2>Edit Recipe</h2>
-            <form onSubmit={addRecipe}>
+            <form onSubmit={editRecipe}>
                
                <input type="text" id="recipeName" ref={(c) => recipeName = c} placeholder={currentRecipe.RecipeName} />
                <br />
@@ -168,8 +168,8 @@ export default function EditForm() {
       
                <br />
                <br />
-               <button onClick={addRecipe} value="Add recipe">
-                  add recipe
+               <button onClick={editRecipe} value="Edit recipe">
+                  Edit Recipe
                </button>
                <span>{message}</span>
                

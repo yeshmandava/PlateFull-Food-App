@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 
-export default function Ingredients({ingredientSetter}) {
-   const [ingredientList, changeList] = useState([])
+export default function Ingredients({defaultList, ingredientSetter}) {
+   const [ingredientList, changeList] = useState(defaultList)
    let ingredientRef = '';
    
    // adds curent contents of Ingredient input into Ingredient list
@@ -20,11 +20,15 @@ export default function Ingredients({ingredientSetter}) {
    }
 
    // updates list in NewRecipe Parent
+   
    useEffect(() =>{
       ingredientSetter(ingredientList)
       ingredientRef.value = '';
    },[ingredientList])
-
+   
+   function clearList(){
+      changeList([]);
+   }
    return (
     <div className='form-card text-center'>
       <form className='text-start'>
@@ -32,7 +36,11 @@ export default function Ingredients({ingredientSetter}) {
 
          <label>Add your ingredients</label>
          <input type='text' ref={(c) => ingredientRef = c} placeholder='Ingredient' className='mb-3'/>
+         
          <input type='submit' className='btn btn-dark my-2' onClick={addToList}/>
+         <div className='text-center'>
+            <button className='btn btn-gold' onClick={clearList}>Clear Ingredients</button>
+         </div>
          <ul>
          {
             ingredientList.map(ingredient =>{

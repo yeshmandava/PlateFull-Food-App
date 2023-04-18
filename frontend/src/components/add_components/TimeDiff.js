@@ -21,15 +21,20 @@ export default function TimeDiff({defaultHrs, defaultMins, timeDiffSetter}) {
          <form className='text-start'>
             <h4 className='form-heading mb-3'>Time and Difficulty</h4>
             <label>How long does it take?</label>
-            <input type='number' ref={(c) => hourRef = c} placeholder={defaultHrs} className='mb-3'/>
-            <p>Hrs</p>
-            <input type='number' ref={(c) => minuteRef = c} placeholder={defaultMins} className='mb-3'></input>
+            <div>
+               <input type='number' ref={(c) => hourRef = c} placeholder={defaultHrs} className='mb-3'/>
+               <span>Hours</span>
+            </div>
+            <div>
+               <input type='number' ref={(c) => minuteRef = c} placeholder={defaultMins} className='mb-3'></input>
+               <span>Minutes</span> 
+            </div> 
             
             <label>How how difficult is the Recipe?</label>
             <select id="difficulty" ref={(c) => diffRef= c} className='mb-3'>
                <option value="1">1 - I could do this in my sleep</option>
                <option value="2">2 - It isn't too bad</option>
-               <option value="3">3 - It is possible</option>
+               <option value="3">3 - Takes a little work</option>
                <option value="4">4 - Come prepared</option>
                <option value="5">5 - I hope you are a chef</option>
             </select>

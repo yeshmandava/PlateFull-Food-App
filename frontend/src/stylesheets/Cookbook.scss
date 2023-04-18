@@ -27,6 +27,7 @@ body{
    width:100%;
    max-width:1200px;
    border-radius:2rem;
+
    display:grid;
    grid-auto-flow:column;
    grid-auto-columns: 30%;
@@ -36,7 +37,6 @@ body{
       width:90%;
       margin-left:10px;
       border-radius:0;
-      pointer-events:none;
   } 
 }
 

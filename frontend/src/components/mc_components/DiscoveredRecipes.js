@@ -52,20 +52,22 @@ export default function DiscoveredRecipes()
    }
 
    useEffect(() =>{getSavedRecipes()}, [])
-   return(
-      <div id="discovered-recipes">
-         <div className="slider snaps-inline">
-            <MCPostList recipeList = {recipeList}/>
+
+   if (recipeList.length > 0)
+   {
+      return(
+         <div id="discovered-recipes" className="my-3">
+            <div className="slider snaps-inline">
+               <MCPostList recipeList = {recipeList} isPoster={false}/>
+            </div>
          </div>
-         <div className="button-box">
-            {/* <button id="back-btn-disc-recipe" className="btn btn-dark">
-               Insert back arrow
-            </button>
-            <button id="next-btn-disc-recipe" className="btn btn-dark">
-               Insert next arrow
-            </button>  */}
+      )
+   }
+   else{
+      return (
+         <div id="discovered-recipes" className="my-3">
+            <h4 className='my-5'>Nothing Here Yet...</h4>
          </div>
-         
-      </div>
-   )
+      )
+   }
 }

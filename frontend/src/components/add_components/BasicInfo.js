@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 
-export default function BasicInfo({defaultName, defaultDesc, basicSetter, imageSetter}) {
+export default function BasicInfo({defaultName, defaultDesc, basicSetter, defaultImage, imageSetter}) {
    
    const [postImage, setPostImage] = useState( { myfile : ''})
 
@@ -34,7 +34,7 @@ export default function BasicInfo({defaultName, defaultDesc, basicSetter, imageS
     <div className="form-card text-center">
       <form className='text-start'>
          <h4 className='form-heading mb-3'>Basic Info</h4>
-         <label for='recipe-name'>Choose a Recipe Name</label>
+         <label htmlFor='recipe-name'>Choose a Recipe Name</label>
          <input 
          type='text' 
          ref={(c) => 
@@ -43,13 +43,13 @@ export default function BasicInfo({defaultName, defaultDesc, basicSetter, imageS
          placeholder={defaultName} 
          className='mb-3'/>
 
-         <label for='recipe-description'>Write a Description</label>
+         <label htmlFor='recipe-description'>Write a Description</label>
          <textarea 
          ref={(c) => descRef = c} 
          placeholder={defaultDesc}
          className='mb-3'></textarea>
          
-         <label for='recipe-image'>Pick an Image</label>
+         <label htmlFor='recipe-image'>Pick an Image</label>
          <input 
             type='file' 
             label='Image' 
@@ -59,7 +59,7 @@ export default function BasicInfo({defaultName, defaultDesc, basicSetter, imageS
             onChange={(handleFileUpload)}
             className='mb-1'
          />
-         <img src={postImage.myFile} alt="recipe image" />
+         <img src={postImage.myFile || defaultImage} alt="recipe image" />
          <input type='submit' className='btn btn-dark my-2' ref={(c) => submitRef = c} onClick={transferInfo}/>
 
       </form>

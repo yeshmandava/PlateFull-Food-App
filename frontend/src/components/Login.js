@@ -1,7 +1,8 @@
 
 import React, { useState } from "react";
 import axios from "axios";
-
+import ForgotPassword from "./ForgotPassword.js";
+import '../index.scss'
 function Login({option}) {
    let loginName;
    let loginPassword;
@@ -53,6 +54,7 @@ function Login({option}) {
          })
          // error catching
          .catch(function (error) {
+            setMessage("User/Password combination incorrect");
             console.log(error);
          });
    };
@@ -76,6 +78,7 @@ function Login({option}) {
           ref={(c) => (loginPassword = c)}
         />
         <br />
+        <ForgotPassword />
         <input
           type="submit"
           id="loginButton"
@@ -83,8 +86,9 @@ function Login({option}) {
           value="Login"
           onClick={doLogin}
         />
+         <span id="loginResult">{message}</span>
+
       </form>
-      <span id="loginResult">{message}</span>
     </div>
   );
 }

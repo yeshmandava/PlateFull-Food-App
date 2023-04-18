@@ -21,13 +21,9 @@ export default function Post({recipe, savedNames}) {
       if (savedNames.indexOf(recipe.RecipeName)!= -1)
       {
          setSave(true)
+         console.log(recipe.RecipeName)
       }
-      let tempMessage;
-      if (isSaved) {tempMessage = 'Unsave Recipe'}
-      else {tempMessage = 'Save Recipe'}
-      setMessage(tempMessage)
    }
-   
    useEffect(() => {checkStatus()}, [])
    useEffect(() => {
       let tempMessage;

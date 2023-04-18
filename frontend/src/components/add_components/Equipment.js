@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 
-export default function Equipment({equipmentSetter}) {
-   const [equipmentList, changeList] = useState([])
+export default function Equipment({defaultList, equipmentSetter}) {
+   const [equipmentList, changeList] = useState(defaultList)
    let equipmentRef = '';
    
    // adds curent contents of equipment input into equipment list
@@ -24,6 +24,9 @@ export default function Equipment({equipmentSetter}) {
       equipmentRef.value = '';
    },[equipmentList])
 
+   function clearList(){
+      changeList([]);
+   }
    return (
     <div className='form-card text-center'>
       <form className='text-start'>
@@ -32,6 +35,9 @@ export default function Equipment({equipmentSetter}) {
          <label>What equipment do you need?</label>
          <input type='text' ref={(c) => equipmentRef = c} placeholder='Equipment' className='mb-3'/>
          <input type='submit' className='btn btn-dark my-2' onClick={addToList}/>
+         <div className='text-center'>
+            <button className='btn btn-gold' onClick={clearList}>Clear Ingredients</button>
+         </div>
          <ul>
          {
             equipmentList.map(equipment =>{

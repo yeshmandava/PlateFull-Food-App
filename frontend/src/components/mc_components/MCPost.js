@@ -1,17 +1,19 @@
 import React, {useState} from 'react'
 import { useNavigate } from "react-router-dom"
 import '../../stylesheets/MCPost.css'
-export default function MCPost({recipe}) {
+export default function MCPost({recipe, isPoster}) {
    let bp = require("../Path.js");
    const [saveStatus, setStatus] = useState("Save Status")
    const navigate = useNavigate();
    
+   const ud = JSON.parse(localStorage.getItem('user_data'))
+   const userId = ud.id;
+
    function openEdit(event)
    {
       event.preventDefault();
       localStorage.setItem('current_recipe', JSON.stringify(recipe))
       navigate('/edit-recipe');
-      
    }
    return (
     <div className="mc-post">
@@ -38,7 +40,10 @@ export default function MCPost({recipe}) {
               <div className="mc-postServes">Serves:</div> 
             </div>
             <div className="bottomRight">
-               <button onClick={openEdit}>Edit Recipes</button>
+               {
+                  isPoster && 
+                  <button className='btn btn-red' onClick={openEdit}>Edit Recipes</button>
+               }
             </div>
           </div>
         </div>

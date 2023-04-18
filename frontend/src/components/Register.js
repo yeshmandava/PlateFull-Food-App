@@ -4,7 +4,7 @@ import axios from 'axios';
 export default function Register({option})
 {
    // textbox inputs
-   let firstName ;
+   let firstName;
    let lastName;
    let email;
    let login;
@@ -18,6 +18,12 @@ export default function Register({option})
    const doRegister = async event =>
    {
       event.preventDefault();
+      if (!firstName.value || !lastName.value || !email.value || !login.value || !password.value)
+      {
+         setMessage('Please Fill In All Fields')
+         console.log(message);
+         return
+      }
 
       // defining the data to be input to the register api
       let obj = {
@@ -73,10 +79,10 @@ export default function Register({option})
             <input type="text" id="email" placeholder="Email" ref={(c) => email = c} /><br />
             <input type="text" id="loginName" placeholder="Username" ref={(c) => login = c} /><br />
             <input type="password" id="loginPassword" placeholder="Password" ref={(c) => password = c} /><br />
-            
             <input type="submit" id="loginButton" className="buttons btn btn-dark mt-3 mb-1" value = "Register" onClick={doRegister} />
+            <span id="registerResult">{message}</span>
+
         </form>
-        <span id="registerResult">{message}</span>
 
       </div>
    )

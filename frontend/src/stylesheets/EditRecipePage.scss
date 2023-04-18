@@ -12,7 +12,7 @@
    --brown-dark: #633729;
 }
 
-#add-recipe-page{
+#edit-recipe-page{
    overflow-x:hidden;
 }
 
@@ -35,16 +35,15 @@
 }
 
 // stylings for form boxes within swiper carousel
-#add-form{
+#edit-form{
    display:inline-block;
    padding:0 !important;
    width:90%;
 }
-#add-form .form-card{
+.form-card{
    width:100%;
 }
-
-#add-form form{
+#edit-form form{
    display:inline-block;
    padding:30px;
    input[type=text], textarea, .form-heading, select{
@@ -65,12 +64,12 @@
    }
 }
 
-#add-form ul{
+#edit-form ul{
    display:flex;
    flex-wrap:wrap;
    width:100%;
 }
-#add-form li{
+#edit-form li{
    padding:15px;
    list-style:none;
 }

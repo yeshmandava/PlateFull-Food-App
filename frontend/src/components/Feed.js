@@ -67,8 +67,8 @@ export default function Feed() {
    return (
       <div className="feedWrapper">
       <div className="feed">
-         <form id='search-form'>
-            <input type="text" placeholder="Search" ref={searchRef} onChange={handleSearch}/>
+         <form className='my-2'>
+            <input type="text" placeholder="Search" ref={searchRef} onChange={handleSearch} className=''/>
          </form>
          <PostList recipeList = {recipeList}/>
       </div>

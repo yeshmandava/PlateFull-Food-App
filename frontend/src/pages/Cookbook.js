@@ -4,7 +4,7 @@ import Topbar from '../components/Topbar'
 import Sidebar from '../components/Sidebar';
 
 import MyRecipes from '../components/mc_components/MyRecipes'
-import DiscoveredRecipes from '../components/mc_components/DiscoverdRecipes'
+import DiscoveredRecipes from '../components/mc_components/DiscoveredRecipes'
 import "../stylesheets/Cookbook.scss";
 export default function Cookbook()
 {
@@ -18,10 +18,9 @@ export default function Cookbook()
    return(
       <div className="container-xl text-center my-5">
          <Topbar />
-         <Sidebar />
-         <h2>My Plates</h2>
+         <h2 className='my-3'>My Plates</h2>
          <MyRecipes functionAlert={test}/>
-         <h2>Discovered Plates</h2>
+         <h2 className='my-3'>Discovered Plates</h2>
          <DiscoveredRecipes /> 
       </div>
     )

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 
-export default function Instructions({instructionSetter}) {
-  const [instructionList, changeList] = useState([])
+export default function Instructions({defaultList, instructionSetter}) {
+  const [instructionList, changeList] = useState(defaultList)
    let instructionRef = '';
    
    // adds curent contents of equipment input into equipment list
@@ -14,7 +14,7 @@ export default function Instructions({instructionSetter}) {
          return
       }
       changeList(prevList =>{
-         return [...prevList, `Step ${instructionList.length + 1}: ${instructionRef.value}`]
+         return [...prevList, instructionRef.value]
       });
    }
 
@@ -23,18 +23,23 @@ export default function Instructions({instructionSetter}) {
       instructionSetter(instructionList)
       instructionRef.value = '';
    },[instructionList])
-
+   function clearList(){
+      changeList([]);
+   }
    return (
     <div className='form-card'>
       <form>
          <h4 className='form-heading mb-3'>Instructions</h4>
          <input type='text' ref={(c) => instructionRef = c} placeholder='Instruction'></input>
          <input type='submit' className='btn btn-dark my-2' onClick={addToList}></input>
+         <div className='text-center'>
+            <button className='btn btn-gold' onClick={clearList}>Clear Ingredients</button>
+         </div>
          <ul>
          {
-            instructionList.map(equipment =>{
+            instructionList.map((equipment, index)=>{
                return(
-                  <li>{equipment}</li>
+                  <li>Step {index + 1} : {equipment}</li>
                )
             })
          }

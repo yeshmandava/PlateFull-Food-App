@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom'
+
 import BasicInfo from './BasicInfo'
 import TimeDiff from './TimeDiff'
 import Ingredients from './Ingredients'
@@ -28,14 +29,6 @@ SwiperCore.use([Pagination,Navigation]);
 
 export default function NewRecipe(){
    const navigate = useNavigate();
-
-   // const [recName, changeName] = useState('')
-   // const [recDesc, changeDesc] = useState('')
-   // const [recTime, changeTime] = useState('')
-   // const [recDiff, changeDiff] = useState('5')
-   // const [recIngredients, setIngredients] = useState([]);
-   // const [recEquipment, setEquipment] = useState([]);
-   // const [recInstructions, setInstructions] = useState([]);
    
    const [message, setMessage] = useState('');
 
@@ -190,13 +183,13 @@ export default function NewRecipe(){
                />
             </SwiperSlide>
             <SwiperSlide>
-               <Ingredients ingredientSetter={addIngredients}/>
+               <Ingredients defaultList={[]} ingredientSetter={addIngredients}/>
             </SwiperSlide>
             <SwiperSlide>
-               <Equipment equipmentSetter={addEquipment}/>
+               <Equipment defaultList={[]} equipmentSetter={addEquipment}/>
             </SwiperSlide>
             <SwiperSlide>
-               <Instructions instructionSetter={addInstruction}/>
+               <Instructions defaultList={[]} instructionSetter={addInstruction}/>
             </SwiperSlide>
             <SwiperSlide >
                <div className='form-card text-center'>

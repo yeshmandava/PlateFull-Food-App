@@ -49,23 +49,21 @@ export default function MyRecipes({functionAlert}) {
       })
    }
    useEffect(() => {searchRecipes()}, [])
-   function sendBack(event){
-      functionAlert('hiya');
-   }
-   return (
-      <div id="my-recipes" className="mb-3">
-         <button onClick = {sendBack}>Test</button>
-         <div className="slider snaps-inline">
-            <MCPostList recipeList = {recipeList}/>
+   if (recipeList.length > 0)
+   {
+      return(
+         <div id="my-recipes" className="my-3">
+            <div className="slider snaps-inline">
+               <MCPostList recipeList = {recipeList} isPoster={true}/>
+            </div>
          </div>
-         {/* <button id="back-btn-disc-recipe" className="btn btn-dark slider-btn">
-               Insert back arrow
-         </button>  
-         <button id="next-btn-disc-recipe slider-btn" className="btn btn-dark">
-            Insert next arrow
-         </button>  */}
-      </div>
-   )
-
-  
+      )
+   }
+   else{
+      return (
+         <div id="my-recipes" className="my-3">
+            <h4 className='my-5'>Nothing Here Yet...</h4>
+         </div>
+      )
+   }
 }

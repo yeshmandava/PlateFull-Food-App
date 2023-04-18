@@ -186,7 +186,6 @@ body{
    box-sizing:border-box;
    width:100%;
    padding:10px;
-   height:400px;
    background-color:var(--red-light);
    box-shadow: 12px 12px 5px var(--shadow-red-light);
 
@@ -215,7 +214,6 @@ body{
    box-sizing:border-box;
    width:100%;
    padding:10px;
-   height:400px;
    background-color:var(--gold);
    box-shadow: 12px 12px 5px var(--shadow-gold);
 
@@ -259,4 +257,39 @@ form > input, form> textarea{
    .shadow-button {
      padding: 0 40px;
    }
+ }
+
+/* forgot password section */
+ .message{
+    display:inline-block;
+    flex:auto;
+    display:flex;
+    justify-content:center;
+ }
+ .fgp-wrapper{
+    width:100%;
+    display:flex;
+    justify-content:flex-start;
+    align-items:center;
+ }
+ 
+ .modal{
+    width: 100%!important;
+    display:flex !important;
+    justify-content:center !important;
+    align-items:center!important;
+ }
+
+ .modal-content{
+    width:100% !important;
+ }
+ 
+ .modal input{
+    width:100%;
+ }
+ 
+ .modal-footer{
+    display:flex;
+    width:100% !important;
+    justify-content:space-between !important;
  }
