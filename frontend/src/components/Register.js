@@ -34,6 +34,13 @@ export default function Register({option})
          password:password.value
       }
 
+      // password validation check
+      if (!validatePassword(obj.password))
+      {
+         setMessage('Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character')
+         return;
+      }
+
       let js = JSON.stringify(obj);
 
       // sets up fetch configuration for api request
@@ -67,6 +74,12 @@ export default function Register({option})
          })
 
       };
+
+      const validatePassword = password => 
+      {
+         const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
+         return regex.test(password);
+      }
 
       
    return(
