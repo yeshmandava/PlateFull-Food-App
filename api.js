@@ -557,7 +557,7 @@ app.post('/api/searchcards', async (req, res, next) =>
       var _search = search.trim();
 	    var _userId = userId.trim();
 
-      const results = await Recipe.find({ "UserId":{ $regex: _userId + '.*'},"RecipeName": { $regex: _search + '.*'} });
+      const results = await Recipe.find({ "UserId":{ $regex: _userId + '.*'},"RecipeName": { $regex: _search + '.*',$options: 'i'} });
 
       
       var refreshedToken = null;
@@ -602,7 +602,7 @@ app.post('/api/searchcards', async (req, res, next) =>
 		
       var _search = search.trim();
 	    var _userId = userId.trim();
-      const results = await SavedRecipe.find({ "UserId":{ $regex: _userId + '.*'},"RecipeName": { $regex: _search + '.*'} });
+      const results = await SavedRecipe.find({ "UserId":{ $regex: _userId + '.*'},"RecipeName": { $regex: _search + '.*',$options: 'i'} });
 
       
       var refreshedToken = null;
